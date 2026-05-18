@@ -12,13 +12,13 @@
 **6 messages you must land (work them in even if not asked):**
 1. Acies.ai = your mirror of Sleuth: founding designer, big data, predictive AI, skeptical analysts who had to trust the model.
 2. You clear the exact bar the old designer missed: modern AI patterns + AI-native workflow.
-3. You *live* in AI: 16 agents on OpenClaw, your own observability layer, Claude+Figma daily, Gen-AI certs.
+3. You *live* in AI — demonstrated, not claimed: shipped a node-based AI flow-builder + your own agent command/observability tooling with Claude Code, Claude wired into Figma daily, an "AI Product Design Patterns" Maven cert (the literal bar the old designer missed).
 4. Trust is designed, not decorated: sources on click, step-by-step reasoning, reversibility, surface-on-demand.
 5. The knowledge graph is the trust moat — "this insight came from these nodes" is a primitive most AI tools can't offer.
 6. You ship at startup speed and design *within* technical constraints (Acies.ai first build was eng-constrained, then iterated to flexible).
 
 **Headline sentence per likely question (say this first, then ≤3 beats):**
-- *Your story* → "Fifteen years in data/AI startups; the one that maps to you is Acies.ai — founding designer on a BI platform where the hard part was getting skeptical analysts to trust a model."
+- *Your story* → "Fourteen years in data/AI startups; the one that maps to you is Acies.ai — founding designer on a BI platform where the hard part was getting skeptical analysts to trust a model."
 - *Why you vs. the old designer* → "You said the gap is modern AI patterns and matching the vision — that's exactly my edge; I don't design AI from outside, I live in it."
 - *What is AI-centric design* → "Two halves: AI-native patterns in the product, and AI-native tools in my own workflow. I do both daily."
 - *Skeptical-expert trust* → "Don't make the AI look smarter — make it legible and reversible: sources, step-by-step, revert, surface-on-demand."
@@ -26,7 +26,7 @@
 - *Process / where you get involved* → "Default: I get in at the problem, before requirements freeze — that's where design changes the outcome."
 - *Work with engineers* → "I design within the constraint, not around it; at Acies.ai the first build was what eng could ship, then we iterated to flexible."
 - *First 90 days* → "Diagnose the trust gap in the current product, ship one visible fix, then systematize."
-- *Why Sleuth* → "Data-heavy + AI-native + trust-critical + fast is the exact intersection I've spent 15 years in — and the knowledge graph makes trust solvable, not just patchable."
+- *Why Sleuth* → "Data-heavy + AI-native + trust-critical + fast is the exact intersection I've spent 14 years in — and the knowledge graph makes trust solvable, not just patchable."
 
 **Never do:** ramble before you know the landing · "it depends" · narrate doubt · tour screens · let the defining question pass without positioning against it.
 

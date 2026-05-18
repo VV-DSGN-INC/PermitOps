@@ -75,7 +75,7 @@ Company-first + snacking. "I route the team to the work that moves the business 
 
 **10. "How do you handle disagreement with product or engineering?"** Disagree in private, commit in public, build the case with evidence not authority. Pull the Acies.ai "in-room with CTO and engineers" detail.
 
-**11. "Why leave consulting / why permanent now?"** You half-answered this in round 1 ("tired of sitting at home", "like being around designers and developers"). Tighten: "Consulting taught me to own design end-to-end fast. What it can't give me is a team to grow and a product to compound on over years. That's what I want next, and it's exactly this role."
+**11. "Why leave consulting / why permanent now?"** You half-answered this in round 1 ("tired of sitting at home", "like being around designers and developers"). Tighten — and use the real frame: you *run a practice* (VV DSGN, with a partner) plus Toptal leads; you're not a lone gig-taker. "Running my own practice taught me to own design end-to-end fast. What it can't give me is a team to grow and a product to compound on over years. That's what I want next, and it's exactly this role." (Higher-status than "tired of consulting.")
 
 **12. "It's a brand-new role with no playbook — how do you operate as a self-starter?"** They flagged they *can't* describe a typical week. "That's the part I want. My founding-designer work — Acies.ai from zero, MeetnGreetMe — was all no-playbook. My first move is always the same: diagnose which business problem design should own, then build the process around that, not before it."
 
@@ -96,7 +96,7 @@ Company-first + snacking. "I route the team to the work that moves the business 
 
 3. **Reframe the Intercom comment.** You told them you "reverse-design" using Intercom's design system. Their new product *competes with Intercom*. Reframe to: "I study Intercom and Zendesk closely as the incumbents — their patterns and where the friction is between bolted-on AI and the core product is exactly the gap your AI-native approach exploits." Same fact, competitive lens instead of "I copy them."
 
-4. **Tighten the rambles.** Round 1 had long, looping answers (the 16-agents/OpenClaw tangent, the Sprig story). With a Director of Product + PM, crisp wins. Rule: answer in 60–90 seconds, then stop and ask "want me to go deeper?" Let them pull.
+4. **Tighten the rambles — but don't bury the AI proof.** Round 1 the 16-agents/OpenClaw thing came out as a meandering tangent. That content is actually your strongest asset (you ship AI-native products weekly — a node-based AI flow-builder, your own agent command/observability tooling, an "AI Product Design Patterns" cert). The fix isn't to suppress it; it's to land it as *one tight, concrete sentence* — "I ship AI-native products weekly, including a node-based flow-builder that's essentially the agent-builder problem" — then stop and let them pull. Rule everywhere: 60–90 seconds, then "want me to go deeper?"
 
 5. **Clarify reporting line — ask it early.** Unknown and critical: does Head of UX report to the Director of Product (a non-designer PM), or to the CEO? This determines whether design has a real seat or sits under product. Ask in round 2: "Who does this role report to, and how does design's voice reach the founder?"
 

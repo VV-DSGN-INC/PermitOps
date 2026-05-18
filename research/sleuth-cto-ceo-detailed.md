@@ -8,18 +8,18 @@ Voice rules throughout: headline sentence first, ≤3 beats, then stop. Real pro
 
 ## Q1. "Tell us about yourself / your background."
 
-**Testing:** Can you self-edit? Do you know which of your 15 years is relevant to *them*?
+**Testing:** Can you self-edit? Do you know which of your 14 years is relevant to *them*?
 **Why it matters at Sleuth:** They're AI-first, data-heavy, trust-critical. They don't want a career history; they want the one thread that maps to their problem.
 **The trap (round 1):** You sprayed — "15 years… 5 full-time… 5 co-founder… 5 Toptal, 22 projects" then blurred three projects. The interviewer had to assemble your story for you.
 
 **Example A — tight (≈35 sec):**
-> "Fifteen years, almost all early-stage data and AI startups, building from zero or rebuilding. The one that maps directly to Sleuth: I was founding designer at Acies.ai, a BI platform for payments — huge datasets, predictive AI, and the core problem was getting skeptical analysts to trust what the model produced. That's your problem. I also run sixteen AI agents day-to-day with my own observability layer — so AI-native is how I already work."
+> "Fourteen years, almost all early-stage data and AI startups, building from zero or rebuilding. The one that maps directly to Sleuth: I was founding designer at Acies.ai, a BI platform for payments — huge datasets, predictive AI, and the core problem was getting skeptical analysts to trust what the model produced. That's your problem. And outside client work I ship AI-native products every week — a node-based flow-builder for AI pipelines, my own agent command-and-observability tooling — so AI-native isn't a skill I'm adding, it's how I already work."
 
 **Example B — deeper, leadership-flavored (≈55 sec, better for CEO):**
 > "Three arcs. Five years full-time in startups — including a FATCA/compliance platform brokering data between banks and businesses, so regulated, trust-heavy data isn't new to me. Five years co-founding my own marketplace, where I owned design and was in the business decisions. Five years through Toptal as a founding/lead designer across data and AI products. The through-line is the same problem you have: complex data, an AI layer, and users who won't adopt it unless they trust it. Acies.ai is the cleanest example — founding designer, payments BI, predictive insights for skeptical analysts."
 
 **Example C — technical-flavored (≈45 sec, better for CTO):**
-> "I've spent fifteen years as the designer on data-heavy products where the technical constraint *is* the design problem. At Acies.ai, founding designer on a payments BI platform, the first report builder was bounded by what the data backend could return — I designed honestly to that, shipped, then we expanded to flexible slice-and-dice over a few iterations. I work close to engineering and I live in AI tooling — sixteen agents on OpenClaw with my own reliability layer, Claude wired into Figma daily. That combination is why this role exists."
+> "I've spent fourteen years as the designer on data-heavy products where the technical constraint *is* the design problem. At Acies.ai, founding designer on a payments BI platform, the first report builder was bounded by what the data backend could return — I designed honestly to that, shipped, then we expanded to flexible slice-and-dice over a few iterations. I work close to engineering and I live in AI tooling — I've shipped my own agent command-and-observability system and a node-based AI pipeline builder with Claude Code, and Claude is wired into my Figma workflow daily. That combination is why this role exists."
 
 **Follow-ups:** "Tell me more about Acies.ai" → go to Q4. "Why so many short engagements?" → "Toptal is how senior designers do startup work without the visa/relocation friction — I pick problems, not logos; 22 completed engagements, several multi-year." (Don't apologize for consulting.)
 **Delivery:** Pick ONE arc framing and commit. Land "that's your problem" — it forces them to agree.
@@ -39,7 +39,7 @@ Voice rules throughout: headline sentence first, ≤3 beats, then stop. Real pro
 > "Easiest way to say it is what it's *not*. AI-centric is not a traditional data table with an 'Ask AI' button — that's a database product wearing an AI hat, and expert users see through it instantly. AI-centric means the interface is organized around the model's behavior: outputs that cite their grounding, reasoning you can expand, states you can revert, latency designed as progress not a spinner. And it means the designer works that way too — I generate and maintain design systems with Claude, I run agents to compress research. I don't design AI from the outside; I operate inside it."
 
 **Example C — proof-first (≈45 sec, strong for CTO):**
-> "Concretely: I run sixteen agents on OpenClaw and got frustrated that I couldn't see what they were doing, so I built my own observability — synced diagrams, rules, state — instead of trusting a chat window. That instinct *is* AI-centric design: make the system legible and controllable, not magical. In product work it's the same — at Sprig the AI-native move was showing why the AI drafted what it drafted, not just the draft. AI-centric is legibility plus control, in the product and in how I build."
+> "Concretely: I run a squad of AI agents and got frustrated I couldn't see what they were doing, so I shipped my own command-and-observability tooling for them — and separately a node-based visual flow-builder for AI pipelines, with Claude Code. Building those taught me the core AI-centric instinct: make the system legible and controllable, not magical. In product work it's the same — at Sprig the AI-native move was showing *why* the AI drafted what it drafted, not just the draft. AI-centric is legibility plus control, in the product and in how I build — and I can show you the things I've shipped, not just describe them."
 
 **Follow-ups:** "Which AI tools specifically?" → name them concretely: Claude (daily, Figma + Claude Code), OpenClaw agents, Gen-AI Maven certifications, prototyping flows. "Show me an AI pattern you'd bring here" → provenance-on-click + step-by-step reasoning trail on knowledge-graph results.
 **Delivery:** This is the answer to over-rehearse. Say it cold, confident, no hedging. It directly clears the bar.
@@ -158,10 +158,10 @@ Voice rules throughout: headline sentence first, ≤3 beats, then stop. Real pro
 **The trap:** Generic "I love AI and startups."
 
 **Example A — the intersection (≈35 sec):**
-> "Two specific reasons. One: data-heavy, AI-native, trust-critical, fast is the exact intersection I've worked in for fifteen years — Acies.ai and Sprig were rehearsals for this. Two: your knowledge graph makes trust *solvable*, not just patchable — most AI tools can't show their work; you structurally can. That's the design problem I actually want."
+> "Two specific reasons. One: data-heavy, AI-native, trust-critical, fast is the exact intersection I've worked in for fourteen years — Acies.ai and Sprig were rehearsals for this. Two: your knowledge graph makes trust *solvable*, not just patchable — most AI tools can't show their work; you structurally can. That's the design problem I actually want."
 
 **Example B — mission-aware (≈45 sec):**
-> "The biopharma angle matters to me more than it might sound. These analysts make calls that decide which drugs get funded — getting them trustworthy insight faster has real downstream weight, not just a metric. And the design challenge is the hardest and most interesting kind: make a skeptical expert trust an AI in a domain where being confidently wrong is catastrophic. Fifteen years of data-and-AI work has been pointing at this; the knowledge graph is what makes it winnable here."
+> "The biopharma angle matters to me more than it might sound. These analysts make calls that decide which drugs get funded — getting them trustworthy insight faster has real downstream weight, not just a metric. And the design challenge is the hardest and most interesting kind: make a skeptical expert trust an AI in a domain where being confidently wrong is catastrophic. Fourteen years of data-and-AI work has been pointing at this; the knowledge graph is what makes it winnable here."
 
 **Follow-ups:** "It's contract — are you just between things?" → "I pick problems over logos. This is one I'd want to own, not pass through."
 **Delivery:** Specificity is sincerity. Name the knowledge graph; generic enthusiasm reads as filler.

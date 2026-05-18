@@ -63,7 +63,7 @@ Drill: for every question in §4, the first sentence is the answer. Everything a
 The CTO/CEO will care about: real AI fluency (not buzzword), data-heavy product judgment, the trust problem (their core UX risk), speed, and "can this person own it." Positioning: **"I'm the AI-native, data-heavy product designer who makes skeptical experts trust AI output — and I live in AI tooling, I don't just design it."**
 
 ### Q. "Tell us about yourself / your story."
-> "Fifteen years, almost all of it early-stage startups, building data and AI products from zero or rebuilding them. The one most relevant to Sleuth: I was the founding designer at Acies.ai, a BI platform for the payments industry — huge datasets, predictive AI, and the core challenge was getting expert analysts to trust insights a model produced. That's your problem. More recently at Sprig I set the AI direction and rebuilt the design system for an AI-native research product. And I personally run sixteen AI agents day to day and built my own observability layer for them — so AI-centric isn't a skill I'm adding, it's how I already work."
+> "Fourteen years, almost all of it early-stage startups, building data and AI products from zero or rebuilding them. The one most relevant to Sleuth: I was the founding designer at Acies.ai, a BI platform for the payments industry — huge datasets, predictive AI, and the core challenge was getting expert analysts to trust insights a model produced. That's your problem. More recently at Sprig I was Senior Product Designer for Platform & AI — set AI direction, rebuilt the design system. And outside client work I ship AI-native products weekly with Claude Code — a node-based visual flow-builder for AI pipelines, my own agent command-and-observability tooling, a universal design-token system. So AI-centric isn't a skill I'm adding; it's how I already work."
 *Three sentences of arc, one project named as the bridge, one differentiator. ~45 sec. Stop.*
 
 ### Q. "Why you, versus the designer we have?" (or implied)
@@ -88,7 +88,7 @@ You must say this even if not asked directly — work it in.
 *~40 sec. A spine with an exception. Done.*
 
 ### Q. "Why this role / why Sleuth?"
-> "Two reasons, specific. One: it's the exact intersection I've spent fifteen years in — data-heavy, AI-native, trust-critical, fast. Acies.ai and Sprig were rehearsals for this. Two: the knowledge-graph foundation means the trust problem is actually *solvable* here, not just patchable — most AI tools can't show their work; you can. That's a design problem I want."
+> "Two reasons, specific. One: it's the exact intersection I've spent fourteen years in — data-heavy, AI-native, trust-critical, fast. Acies.ai and Sprig were rehearsals for this. Two: the knowledge-graph foundation means the trust problem is actually *solvable* here, not just patchable — most AI tools can't show their work; you can. That's a design problem I want."
 
 ---
 

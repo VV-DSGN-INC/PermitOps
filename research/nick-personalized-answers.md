@@ -9,7 +9,7 @@ This supersedes the generic 100-Q doc for your specific case. Uses your actual s
 ### Strong fit signals
 1. **You're already in Montreal.** The fully-in-office requirement that would kill most candidates is a non-issue for you.
 2. **You're literally working on conversational AI right now.** Sprig — "users describe a research goal in natural language and the AI drafts, refines, and iterates the survey" — is the exact UX pattern Botpress wants you to design at scale.
-3. **You have founding-designer DNA.** Acies.ai BI platform from zero. MeetnGreetMe co-founded (UN World Summit Award). Botpress's "Head of UX who ships" is this pattern.
+3. **You have founding-designer DNA.** Acies.ai BI platform from zero. MeetnGreetMe co-founded (World Summit Award, Culture & Heritage, 2016). Botpress's "Head of UX who ships" is this pattern.
 4. **You have real junior mentoring** — MeetnGreetMe ("led a few junior designers on verification flow and matching experience"). Not theoretical.
 5. **Maven Design System Bootcamp + 2 Gen AI Maven certs** — credentialed on both halves of the JD.
 6. **"Agent management" is literally in your interest list** (braindump §10). You can speak about agent UX with conviction.
@@ -35,13 +35,13 @@ Pros: Coherent. Plays to your stated mission. Easy to land.
 Cons: Slightly abstract. Doesn't lead with the AI-design chops.
 
 ### Arc B — "Data and AI fluency, founding-designer DNA" ⭐ **recommended**
-> "I've spent the last six years in data-heavy and AI-first products: Acies.ai BI platform for payments as the founding designer, Pendo's Data Explorer redesign, Sprig's conversational AI for research design. The unsolved design problems at Botpress — observability, evaluation, builder-tooling UX, agent flow editors — are the same shape as the problems I've shipped before. Plus I co-founded MeetnGreetMe (UN World Summit Award 2017), so I know how to ship a product end-to-end in a lean team."
+> "I've spent the last six years in data-heavy and AI-first products: Acies.ai BI platform for payments as the founding designer, Pendo's Data Explorer redesign, Sprig's conversational AI for research design. The unsolved design problems at Botpress — observability, evaluation, builder-tooling UX, agent flow editors — are the same shape as the problems I've shipped before. Plus I co-founded MeetnGreetMe (World Summit Award, Culture & Heritage, 2016), so I know how to ship a product end-to-end in a lean team."
 
 Pros: Most credentialed. Most relevant. Lets you talk about the harder Botpress problems.
 Cons: Slightly heavy on credentials; balance with personality.
 
 ### Arc C — "Founder DNA"
-> "I co-founded MeetnGreetMe, won the UN World Summit Award for it, and have been a founding or first-design hire at three different startups. I've shipped 16 products to production. Most senior designers in Montreal don't have this combination. What I want in my next role is to do that work somewhere I can stay, not as a contractor — Botpress fits because it's lean enough that design matters, ambitious enough that the surface I'd own is meaningful."
+> "I co-founded MeetnGreetMe, won a World Summit Award for it, and have been a founding or first-design hire at three different startups. I've shipped 20-plus products to production over fourteen years. Most senior designers in Montreal don't have this combination. What I want in my next role is to do that work somewhere I can stay and go deep, not engagement by engagement — Botpress fits because it's lean enough that design matters, ambitious enough that the surface I'd own is meaningful."
 
 Pros: Differentiator. Plays the UN award. Justifies Head-of-UX scope.
 Cons: Risks sounding like you only want to be the boss; balance with team-orientation.
@@ -51,7 +51,7 @@ Cons: Risks sounding like you only want to be the boss; balance with team-orient
 ## Top 15 personalized answers
 
 ### 1. Tell me about yourself (90 seconds, Arc B baseline)
-> "I'm a product designer based in Montreal, ten-plus years in, mostly building B2B SaaS, analytics platforms, and AI tools. I came up in Minsk, then London, then Toronto, then here. The through-line of my career is data-heavy and increasingly AI-first products: I was the founding designer at Acies.ai, a BI platform for the payments industry, then redesigned the Data Explorer experience at Pendo, and I'm currently lead designer at Sprig where I'm shaping how users describe a research goal in natural language and have AI draft and iterate the study. Before all that I co-founded a travel marketplace called MeetnGreetMe that won the UN World Summit Award in 2017. Botpress is interesting to me because agent-builder UX is the exact problem space my Sprig work is in, but at platform scale — and the role being in Montreal is a real plus."
+> "I'm a product designer based in Montreal, fourteen years in, mostly building B2B SaaS, analytics platforms, and AI tools. I came up in Minsk, then London, then Toronto, then here. The through-line of my career is data-heavy and increasingly AI-first products: I was the founding designer at Acies.ai, a BI platform for the payments industry, then redesigned the Data Explorer experience at Pendo, and most recently I was Senior Product Designer for Platform & AI at Sprig, shaping how users describe a research goal in natural language and have AI draft and iterate the study. Before all that I co-founded a travel marketplace called MeetnGreetMe that won a World Summit Award in 2016. Botpress is interesting to me because agent-builder UX is the exact problem space my Sprig work is in, but at platform scale — and the role being in Montreal is a real plus."
 
 What this does: lands location, seniority, AI bona fides, UN award, current relevance, and "fully in-office Montreal is fine" all in 90 seconds.
 
@@ -61,7 +61,7 @@ What this does: lands location, seniority, AI bona fides, UN award, current rele
 Customize sentence three based on whether you actually want a permanent move or are exploring.
 
 ### 3. Why are you leaving your current role / Sprig ends in March, what's next?
-> "Sprig has been a contract from the start — six months, ends in March. The work has been everything I'd hoped: conversational AI design for a real product team. What I want next isn't another six-month contract; I want a permanent seat on a real design team. Botpress fits because the AI-design depth is here and the role isn't another solo-contractor gig — it's actually building something with people."
+> "For the last few years I've run my own product-design practice — VV DSGN, with a partner — plus lead engagements through Toptal, and just wrapped six months at Sprig as Senior Product Designer for Platform & AI. I'm good at the practice; that's not the issue. What running a practice and taking engagements can't give me is a permanent, embedded seat on one product team — staying long enough that the design system, the people, and the craft actually compound. That's what I want next, and Botpress is the kind of place where that's worth doing: AI-design depth, and a real team to build with rather than another engagement that ends."
 
 This addresses one of your stated deal-breakers directly. Hiring managers respect candidates who name what they're optimizing for.
 
@@ -113,10 +113,10 @@ Pull-through from Sprig + extend to Botpress = senior signal.
 The Maven cert in a sentence is more credible than a bullet on a resume. Drop it in conversation.
 
 ### 12. Critique Botpress Studio.
-**Build it yourself before the interview.** No other answer earns you the room faster. Skeleton:
-> "I spent [N] hours building [a specific agent you built — something useful, not a hello-world]. Three friction points worth talking about. First, [specific friction — be precise about screen, click, decision moment]. Second, [specific friction]. Third, [specific friction]. Each one violates a principle: [principle 1], [principle 2], [principle 3]. In my first 30 days I'd fix one of these end-to-end as a visible IC ship, and run critique with the team on the other two so the design pattern gets decided collectively, not imposed."
+**Build it yourself before the interview.** No other answer earns you the room faster. You have a uniquely strong angle here most candidates can't touch: you've **built a node-based visual flow-builder for AI pipelines yourself** (React Flow, typed handles, topological executor) and you've **cloned the Botpress repo as a reference**. That means you can critique Studio not as a user, but as someone who has designed and built the exact class of product. Skeleton:
+> "Two things give me an unusual lens on this. One — I built my own node-based flow-builder for AI pipelines, so I've made the hard calls Studio's team made: node density, typed connections, where the escape hatch to code lives. Two — I spent [N] hours building [a specific agent — something useful, not a hello-world] in Studio. Three friction points worth talking about. First, [specific friction — precise: screen, click, decision moment]. Second, [specific friction]. Third, [specific friction]. Each violates a principle: [principle 1], [principle 2], [principle 3]. In my first 30 days I'd fix one end-to-end as a visible IC ship, and run critique with the team on the other two so the pattern gets decided collectively, not imposed."
 
-⚠️ Action: spend 2–4 hours in Botpress Studio. Take notes as you go. This single prep action is worth more than all the answer scripts combined.
+⚠️ Action: spend 2–4 hours in Botpress Studio. Take notes as you go. This single prep action is worth more than all the answer scripts combined — and pair it with a one-line mention that you've built a flow-builder of your own. That converts "candidate critiquing our product" into "peer who's solved this problem."
 
 ### 13. What's our biggest differentiator vs. Voiceflow / Copilot Studio / Rasa?
 > "From outside, Botpress's bet on being both developer-extensible AND non-developer-accessible is rarer than the market gives credit for. Voiceflow leans non-developer; Rasa and Copilot Studio lean developer. The bet only works if the design holds both audiences without compromising either, which is a hard design problem. If that hypothesis is right, it's a moat. If it's wrong, the product splits into two products. I'd want to understand which version is on the roadmap."

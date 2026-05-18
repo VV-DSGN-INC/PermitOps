@@ -7,7 +7,7 @@ First-person, in your voice (direct, concrete, modest-on-craft, confident-on-out
 ### Q1. "Tell us about yourself / why this role?"
 *Are you the self-starter who can own design with no playbook?*
 
-> "Ten-plus years, mostly building B2B SaaS, analytics, and AI tools — and the pattern in my career is that I've been the first or founding designer three times. At Acies.ai I built a BI platform for the payments industry from zero, sitting in the same room as the CEO and the engineers. I co-founded a travel marketplace, MeetnGreetMe, that won a UN World Summit Award. And most recently at Sprig I led design for their AI research and reporting work and ended up owning the design system because it needed it.
+> "Fourteen years, mostly building B2B SaaS, analytics, and AI tools — and the pattern in my career is that I've been the first or founding designer three times. At Acies.ai I built a BI platform for the payments industry from zero, sitting in the same room as the CEO and the engineers. I co-founded a travel marketplace, MeetnGreetMe, that won a World Summit Award. And most recently at Sprig I led design for their Platform & AI work — AI research and reporting — and ended up owning the design system because it needed it.
 >
 > So 'first design leader, no playbook, has to ship as well as lead' isn't a stretch for me — it's the exact situation I keep choosing. That's why this role is interesting. It's not a bigger version of a job I have; it's the job I do best, at a company where the design problem actually matters."
 
@@ -125,9 +125,9 @@ Pick **InRule** for this audience — it's your closest parallel to Botpress.
 ### Q11. "You've been consulting a while. Why a permanent role now?"
 *Will you actually stay? Are you running from solo work or toward a team?*
 
-> "Consulting taught me to walk into ambiguity and own design end-to-end, fast, with no scaffolding — that's most of why I'd be useful here from week one. What it can't give me is a team to grow over years or a product to compound on. You ship something, the engagement ends, you don't see the second-order effects or watch a junior you mentored become a senior.
+> "Running my own practice — VV DSGN, with a partner — and lead engagements through Toptal taught me to walk into ambiguity and own design end-to-end, fast, with no scaffolding. That's most of why I'd be useful here from week one. What that model structurally can't give me is a team to grow over years or a product to compound on — the engagement ends, and you don't see the second-order effects or watch a junior you mentored become a senior.
 >
-> I want the part consulting structurally can't offer: continuity. The same team, the same product, long enough that the design system, the people, and the craft actually compound. And honestly — I'm in Montreal, I'm a bit tired of working alone from home, and I do better around designers and engineers in a room. This role is permanent, it's a real team, it's an AI product where design decides whether it works. That's the thing I'd stay for."
+> What I want next is the part the practice can't offer: continuity. The same team, the same product, long enough that the design system, the people, and the craft compound. I'm in Montreal, I do better around designers and engineers in a room than running everything solo, and this role is permanent, a real team, an AI product where design decides whether it works. That's the thing I'd stay and go deep on."
 
 *Delivery: pull toward, not push from. The Montreal/in-office bit aligns you with their setup — say it. ~75 sec.*
 

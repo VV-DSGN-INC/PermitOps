@@ -8,7 +8,6 @@ import {
   Cpu,
   FileText,
   Folder,
-  HelpCircle,
   Lightbulb,
   Map,
   Sparkles,
@@ -30,7 +29,6 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@workspace/ui/components/sidebar"
-import { Button } from "@workspace/ui/components/button"
 import { navigation } from "@/lib/mock-data"
 
 const iconMap: Record<string, LucideIcon> = {
@@ -125,15 +123,18 @@ export function AppSidebar() {
       <SidebarFooter>
         <SidebarMenu>
           <SidebarMenuItem>
-            <div className="rounded-lg border bg-sidebar-accent/50 p-3 text-xs">
-              <div className="mb-2 flex items-center gap-2 font-medium">
-                <HelpCircle className="size-3.5" />
-                Need help?
+            <NavLink to="/home/welcome">
+              <div className="border-amber-200/70 bg-amber-50/60 hover:bg-amber-50 text-amber-900 rounded-lg border p-3 text-xs transition cursor-pointer">
+                <div className="mb-1.5 flex items-center gap-2 font-semibold">
+                  <Sparkles className="size-3.5" />
+                  Try the Home edition
+                </div>
+                <p className="text-amber-900/80 text-[11.5px] leading-snug">
+                  A homeowner-facing version of PermitOps — single renovation,
+                  AI-led, plain language.
+                </p>
               </div>
-              <Button size="sm" className="w-full">
-                Contact Us
-              </Button>
-            </div>
+            </NavLink>
           </SidebarMenuItem>
         </SidebarMenu>
       </SidebarFooter>

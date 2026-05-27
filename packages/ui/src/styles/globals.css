@@ -49,6 +49,13 @@
     --radius-3xl: calc(var(--radius) * 2.2);
     --radius-4xl: calc(var(--radius) * 2.6);
     --font-sans: 'Geist Variable', sans-serif;
+    /* PermitOps Home — warm, residential surface tokens */
+    --color-home-canvas: var(--home-canvas);
+    --color-home-surface: var(--home-surface);
+    --color-home-border: var(--home-border);
+    --color-home-accent: var(--home-accent);
+    --color-home-accent-soft: var(--home-accent-soft);
+    --color-home-ink: var(--home-ink);
 }
 
 :root {
@@ -84,6 +91,13 @@
   --sidebar-accent-foreground: oklch(0.228 0.013 107.4);
   --sidebar-border: oklch(0.93 0.007 106.5);
   --sidebar-ring: oklch(0.737 0.021 106.9);
+  /* PermitOps Home — warm cream canvas, parchment surfaces, amber accent */
+  --home-canvas: oklch(0.985 0.012 85);
+  --home-surface: oklch(1 0 0);
+  --home-border: oklch(0.91 0.018 80);
+  --home-accent: oklch(0.74 0.16 64);
+  --home-accent-soft: oklch(0.96 0.045 80);
+  --home-ink: oklch(0.21 0.014 90);
 }
 
 .dark {

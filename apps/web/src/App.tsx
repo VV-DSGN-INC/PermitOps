@@ -1,5 +1,6 @@
 import { Navigate, Route, Routes } from "react-router-dom"
 import { AppShell } from "@/components/app-shell"
+import { HomeShell } from "@/components/home/home-shell"
 import { ProjectsPage } from "@/pages/projects"
 import { ProjectDetailPage } from "@/pages/project-detail"
 import { PermitsPage } from "@/pages/permits"
@@ -15,10 +16,20 @@ import { AssumptionsPage } from "@/pages/assumptions"
 import { TasksPage } from "@/pages/tasks"
 import { DirectoryPage } from "@/pages/directory"
 import { MunicipalitiesPage } from "@/pages/municipalities"
+import { HomeWelcomePage } from "@/pages/home/home-welcome"
+import { HomeDashboardPage } from "@/pages/home/home-dashboard"
+import { HomePermitDetailPage } from "@/pages/home/home-permit-detail"
+import { HomeAskPage } from "@/pages/home/home-ask"
 
 export function App() {
   return (
     <Routes>
+      <Route path="home" element={<HomeShell />}>
+        <Route index element={<HomeDashboardPage />} />
+        <Route path="welcome" element={<HomeWelcomePage />} />
+        <Route path="permit/:id" element={<HomePermitDetailPage />} />
+        <Route path="ask" element={<HomeAskPage />} />
+      </Route>
       <Route element={<AppShell />}>
         <Route index element={<Navigate to="/projects" replace />} />
         <Route path="projects" element={<ProjectsPage />} />

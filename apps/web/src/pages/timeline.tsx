@@ -186,30 +186,70 @@ const planAssumptions = [
   "Mock data + Claude-driven AI prompts are acceptable for the VC prototype.",
 ]
 
-const afterPhaseFour = [
+type AfterRow = {
+  phase: "Pre" | "B" | "C" | "D"
+  label: string
+  weeks: string
+  body: string
+  source?: string
+}
+
+const afterPhaseFour: AfterRow[] = [
   {
-    label: "Validation (weeks 5–6)",
-    body: "Recruit homeowners for user testing per Paul's plan. Run 5–8 unmoderated sessions on the prototype. Synthesize findings; bring fix list to sprint review.",
+    phase: "Pre",
+    label: "Pre-engagement",
+    weeks: "Weeks −3 → 0",
+    body: "~2 weeks for Paul to decide on the hire, then ~1 week from decision to kickoff. Used for any prep Paul wants before the clock starts.",
+    source: "Paul: 'We're a couple of weeks from a decision. Kickoff probably a week from there.'",
   },
   {
-    label: "Iteration (weeks 6–7)",
-    body: "Modify the prototype based on user signal. Sharpen the parts that landed in VC conversations; soften the parts that confused investors. Keep design system docs current.",
+    phase: "B",
+    label: "User validation",
+    weeks: "Weeks 5–6",
+    body: "Recruit homeowners (Paul: 'not very difficult to recruit'). Run 5–8 unmoderated sessions on the prototype. Synthesize findings; bring fix list to sprint review.",
+    source: "Paul: 'At least two weeks of that to get going.'",
   },
   {
-    label: "Hi-res production (weeks 7–14)",
-    body: "Two months of high-fidelity, full-fledged design. Cover the top three pain points completely. Edge cases, mobile (notifications-only), additional flows. Begin dev handoff once a full-time dev is hired.",
+    phase: "B",
+    label: "Iteration on signal",
+    weeks: "Weeks 6–7",
+    body: "Modify the prototype based on user signal AND any VC feedback that came in from the demo. Sharpen what landed; soften what confused investors. Keep design system docs current.",
+    source: "Paul: 'We will make modifications if necessary to the iterations at that stage.'",
   },
   {
-    label: "Mobile companion",
-    body: "Per Paul's direction: mobile is a notifications surface, not a project-management tool. Design as a thin companion to the desktop product for the homeowner — permit-status pings, inspector arrival alerts, reviewer-comment notifications.",
+    phase: "C",
+    label: "Hi-res production starts",
+    weeks: "Weeks 7–10",
+    body: "Full visual design for the 3 hero flows. Type, color tokens, spacing, polished interactions. Cover the top three pain points completely with production-grade design.",
+    source: "Paul: 'Next two months after that, we'd be developing this from a high-res full-fledged.'",
   },
   {
-    label: "Bridge to dev team",
-    body: "Once Paul hires a full-stack dev, transition from solo Claude-driven prototyping to paired delivery. Cover the first 2 weeks of build to answer questions, adjust as constraints surface, lock the design system.",
+    phase: "C",
+    label: "Edge cases + mobile companion",
+    weeks: "Weeks 9–12",
+    body: "Empty / error / loading / GC handoff / multi-project edge cases. Mobile companion: notifications-only (permit-status pings, inspector arrival alerts, reviewer comments) — Paul's explicit framing, no project management on mobile in v1.",
+    source: "Paul: 'Mobile as more of a communication platform. Not project management in the platform.'",
   },
   {
-    label: "Success metrics",
-    body: "Track beyond adoption per Paul's ask — time-to-clarity, free-to-paid conversion, pre-submission validation accuracy, AHJ-by-AHJ data-quality scoring, trust signals (return rate, referral mentions).",
+    phase: "C",
+    label: "Bridge to engineering",
+    weeks: "Weeks 12–14",
+    body: "Once Paul hires the first full-stack dev, pair on the first 2 weeks of build. Lock the design system, ship component documentation, answer constraint questions as they surface.",
+    source: "Paul: 'I'll be looking at a full stack developer at some point. That's not going to be our issue at the moment.'",
+  },
+  {
+    phase: "D",
+    label: "Full team launch",
+    weeks: "Week 15+",
+    body: "Full-time hires (dev, designer, PM). My role shifts depending on what's needed — could continue as design lead, transition out, or stay involved through launch.",
+    source: "Paul: 'Once we get to full launch, I would hire on a full-time developer, full-time designer, and a full-time PM.'",
+  },
+  {
+    phase: "D",
+    label: "Success metrics — beyond adoption",
+    weeks: "Throughout",
+    body: "Track time-to-clarity, free-to-paid conversion, pre-submission validation accuracy, AHJ-by-AHJ data-quality scoring, trust signals (return rate, referrals). These get instrumented in development, not designed in advance.",
+    source: "Paul: 'It would be good if you come up with a general list of what would be success criteria. More than just adoption.'",
   },
 ]
 
@@ -309,35 +349,64 @@ export function TimelinePage() {
         </ul>
       </section>
 
-      {/* After week 4 */}
+      {/* Full engagement arc */}
       <section className="space-y-3">
         <div className="text-xs font-medium tracking-wide text-muted-foreground uppercase">
-          Beyond week 4
+          Full arc
         </div>
         <h2 className="font-heading text-xl font-semibold text-foreground">
-          What I&rsquo;d do next
+          Before, around, and after the 4-week sprint
         </h2>
         <p className="max-w-3xl text-sm text-muted-foreground">
-          Week 4 ends with a VC-ready prototype, not a finished product. The next ~10
-          weeks follow Paul&rsquo;s plan: 2 weeks of validation, then 2 months of
-          high-resolution design alongside the first dev hire.
+          Phase A is the 4-week prototype sprint above (the gantt). This section covers
+          everything else Paul described &mdash; pre-engagement runway, validation,
+          high-res production, and the bridge to a full team. Quotes from the 2026-05-27
+          call attached to each row so we know we&rsquo;re working from his words.
         </p>
         <div className="grid grid-cols-1 gap-3 pt-1 md:grid-cols-2">
           {afterPhaseFour.map((row) => (
-            <div
-              key={row.label}
-              className="rounded-xl border bg-muted/30 p-4"
-            >
-              <div className="text-xs font-semibold tracking-wide text-foreground uppercase">
-                {row.label}
-              </div>
-              <p className="mt-1.5 text-sm leading-relaxed text-foreground/80">
-                {row.body}
-              </p>
-            </div>
+            <AfterCard key={`${row.phase}-${row.label}`} row={row} />
           ))}
         </div>
       </section>
+    </div>
+  )
+}
+
+/* ────────────────────────────────────────────────────────────────────────────
+   AfterCard — one row in the "full arc" grid (pre + phases B/C/D)
+   ──────────────────────────────────────────────────────────────────────── */
+
+const PHASE_TONE: Record<AfterRow["phase"], { bg: string; fg: string; label: string }> = {
+  Pre: { bg: "bg-slate-100 dark:bg-slate-500/15", fg: "text-slate-700 dark:text-slate-300", label: "Pre" },
+  B: { bg: "bg-violet-100 dark:bg-violet-500/15", fg: "text-violet-800 dark:text-violet-300", label: "Phase B" },
+  C: { bg: "bg-emerald-100 dark:bg-emerald-500/15", fg: "text-emerald-800 dark:text-emerald-300", label: "Phase C" },
+  D: { bg: "bg-amber-100 dark:bg-amber-500/15", fg: "text-amber-800 dark:text-amber-300", label: "Phase D" },
+}
+
+function AfterCard({ row }: { row: AfterRow }) {
+  const tone = PHASE_TONE[row.phase]
+  return (
+    <div className="rounded-xl border bg-muted/30 p-4">
+      <div className="flex items-center justify-between gap-2">
+        <div className="text-xs font-semibold tracking-wide text-foreground uppercase">
+          {row.label}
+        </div>
+        <span className={cn("rounded-md px-2 py-0.5 text-[10px] font-medium tracking-wide uppercase", tone.bg, tone.fg)}>
+          {tone.label}
+        </span>
+      </div>
+      <div className="mt-1 text-[11px] font-medium tracking-wide text-muted-foreground uppercase tabular-nums">
+        {row.weeks}
+      </div>
+      <p className="mt-2 text-sm leading-relaxed text-foreground/80">
+        {row.body}
+      </p>
+      {row.source ? (
+        <p className="mt-3 border-l-2 border-muted-foreground/30 pl-3 text-xs italic text-muted-foreground">
+          {row.source}
+        </p>
+      ) : null}
     </div>
   )
 }

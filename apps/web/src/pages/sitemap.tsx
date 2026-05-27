@@ -671,6 +671,13 @@ const routes: RouteRow[] = [
     state: "Built",
   },
   {
+    path: "/notes/timeline",
+    surface: "Design Notes · Timeline",
+    description:
+      "4-week phased plan covering discovery, flows + IA, wireframes, and hi-fi + prototype.",
+    state: "Built",
+  },
+  {
     path: "/notes/assumptions",
     surface: "Design Notes · Assumptions",
     description: "9 bets across Market / User / Technical / Design with confidence + evidence.",

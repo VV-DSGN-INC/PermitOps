@@ -2,6 +2,7 @@ import { NavLink } from "react-router-dom"
 import {
   Briefcase,
   Building2,
+  CalendarClock,
   CheckSquare,
   ChevronsUpDown,
   Cpu,
@@ -45,6 +46,7 @@ const iconMap: Record<string, LucideIcon> = {
   Target,
   Sparkles,
   Cpu,
+  CalendarClock,
 }
 
 export function AppSidebar() {

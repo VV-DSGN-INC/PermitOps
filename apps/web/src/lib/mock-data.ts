@@ -809,6 +809,7 @@ export const navigation = {
     { label: "Sitemap", icon: "Map", to: "/notes/sitemap" },
     { label: "AI Opportunities", icon: "Sparkles", to: "/notes/ai-opportunities" },
     { label: "AI Patterns", icon: "Cpu", to: "/notes/ai-patterns" },
+    { label: "Timeline", icon: "CalendarClock", to: "/notes/timeline" },
     { label: "Assumptions", icon: "Lightbulb", to: "/notes/assumptions" },
   ],
 } as const

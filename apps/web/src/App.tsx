@@ -10,6 +10,7 @@ import { SitemapPage } from "@/pages/sitemap"
 import { ProblemPage } from "@/pages/problem"
 import { AIOpportunitiesPage } from "@/pages/ai-opportunities"
 import { AIPatternsPage } from "@/pages/ai-patterns"
+import { TimelinePage } from "@/pages/timeline"
 import { AssumptionsPage } from "@/pages/assumptions"
 import { TasksPage } from "@/pages/tasks"
 import { DirectoryPage } from "@/pages/directory"
@@ -34,6 +35,7 @@ export function App() {
           <Route path="sitemap" element={<SitemapPage />} />
           <Route path="ai-opportunities" element={<AIOpportunitiesPage />} />
           <Route path="ai-patterns" element={<AIPatternsPage />} />
+          <Route path="timeline" element={<TimelinePage />} />
           <Route path="assumptions" element={<AssumptionsPage />} />
         </Route>
         <Route path="*" element={<Navigate to="/projects" replace />} />

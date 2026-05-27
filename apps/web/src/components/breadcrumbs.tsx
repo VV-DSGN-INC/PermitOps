@@ -22,6 +22,7 @@ const routeTitles: Record<string, string> = {
   sitemap: "Sitemap",
   "ai-opportunities": "AI Opportunities",
   "ai-patterns": "AI Patterns",
+  timeline: "Timeline",
   assumptions: "Assumptions",
 }
 

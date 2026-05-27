@@ -13,7 +13,6 @@ import {
   Sparkles,
 } from "lucide-react"
 import { Button } from "@workspace/ui/components/button"
-import { cn } from "@workspace/ui/lib/utils"
 import {
   formatMoney,
   formatShortDate,

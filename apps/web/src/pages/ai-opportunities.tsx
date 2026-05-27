@@ -1,9 +1,8 @@
 import {
   Bot,
-  CalendarClock,
   ClipboardCheck,
+  Cpu,
   FileSearch,
-  FileText,
   Filter,
   MapPinned,
   MessageSquare,
@@ -38,135 +37,135 @@ type Opportunity = {
 const opportunities: Opportunity[] = [
   {
     id: 1,
-    title: "Contract PDF → project intake",
+    title: "Plain-language project intake",
     description:
-      "Drop the executed contract; project shell, address, scope, and parties auto-populate.",
-    icon: FileText,
+      "Homeowner types 'I want to finish my attic into a bedroom' — we extract project type, scope, and follow-up questions. No 20-field form.",
+    icon: MessageSquare,
     agent: "Intake",
-    persona: "Coordinator",
+    persona: "Sarah · Miguel · Tom",
     feasibility: 5,
-    value: 4,
+    value: 5,
   },
   {
     id: 2,
-    title: "Jurisdiction identification",
+    title: "Geo auto-detection",
     description:
-      "Geocode the address, resolve the AHJ, and surface the applicable permit set.",
+      "Resolve the homeowner's city + AHJ from IP / address. Confirm with one tap. Anchors every downstream answer to the right jurisdiction.",
     icon: MapPinned,
-    agent: "Research",
-    persona: "Coordinator · Architect",
+    agent: "Intake",
+    persona: "Sarah · Miguel · Tom",
     feasibility: 5,
     value: 4,
   },
   {
     id: 3,
-    title: "Per-AHJ form auto-fill",
+    title: "Requirements in plain English",
     description:
-      "Pre-populate every jurisdiction's form set from one central project record. Kills the multi-jurisdiction tax.",
-    icon: Wand2,
-    agent: "Submission",
-    persona: "Coordinator",
+      "Translate the BC Building Code + municipal bylaws into homeowner-friendly language. 'You'll need a Building Permit and an Electrical Permit because…'. Every claim cited to the source.",
+    icon: FileSearch,
+    agent: "Research",
+    persona: "Sarah · Miguel",
     feasibility: 4,
     value: 5,
   },
   {
     id: 4,
-    title: "Reviewer comment triage",
+    title: "Cost + timeline estimation",
     description:
-      "Classify incoming comments, suggest assignee, draft a response. Comments stop disappearing into email.",
-    icon: MessageSquare,
-    agent: "Coordination",
-    persona: "Coordinator · PM",
+      "Predict fee + review time for this specific homeowner's project in their specific AHJ. Aggregated user data over time beats any public AI guess.",
+    icon: TrendingUp,
+    agent: "Research",
+    persona: "Sarah · Miguel · Tom",
     feasibility: 4,
     value: 5,
   },
   {
     id: 5,
-    title: "Renewal staging",
+    title: "Multi-project scoping",
     description:
-      "Pre-build renewal packets 30 days before expiration; route to the original submitter.",
-    icon: CalendarClock,
-    agent: "Coordination",
-    persona: "PM · Coordinator",
-    feasibility: 4,
+      "Take 'shed + garage + laneway house' as one bundle. Sequence sensibly, surface dependencies, flag what needs a general contractor.",
+    icon: Bot,
+    agent: "Research",
+    persona: "Miguel",
+    feasibility: 3,
     value: 5,
   },
   {
     id: 6,
-    title: "Status briefing",
+    title: "Smart GC handoff",
     description:
-      "Daily/weekly digest of at-risk permits, recent decisions, and inspection schedule.",
-    icon: ClipboardCheck,
-    agent: "Coordination",
-    persona: "PM · Ops VP",
-    feasibility: 5,
+      "When project complexity crosses a threshold, surface 'you'll want a general contractor for this' with a list of local options. We don't try to be the GC.",
+    icon: Wrench,
+    agent: "Research",
+    persona: "Miguel · Sarah",
+    feasibility: 3,
     value: 4,
   },
   {
     id: 7,
-    title: "Bid jurisdiction lookup",
+    title: "Form pre-fill",
     description:
-      "Pre-bid intelligence for an unfamiliar AHJ — typical fees, review days, required forms.",
-    icon: Search,
-    agent: "Research",
-    persona: "Architect · PM",
+      "Pre-populate every municipal form from the project data the homeowner already gave. Every field shows an attribution chip and the source.",
+    icon: Wand2,
+    agent: "Submission",
+    persona: "Sarah · Miguel · Tom",
     feasibility: 4,
     value: 5,
   },
   {
     id: 8,
-    title: "Requirements summarizer",
+    title: "Pre-submission validation",
     description:
-      "Plain-English 'what you'll need' for a specific permit type in a specific AHJ.",
-    icon: FileSearch,
-    agent: "Research",
-    persona: "Architect · Coordinator",
+      "Before anything goes to the city, check every form, version, dependency, and known-rejection trigger. If something's missing, flag it in plain English. Paul's must-have.",
+    icon: Filter,
+    agent: "Submission",
+    persona: "Sarah · Miguel · Tom",
     feasibility: 4,
-    value: 4,
+    value: 5,
   },
   {
     id: 9,
-    title: "Chat with your portfolio",
+    title: "Status translation",
     description:
-      "Conversational query across every project, permit, and AHJ — for the long tail not covered by pre-built views.",
-    icon: Bot,
-    agent: "Cross-cutting",
-    persona: "PM · Ops VP",
+      "Turn opaque 'In Review' into 'You're 3rd in queue, ~12 days remaining based on Burnaby's last 24 months of data.' Real transparency, real numbers.",
+    icon: ClipboardCheck,
+    agent: "Coordination",
+    persona: "Sarah · Miguel · Tom",
     feasibility: 4,
     value: 4,
   },
   {
     id: 10,
-    title: "Permit risk scoring",
+    title: "Reviewer comment translation",
     description:
-      "Predict which permits will slip based on AHJ history, days-in-stage, and comment volume.",
-    icon: TrendingUp,
+      "When the reviewer asks for corrections, translate the legalese into a concrete next step. 'They need a sketch showing the new wall location' instead of '§R301.2.1.4 reference.'",
+    icon: MessageSquare,
     agent: "Coordination",
-    persona: "PM · Ops VP",
-    feasibility: 3,
+    persona: "Sarah · Miguel · Tom",
+    feasibility: 4,
     value: 5,
   },
   {
     id: 11,
-    title: "Plan-set pre-flight check",
+    title: "Provenance / citation everywhere",
     description:
-      "Vision-validate the uploaded plan set against AHJ requirements before submission.",
-    icon: Filter,
-    agent: "Submission",
-    persona: "Coordinator",
-    feasibility: 3,
-    value: 4,
+      "Every factual claim — fees, timelines, requirements — links to its source. Homeowners need verifiability, not confidence. Citation patterns shared across the product.",
+    icon: Search,
+    agent: "Cross-cutting",
+    persona: "Sarah · Miguel · Tom",
+    feasibility: 4,
+    value: 5,
   },
   {
     id: 12,
-    title: "Inspection slot booking",
+    title: "Data-aggregation feedback loop",
     description:
-      "Book inspections through AHJ portals or hotlines based on field-crew availability.",
-    icon: Wrench,
-    agent: "Issuance",
-    persona: "Field Supervisor · Ops VP",
+      "User outcomes — actual review times, rejection reasons, fees paid — flow back into the model. After 1,000 users, predictions per AHJ beat any public AI. The long-term moat.",
+    icon: Cpu,
+    agent: "Cross-cutting",
+    persona: "All users",
     feasibility: 2,
-    value: 4,
+    value: 5,
   },
 ]
 
@@ -256,14 +255,17 @@ export function AIOpportunitiesPage() {
             AI Opportunities
           </h1>
           <p className="max-w-2xl text-base text-muted-foreground">
-            Twelve places AI delivers measurable value in PermitOps — plotted by how
-            valuable each one is and how feasible it is to ship.
+            Twelve places AI delivers measurable value for homeowners and residential
+            contractors — plotted by how valuable each one is and how feasible it is to
+            ship in the MVP.
           </p>
         </div>
         <p className="max-w-3xl text-sm leading-relaxed text-foreground/85">
-          Each opportunity is mapped to one of the five agents (Intake / Research /
-          Submission / Coordination / Issuance) so the work ties back to a single owner.
-          The matrix is a planning view; the cards below are the working detail.
+          Each opportunity is mapped to one of the agents (Intake / Research / Submission
+          / Coordination / Cross-cutting) so the work ties back to a single owner. The
+          matrix is a planning view; the cards below are the working detail. Three of these
+          (in the Ship-First quadrant) are the candidates for the MVP&rsquo;s three pain
+          points per Paul&rsquo;s direction.
         </p>
       </header>
 

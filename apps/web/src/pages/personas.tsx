@@ -30,10 +30,11 @@ export function PersonasPage() {
           </p>
         </div>
         <p className="max-w-3xl text-sm leading-relaxed text-foreground/85">
-          These are working hypotheses, not validated research. Four primary personas (the
-          people who will actually open the product) sit alongside one counter-persona &mdash; Linda
-          Ruiz, the municipal reviewer. She never logs in, but every design choice ripples to her
-          desk. Designing for her quality bar keeps us honest about what &ldquo;done&rdquo; means.
+          These are working hypotheses, not validated research. Three primary personas (the
+          people who will actually open the product &mdash; two homeowners and a residential
+          contractor) sit alongside one counter-persona &mdash; Linda Ruiz, the municipal reviewer.
+          She never logs in, but every design choice ripples to her desk. Designing for her
+          quality bar keeps us honest about what &ldquo;done&rdquo; means.
         </p>
       </header>
 
@@ -47,7 +48,7 @@ export function PersonasPage() {
               Primary personas
             </h2>
             <p className="text-sm text-muted-foreground">
-              The four roles that drive product decisions, ranked by depth of daily use.
+              The three roles that drive product decisions, ranked by depth of daily use.
             </p>
           </div>
           <Badge variant="secondary" className="hidden font-medium sm:inline-flex">

@@ -1,13 +1,13 @@
 import {
   AlertCircle,
   Banknote,
-  CalendarClock,
   ClipboardList,
-  Compass,
   Eye,
+  HandCoins,
+  HelpCircle,
   Layers,
+  ShieldCheck,
   Target,
-  Wrench,
   X,
   type LucideIcon,
 } from "lucide-react"
@@ -29,74 +29,74 @@ type Problem = {
 
 const problems: Problem[] = [
   {
-    id: "multi-jurisdiction",
-    icon: Layers,
-    accent: "blue",
-    title: "The multi-jurisdiction tax",
-    today:
-      "A team filing in ten cities learns ten portals, ten form sets, and ten quirky submission processes. Coordinators re-key the same project data five times per permit and twenty-plus times per project.",
-    fix: "One project record auto-populates every jurisdiction's form set. The Submission agent handles the per-AHJ peculiarities; the coordinator only fills the gaps that need human judgment.",
-    target: "Target: re-key project data once, not five times",
-  },
-  {
-    id: "invisible-status",
+    id: "opacity",
     icon: Eye,
-    accent: "amber",
-    title: "Permit status disappears into email",
+    accent: "blue",
+    title: "The process is a black box",
     today:
-      "Reviewer comments arrive in someone's inbox. Updates go missing for days. The project manager finds out a permit is stuck only when the field crew can't start work.",
-    fix: "The Coordination agent watches every AHJ portal and reviewer inbox. Comments surface as assignable threads on the permit's side panel, with the responsible person attached.",
-    target: "Target: zero permits sit > 7 days without action or visibility",
+      "Homeowners search 'do I need a permit for X' and get four contradictory answers from four random blog posts. Municipal websites are written for contractors. There's no single trustworthy source that tells you what you actually need, how much it'll cost, or how long it'll take.",
+    fix: "One conversational prompt and a plain-English answer. We pull the rules for the homeowner's specific city, translate them into language they can act on, and cite the sources so the answer is verifiable — not just confident-sounding.",
+    target: "Target: clear answer in under 5 minutes, no signup required",
   },
   {
-    id: "no-predictability",
-    icon: Compass,
-    accent: "violet",
-    title: "No way to quote work in unfamiliar jurisdictions",
-    today:
-      "Architects and PMs win bids in cities they've never worked in, then discover the AHJ takes 11 weeks to review a tenant improvement. Margin disappears into unpriced administrative time.",
-    fix: "The Research agent pulls requirements, fees, and historical review times for any jurisdiction before the bid is finalized. Decisions get made with eyes open.",
-    target: "Target: jurisdiction-level fee + timeline lookup in under 2 minutes",
-  },
-  {
-    id: "expiration-blindness",
-    icon: CalendarClock,
+    id: "cost-of-wrong",
+    icon: ShieldCheck,
     accent: "red",
-    title: "Permits expire mid-project",
+    title: "The cost of being wrong is brutal",
     today:
-      "Expirations and continuing-education deadlines aren't tracked centrally. A permit lapses, inspections get blocked, and the schedule slips by weeks while the team refiles.",
-    fix: "Smart alerts watch every expiration window. Renewal packets stage themselves 30 days out and route to whoever owned the original filing.",
-    target: "Target: 100% on-time renewal rate across the portfolio",
+      "Skip the permit accidentally and you face fines ($500+/day in many municipalities), forced demolition, insurance gaps, and unsellable additions. Most homeowners don't know which side of the line their project sits on — so they either skip a permit they needed, or pay for one they didn't.",
+    fix: "We treat 'do I even need a permit?' as a first-class question and answer it directly. If the answer is no, we tell them so and let them go. If yes, we explain why with citations and lay out the path.",
+    target: "Target: zero permit-status guesswork",
   },
   {
-    id: "inspection-friction",
-    icon: Wrench,
+    id: "multi-project",
+    icon: Layers,
+    accent: "violet",
+    title: "Renovations come in bundles, but tools handle them one-by-one",
+    today:
+      "A homeowner doesn't think 'I want to file a Building Permit.' They think 'I want a shed, a garage, and eventually a laneway house.' Every existing tool makes them tackle these as separate, sequential, isolated tickets — losing context, repeating themselves, and missing dependencies.",
+    fix: "Project-scoped, not permit-scoped. Describe everything you want to do in the next 12–18 months; we sequence the work, surface dependencies, and route the over-complex pieces to a general contractor (we don't try to be one).",
+    target: "Target: one project bundle, not three disconnected applications",
+  },
+  {
+    id: "pre-submission-blindness",
+    icon: AlertCircle,
+    accent: "amber",
+    title: "Submitting blind is the default",
+    today:
+      "Homeowner spends hours assembling forms, sends them in, hears nothing for weeks, then gets a rejection citing a missing checkbox or wrong-version form. They lose months waiting for the city to come back with what could have been caught upfront.",
+    fix: "Pre-submission validation is non-negotiable. Every form, every dependency, every common-rejection trigger is checked before anything goes to the city. If something's missing, we surface it in plain English with a path to fix it.",
+    target: "Target: first-pass approval rate above industry baseline",
+  },
+  {
+    id: "no-transparency",
+    icon: HelpCircle,
     accent: "cyan",
-    title: "Inspection scheduling is manual and lossy",
+    title: "Once it's submitted, you're in the dark",
     today:
-      "Field supervisors call municipal hotlines to book inspections. Appointments get missed, rescheduled, or never confirmed. No one has visibility into inspector availability when planning the job.",
-    fix: "The Scheduling agent books inspections through AHJ portals where available and surfaces inspector availability when the work is being planned, not the morning of.",
-    target: "Target: no field calls to a municipal hotline",
+      "After submission, the homeowner has no idea what's happening. Are they next in line? Stuck behind 200 applications? Did the reviewer flag something? Most cities provide a number that maps to nothing the homeowner can interpret.",
+    fix: "Coordination agent watches the city portal and email. Every update — even a silent one — gets translated and timestamped on the homeowner's status page. When the reviewer asks for corrections, we translate the request and stage the fix.",
+    target: "Target: status update lag from 'days' to 'within the hour'",
   },
   {
-    id: "margin-tax",
-    icon: Banknote,
+    id: "trust-then-pay",
+    icon: HandCoins,
     accent: "emerald",
-    title: "Permit work isn't billable",
+    title: "Service tools demand payment before proving value",
     today:
-      "Hours spent on permit admin show up as overhead, not revenue. Margin gets eaten by coordinator labor that scales linearly with project count.",
-    fix: "Automating the per-jurisdiction grunt work means each coordinator can run roughly 3× the permit volume. Same headcount, more revenue, lower per-permit cost.",
-    target: "Target: 3× permit throughput per coordinator FTE",
+      "Most permit-service companies hide all the answers behind a paywall, then charge per submission. Homeowners don't know what they're paying for until they've already paid. The bar for trust is high; the proof is low.",
+    fix: "Everything information-based is free, forever. The discovery flow, the cost estimate, the form templates — all free. We only charge when the homeowner explicitly wants us to file and manage the permit on their behalf.",
+    target: "Target: 100% of discovery flows complete without a payment gate",
   },
 ]
 
 const outOfScope = [
-  { label: "Estimating + bid management", alt: "Procore, B2W, STACK" },
-  { label: "Field execution / punch lists", alt: "Fieldwire, PlanGrid" },
-  { label: "AP / payment management", alt: "Stampli, AvidPay" },
-  { label: "Plan markup + redlines", alt: "Bluebeam Revu" },
-  { label: "Subcontractor procurement", alt: "BuildingConnected" },
-  { label: "Document control + RFI", alt: "Procore, Autodesk Construction Cloud" },
+  { label: "Acting as the general contractor", alt: "We surface the handoff, we don't replace the GC" },
+  { label: "Renovation cost-estimation / bid management", alt: "Houzz, HomeStars (find a pro)" },
+  { label: "Project management of the construction itself", alt: "Buildertrend, CoConstruct" },
+  { label: "Material procurement & ordering", alt: "Home Depot Pro, Lowe's for Pros" },
+  { label: "Insurance and financing for the project", alt: "Banks, contractor insurance carriers" },
+  { label: "Inspection scheduling on the homeowner's behalf", alt: "Municipal portals (for now)" },
 ]
 
 export function ProblemPage() {
@@ -118,7 +118,8 @@ export function ProblemPage() {
             Problem Statement
           </h1>
           <p className="max-w-2xl text-base text-muted-foreground">
-            Why construction permitting is broken today, and what PermitOps is built to fix.
+            Why residential permitting is broken for homeowners and small contractors today
+            &mdash; and what PermitOps is built to fix.
           </p>
         </div>
       </header>
@@ -132,22 +133,25 @@ export function ProblemPage() {
           The problem
         </div>
         <h2 className="font-heading text-2xl leading-snug font-semibold text-foreground sm:text-[28px]">
-          Permit work is a tax on every construction project — paid by the people least
-          able to defend their time.
+          Getting a permit shouldn&rsquo;t take longer than the actual project. For most
+          homeowners today, it does &mdash; because the process is opaque, the rules are
+          buried, and nobody is on their side.
         </h2>
         <div className="max-w-3xl space-y-4 text-base leading-relaxed text-foreground/85">
           <p>
-            Every permit a builder files crosses a fragmented landscape of 7,000+ municipal
-            jurisdictions, each with its own forms, fees, portals, and review queues.
-            Coordinators re-key the same project data five times per permit. Reviewer
-            comments arrive by email and get lost. Status meetings burn the project
-            manager's week. And none of this time is billable — it eats directly into
-            project margin.
+            Every homeowner trying to renovate hits the same wall: they don&rsquo;t know
+            if they need a permit, what it&rsquo;ll cost, how long it&rsquo;ll take, or
+            what happens if they get it wrong. Municipal websites are written for
+            contractors. AI chatbots make confident guesses with no sources. Google sends
+            them to four contradictory blog posts. The result is people skipping permits
+            they needed, paying for ones they didn&rsquo;t, or stalling out entirely.
           </p>
           <p>
-            PermitOps replaces the manual choreography with an AI workforce that handles
-            the per-jurisdiction grunt work, surfaces status proactively, and keeps the
-            human in the loop only where their judgment matters.
+            PermitOps is the trustworthy front door to the permit process for residential
+            homeowners and the contractors who serve them. The information layer is free
+            and complete &mdash; what you need, how much it costs, how long it takes,
+            citations to the source. When the homeowner wants us to file and manage the
+            permit on their behalf, the service kicks in. Trust first; transact second.
           </p>
         </div>
       </section>
@@ -164,7 +168,8 @@ export function ProblemPage() {
           </h2>
           <p className="max-w-3xl text-sm text-muted-foreground">
             Six concrete failures of the status quo, each paired with how PermitOps
-            addresses it. Ranked by frequency in coordinator and PM conversations.
+            addresses it. Surfaced from Paul&rsquo;s own renovation experience plus
+            homeowner research; validated in the discovery call 2026-05-27.
           </p>
         </div>
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2">

@@ -166,7 +166,7 @@ export function AIPatternsPage() {
             Design notes
           </Badge>
           <span className="text-xs text-muted-foreground">
-            v0.1 &middot; how AI shows up in the UI
+            v0.2 &middot; pattern weights tuned for homeowner audience
           </span>
         </div>
         <div className="space-y-2">
@@ -179,11 +179,18 @@ export function AIPatternsPage() {
           </p>
         </div>
         <p className="max-w-3xl text-sm leading-relaxed text-foreground/85">
-          These patterns sit underneath every AI feature in PermitOps. They keep the
-          experience honest about uncertainty, attribution, and what&rsquo;s automated
-          vs. on-demand. The orientation is Permitflow&rsquo;s &ldquo;AI workforce&rdquo;
-          framing: agents are coworkers with bounded responsibilities, not an oracle in
+          These ten patterns sit underneath every AI feature in PermitOps. They keep the
+          experience honest about uncertainty, attribution, and what&rsquo;s automated vs.
+          on-demand. Agents are coworkers with bounded responsibilities, not an oracle in
           a chat box.
+        </p>
+        <p className="max-w-3xl text-sm leading-relaxed text-foreground/85">
+          For the homeowner-first MVP, three patterns are heavier-weight than they would be
+          for a contractor product: <strong>provenance / citation</strong> (homeowners need
+          to verify sources, not just trust), <strong>confidence indicator + override</strong>{" "}
+          (low-tech-comfort users need the agent to surface uncertainty, not hide it), and{" "}
+          <strong>uncertainty disclosure</strong> (&ldquo;we don&rsquo;t know yet&rdquo; for
+          this jurisdiction is a real state). The other seven still apply at normal weight.
         </p>
       </header>
 
@@ -223,11 +230,14 @@ export function AIPatternsPage() {
               How we&rsquo;ll know these are working
             </h3>
             <p className="text-sm leading-relaxed text-muted-foreground">
-              Coordinators should be able to point at any AI-touched value and say who
-              did it, how confident the model was, and how to fix it &mdash; without
-              hunting through a side panel. If a usability session ever turns up the
-              phrase &ldquo;wait, did I do that or did the agent?&rdquo;, the relevant
-              pattern is missing or too quiet.
+              Any user &mdash; homeowner or contractor &mdash; should be able to point at
+              an AI-touched value and say who did it, where it came from, how confident
+              the agent was, and how to fix it &mdash; without hunting through a side
+              panel. If a usability session ever turns up the phrase &ldquo;wait, did I
+              do that or did the agent?&rdquo;, the relevant pattern is missing or too
+              quiet. For homeowners specifically, watch for the phrase &ldquo;can I trust
+              this?&rdquo; &mdash; if it comes up, citation and confidence are not pulling
+              their weight.
             </p>
           </div>
         </div>

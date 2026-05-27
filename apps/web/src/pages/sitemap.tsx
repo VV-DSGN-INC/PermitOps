@@ -22,7 +22,7 @@ export function SitemapPage() {
             Design notes
           </Badge>
           <span className="text-xs text-muted-foreground">
-            v0.2 · navigation + data model
+            v0.3 · homeowner-first IA, contractor surface as reference
           </span>
         </div>
         <div className="space-y-2">
@@ -30,14 +30,15 @@ export function SitemapPage() {
             Sitemap
           </h1>
           <p className="max-w-2xl text-base text-muted-foreground">
-            How the product is organized — pages, surfaces, and the data underneath.
+            How the product is organized &mdash; pages, surfaces, and the data underneath.
           </p>
         </div>
         <p className="max-w-3xl text-sm leading-relaxed text-foreground/85">
-          Two views: the navigation hierarchy (every page a user can reach, plus the
-          sub-views, drawers, and side panels nested under each) and the entity model
-          (what the database actually tracks). The URL map at the bottom is the canonical
-          reference for every route in this prototype.
+          The MVP is built around the homeowner journey: a free, trust-building discovery
+          experience that converts into a paid filing service. The contractor surface is
+          a secondary path that shares the same entity model. Both flows show up in the
+          IA below; the URL map at the bottom lists what&rsquo;s built today in the
+          prototype.
         </p>
       </header>
 
@@ -120,16 +121,80 @@ const navTree: TreeNode = {
   variant: "root",
   children: [
     {
-      label: "Workspace",
+      label: "Homeowner edition",
       variant: "section",
+      note: "primary MVP surface — free → paid",
+      children: [
+        {
+          label: "Home",
+          variant: "page",
+          note: "default landing — single conversational prompt, no signup",
+          children: [
+            { label: "First-prompt: 'What are you looking to renovate?'", variant: "view", default: true },
+            { label: "Location confirm", variant: "view", note: "geo-detected, one-tap" },
+            { label: "Clarifying questions", variant: "view", note: "max 2–3, never a long form" },
+          ],
+        },
+        {
+          label: "Discovery Results",
+          variant: "page",
+          note: "free — full answer, no email gate",
+          children: [
+            { label: "Plain-language answer", variant: "view", default: true },
+            { label: "Cost + timeline estimate", variant: "view", note: "with citations" },
+            { label: "Required forms (downloadable)", variant: "view", note: "for DIY filers" },
+            {
+              label: "Decision",
+              variant: "detail",
+              note: "DIY or engage service",
+              children: [
+                { label: "I'll file myself (free path)", variant: "tab" },
+                { label: "You handle it for me (paid path)", variant: "tab" },
+              ],
+            },
+          ],
+        },
+        {
+          label: "Multi-project Bundle",
+          variant: "page",
+          note: "describe many projects at once",
+          children: [
+            { label: "Scope view", variant: "view", default: true },
+            { label: "Sequencing", variant: "view", note: "with reasons" },
+            { label: "GC handoff suggestion", variant: "view", note: "for complex projects" },
+          ],
+        },
+        {
+          label: "My Project",
+          variant: "page",
+          note: "after paid service starts",
+          children: [
+            { label: "Status", variant: "tab", default: true },
+            { label: "Application + Forms", variant: "tab" },
+            { label: "Documents", variant: "tab" },
+            { label: "Comments thread", variant: "tab", note: "reviewer correspondence" },
+            { label: "Service agreement", variant: "tab" },
+          ],
+        },
+        {
+          label: "Help",
+          variant: "page",
+          note: "agent-grounded chat fallback",
+        },
+      ],
+    },
+    {
+      label: "Contractor surface",
+      variant: "section",
+      note: "reference — same backend, different IA",
       children: [
         {
           label: "Projects",
           variant: "page",
-          note: "default landing",
+          note: "list of jobs across clients",
           children: [
             { label: "View All", variant: "view", default: true },
-            { label: "+ New Project", variant: "view", note: "drawer" },
+            { label: "+ New Project", variant: "view", note: "from contract PDF" },
             {
               label: "Project Detail",
               variant: "detail",
@@ -137,24 +202,15 @@ const navTree: TreeNode = {
                 { label: "Overview", variant: "tab", default: true },
                 { label: "Permits (filtered to project)", variant: "tab" },
                 { label: "Requirements (per AHJ)", variant: "tab" },
-                { label: "Team", variant: "tab" },
+                { label: "Client view (shareable)", variant: "tab" },
               ],
             },
           ],
         },
         {
-          label: "My Tasks",
-          variant: "page",
-          children: [
-            { label: "All", variant: "tab", default: true },
-            { label: "Today", variant: "tab" },
-            { label: "Upcoming", variant: "tab" },
-            { label: "Completed", variant: "tab" },
-          ],
-        },
-        {
           label: "Permits",
           variant: "page",
+          note: "across all the contractor's jobs",
           children: [
             { label: "Open", variant: "tab", default: true },
             { label: "Completed", variant: "tab" },
@@ -164,43 +220,26 @@ const navTree: TreeNode = {
               note: "side panel",
               children: [
                 { label: "Status + dates", variant: "tab" },
-                { label: "Description (rich-text)", variant: "tab" },
-                { label: "Activity & Comments", variant: "tab" },
                 { label: "Forms", variant: "tab" },
+                { label: "Comments", variant: "tab" },
               ],
             },
           ],
         },
         {
-          label: "Requirements",
+          label: "My Tasks",
           variant: "page",
-          note: "linked from a project / permit context",
+          note: "personal inbox",
         },
         {
           label: "Municipalities",
           variant: "page",
-          children: [
-            { label: "List", variant: "view", default: true },
-            {
-              label: "AHJ Detail",
-              variant: "detail",
-              note: "side panel",
-              children: [
-                { label: "Contact", variant: "tab" },
-                { label: "Submission methods", variant: "tab" },
-                { label: "Recent permits", variant: "tab" },
-              ],
-            },
-          ],
+          note: "AHJ directory for jurisdictions worked in",
         },
         {
           label: "Directory",
           variant: "page",
-          children: [
-            { label: "People", variant: "tab", default: true },
-            { label: "Companies", variant: "tab" },
-            { label: "Reviewers", variant: "tab" },
-          ],
+          note: "clients + people",
         },
       ],
     },
@@ -594,41 +633,70 @@ type RouteRow = {
 
 const routes: RouteRow[] = [
   {
+    path: "/home",
+    surface: "Homeowner · Welcome / First-prompt",
+    description:
+      "Conversational landing: 'What are you looking to renovate?' No signup, no 'Get Started'.",
+    state: "Stub",
+  },
+  {
+    path: "/home/ask",
+    surface: "Homeowner · Clarifying questions",
+    description:
+      "Max 2–3 follow-ups after intake. Geo confirm + scope. Then route to results.",
+    state: "Stub",
+  },
+  {
+    path: "/home/dashboard",
+    surface: "Homeowner · My Project status",
+    description:
+      "After service engagement: status, application, documents, comments thread, service agreement.",
+    state: "Stub",
+  },
+  {
+    path: "/home/permit/:id",
+    surface: "Homeowner · Permit detail",
+    description:
+      "Per-permit view: status with timestamp, plain-language reviewer comments, what to do next.",
+    state: "Stub",
+  },
+  {
     path: "/projects",
-    surface: "Workspace · Projects",
-    description: "Searchable list of all projects with filters and pagination.",
+    surface: "Contractor · Projects",
+    description:
+      "Contractor's job list with filters. Same data model, different UI for repeat users.",
     state: "Built",
   },
   {
     path: "/permits",
-    surface: "Workspace · Permits",
+    surface: "Contractor · Permits dashboard",
     description:
       "Status-card dashboard with Open/Completed tabs; row click opens permit detail in a sheet.",
     state: "Built",
   },
   {
     path: "/requirements",
-    surface: "Workspace · Project Requirements",
+    surface: "Contractor · Project Requirements",
     description:
       "Per-permit requirements view — project questions, submission process, plan requirements, required forms.",
     state: "Built",
   },
   {
     path: "/tasks",
-    surface: "Workspace · My Tasks",
+    surface: "Contractor · My Tasks",
     description: "Personal task inbox with priority, due dates, and per-task completion.",
     state: "Built",
   },
   {
     path: "/municipalities",
-    surface: "Workspace · Municipalities",
+    surface: "Contractor · Municipalities",
     description:
       "AHJ directory with operational stats; row click opens contact + submission detail.",
     state: "Built",
   },
   {
     path: "/directory",
-    surface: "Workspace · Directory",
+    surface: "Contractor · Directory",
     description: "People, companies, and reviewers organized into tabs.",
     state: "Built",
   },
@@ -641,13 +709,13 @@ const routes: RouteRow[] = [
   {
     path: "/notes/personas",
     surface: "Design Notes · Personas",
-    description: "4 primary personas + 1 counter-persona with goals, pains, JTBD, and quotes.",
+    description: "3 primary personas (2 homeowners + 1 contractor) + 1 counter-persona.",
     state: "Built",
   },
   {
     path: "/notes/flows",
     surface: "Design Notes · Key Flows",
-    description: "3 user journeys with surface chips and AI-agent attribution per step.",
+    description: "3 homeowner journeys: discovery, service engagement, multi-project scoping.",
     state: "Built",
   },
   {
@@ -660,7 +728,7 @@ const routes: RouteRow[] = [
     path: "/notes/ai-opportunities",
     surface: "Design Notes · AI Opportunities",
     description:
-      "12 AI use cases plotted on a value × feasibility matrix, with detail cards per opportunity.",
+      "12 AI use cases plotted on a value × feasibility matrix, refocused for homeowner-first MVP.",
     state: "Built",
   },
   {
@@ -674,13 +742,13 @@ const routes: RouteRow[] = [
     path: "/notes/timeline",
     surface: "Design Notes · Timeline",
     description:
-      "4-week phased plan covering discovery, flows + IA, wireframes, and hi-fi + prototype.",
+      "Phased plan: 4-week VC prototype + 2-week validation + 2-month hi-res, per Paul's brief.",
     state: "Built",
   },
   {
     path: "/notes/assumptions",
     surface: "Design Notes · Assumptions",
-    description: "9 bets across Market / User / Technical / Design with confidence + evidence.",
+    description: "10 bets across Market / User / Technical / Design with confidence + evidence.",
     state: "Built",
   },
 ]

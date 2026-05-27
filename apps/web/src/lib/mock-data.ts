@@ -458,129 +458,102 @@ export const requiredForms: RequiredForm[] = [
 export const personas: Persona[] = [
   {
     id: "persona-1",
-    name: "Marcus Hill",
-    role: "Senior Project Manager",
-    company: "Westline Commercial Builders (mid-size GC, 220 employees)",
-    avatarSeed: "marcus-hill",
+    name: "Sarah Chen",
+    role: "Homeowner — first-time renovator",
+    company: "Vancouver, BC · East Van bungalow",
+    avatarSeed: "sarah-chen",
     bio:
-      "12 years in commercial construction. Runs 8-14 concurrent fit-out projects across three states. Lives in spreadsheets and Outlook; reluctant to add another tool unless it removes weekly status calls.",
+      "Bought her first house two years ago. Wants to finish her attic into a home office plus guest room. Googled 'do I need a permit for an attic conversion in Vancouver' four times this month and got four different answers.",
     goals: [
-      "Know which permits are at risk this week without chasing his team",
-      "Hand off cleanly to the field once a permit is issued",
-      "Defend schedules to clients with evidence, not vibes",
+      "Get a clear, accurate answer on what her project actually needs",
+      "Know the real cost and timeline before she commits to anything",
+      "Avoid expensive mistakes — fines, redo-work, insurance issues",
     ],
     pains: [
-      "Each municipality has different rules and his coordinators each track them their own way",
-      "Has been burned twice by missed expiration dates causing inspection blockers",
-      "Status meetings eat 6 hours a week he could spend on pre-construction planning",
+      "Municipal websites are written for contractors, not her — full of jargon she doesn't know",
+      "Online answers contradict each other and feel unsafe to rely on",
+      "Doesn't know what she doesn't know — terrified of missing something obvious",
     ],
     jobsToBeDone: [
-      "Triage at-risk permits in under 2 minutes each morning",
-      "Forward a clean status to the owner's rep without manual cleanup",
-      "Answer 'where is permit X' for any project in under 10 seconds",
+      "Describe my project in plain language, get a plain-language answer back",
+      "Decide confidently whether I can DIY this or need to hire help",
+      "Hand the paperwork off so I can focus on my actual project",
     ],
-    techComfort: 3,
+    techComfort: 4,
     quote:
-      "I don't need fancy AI. I need to know which three permits are going to blow up my schedule this week.",
+      "I don't need fancy. I need someone to tell me, in plain English, what I actually need to do — and to not be wrong.",
   },
   {
     id: "persona-2",
-    name: "Priya Shah",
-    role: "Permit Coordinator",
-    company: "Westline Commercial Builders",
-    avatarSeed: "priya-shah",
+    name: "Miguel Reyes",
+    role: "Homeowner — multi-project, immigrant family",
+    company: "Surrey, BC · 1960s bungalow, three generations under one roof",
+    avatarSeed: "miguel-reyes",
     bio:
-      "4 years in the role, runs the day-to-day filing for 30+ active permits. Power user of every municipal portal in her region.",
+      "Moved to Canada eight years ago. Just bought a place with his wife and parents. Wants to build a backyard shed, a detached garage, and a laneway house — eventually. English is his second language. He'll absolutely follow the rules — he just needs to know what they are.",
     goals: [
-      "File more permits per week without dropping accuracy",
-      "Stop re-keying the same project data into different forms",
-      "Get municipal reviewers to respond faster by giving them clean submissions",
+      "Do everything by the book — no fines, no inspector showing up unannounced",
+      "Sequence three projects sensibly so he doesn't waste money or time",
+      "Understand the forms without needing his daughter to translate every line",
     ],
     pains: [
-      "Switching contexts between 11 different jurisdiction portals every day",
-      "Re-typing the same project details into 5 forms per permit",
-      "No central place to see comments coming back from reviewers — they arrive by email",
+      "Form language is hard even with a translator app",
+      "Doesn't know which projects need permits and which don't — and Google is a coin flip",
+      "Three separate projects feel like three separate problems; nobody scopes them together",
     ],
     jobsToBeDone: [
-      "Auto-populate forms from project data once, not five times",
-      "Get a single inbox of municipal responses",
-      "Track every form's submission state in one view",
+      "Tell the system what I want to build over the next 18 months and let it order things",
+      "Get forms pre-filled with the info I already gave once",
+      "Have someone smarter than me check my submission before it goes to the city",
     ],
-    techComfort: 5,
+    techComfort: 3,
     quote:
-      "If the tool can pre-fill the forms and tell me what's missing before I submit, I'd save 10 hours a week.",
+      "I just want to do this right. Tell me what's required and I'll do it. Don't make me guess.",
   },
   {
     id: "persona-3",
-    name: "Dana Okafor",
-    role: "Founding Architect",
-    company: "Okafor + Lane Studio (12-person residential and small commercial)",
-    avatarSeed: "dana-okafor",
+    name: "Tom Bryce",
+    role: "Residential General Contractor",
+    company: "Bryce Renovations — 5-person crew, North Vancouver",
+    avatarSeed: "tom-bryce",
     bio:
-      "Runs a small architecture practice. Handles permitting herself for most projects because there's no one else to do it. Treats permit work as overhead, not craft.",
+      "Runs a small residential contracting business. 15–20 projects a year across the North Shore and Burnaby. Permit work is the worst part of his job — unbillable, slow, and a constant source of client friction.",
     goals: [
-      "Stop being the bottleneck for her own firm's projects",
-      "Know upfront what a jurisdiction will require so she can quote accurately",
-      "Keep clients informed without writing weekly emails",
+      "Cut the time he spends on permits per project from days to hours",
+      "Stop fielding client phone calls asking 'is the permit done yet?'",
+      "Quote new jurisdictions accurately without losing margin to admin",
     ],
     pains: [
-      "Doesn't know the requirements for new jurisdictions she hasn't worked in before",
-      "Clients ping her constantly asking 'is the permit through yet?'",
-      "Submitting a permit means a full afternoon she's not designing",
+      "Every municipality has its own quirks — no consistent process across his service area",
+      "Clients ask for status three times a week; he doesn't have an easy way to share it",
+      "When a submission gets rejected for a missing form, he eats the schedule slip",
     ],
     jobsToBeDone: [
-      "See requirements and fees for a new jurisdiction before quoting",
-      "Give clients a read-only link to track permit status",
-      "Compress submission prep from half a day to 30 minutes",
+      "File a permit for a known job type in under 30 minutes",
+      "Give clients a read-only status page so they stop calling him",
+      "Pre-validate every submission so he doesn't get bounced back",
     ],
-    techComfort: 4,
+    techComfort: 3,
     quote:
-      "Half of every project's profit margin is the time I spend on permits I didn't quote for.",
-  },
-  {
-    id: "persona-4",
-    name: "Reggie Vance",
-    role: "Operations VP",
-    company: "Tier Home Services (HVAC + plumbing, 60 trucks across 4 metros)",
-    avatarSeed: "reggie-vance",
-    bio:
-      "Runs operations for a residential services company doing thousands of small permits a year (HVAC swaps, water heaters, panel upgrades). Volume game.",
-    goals: [
-      "Cut the per-permit admin cost so techs can finish more jobs",
-      "Reduce permit-related callbacks from inspectors",
-      "Get visibility into which technicians are causing rework",
-    ],
-    pains: [
-      "Each metro has different rules and the dispatchers learn them the hard way",
-      "Paper permits get lost between the truck and the office",
-      "No way to forecast inspection availability when scheduling jobs",
-    ],
-    jobsToBeDone: [
-      "Auto-route permits to the right jurisdiction by job address",
-      "Surface inspection slot availability when scheduling the job",
-      "Roll up permit failures by tech, jurisdiction, and job type",
-    ],
-    techComfort: 4,
-    quote:
-      "I don't care which tool — I care that my dispatchers stop calling city hall to ask when an inspector will show up.",
+      "I'm a builder. I don't want to log into another portal. Just tell me what's missing and I'll fix it.",
   },
   {
     id: "persona-5",
     name: "Linda Ruiz",
     role: "Senior Plan Reviewer (counter-persona)",
-    company: "City of San Francisco — Department of Building Inspection",
+    company: "City of Vancouver — Building Permits Office",
     avatarSeed: "linda-ruiz",
     bio:
       "20 years reviewing plan sets. Sees PermitOps users from the other side of the counter. Doesn't use the product directly but its quality affects her queue.",
     goals: [
       "Receive clean, complete submissions she can review on first pass",
-      "Spend less time on incomplete applications",
-      "Communicate corrections in writing so they don't get lost",
+      "Spend less time on incomplete applications from confused homeowners",
+      "Communicate corrections in writing so they don't get lost in translation",
     ],
     pains: [
-      "Most applications have at least one missing form",
+      "Most homeowner-filed applications have at least one missing form",
       "Applicants don't know which version of a form is current",
-      "Corrections sent by email get re-asked weeks later",
+      "Corrections sent back get re-asked weeks later — applicant didn't understand",
     ],
     jobsToBeDone: [
       "Reject incomplete submissions before they hit her queue",
@@ -595,114 +568,140 @@ export const personas: Persona[] = [
 
 export const flows: Flow[] = [
   {
-    id: "flow-intake",
-    name: "New project intake → first permit filed",
-    persona: "Priya Shah (Permit Coordinator)",
+    id: "flow-discover",
+    name: "Tell us what you want to renovate → know exactly what you need",
+    persona: "Sarah Chen (Homeowner)",
     outcome:
-      "Project created from a contract PDF, jurisdiction identified, requirements surfaced, first permit application ready for submission — under 30 minutes.",
+      "Homeowner gets clear, plain-language answers — what permits are required, how much it'll cost, how long it'll take, what comes next — without giving up an email address. Free, fast, and trustworthy. Under 5 minutes.",
     steps: [
       {
-        title: "Drop contract PDF",
+        title: "First prompt: what are you renovating?",
         description:
-          "Coordinator drags the executed contract into PermitOps. Project shell is created with address, scope hints, and party data extracted.",
-        surface: "Projects → New Project drawer",
+          "No signup, no 'get started.' Single conversational prompt: 'What are you looking to renovate?' Sarah types 'I want to finish my attic into a bedroom and office.'",
+        surface: "Landing → first-prompt input",
         agentBehind: "Intake",
       },
       {
-        title: "Confirm jurisdiction",
+        title: "Confirm location",
         description:
-          "System geocodes the address and proposes the issuing AHJ. Coordinator confirms or overrides.",
-        surface: "Project header → Jurisdiction confirm modal",
+          "System detects city by geo-IP and confirms with Sarah ('Looks like you're in Vancouver, BC — yes?'). She corrects to Burnaby. Project anchors to the right AHJ.",
+        surface: "Intake → location confirm",
+        agentBehind: "Intake",
+      },
+      {
+        title: "Clarify scope (2–3 questions max)",
+        description:
+          "Research agent asks only what changes the answer: 'Will the new bedroom be a separate suite (with kitchen)?' 'Will there be new plumbing?' Two questions, max. Not a 20-field form.",
+        surface: "Intake → clarifying questions",
         agentBehind: "Research",
       },
       {
-        title: "Review requirements",
+        title: "Show the answer in plain language",
         description:
-          "Requirements page populates with the list of forms, plan sheets, and yes/no project questions specific to the AHJ. Anything ambiguous is flagged for human input.",
-        surface: "Project Requirements page",
+          "Single page: 'For your attic conversion in Burnaby, you'll need a Building Permit plus an Electrical Permit. Estimated city fee: $1,400. Expected timeline: 8–12 weeks. Here's why, and here's what we'd need from you.' Citations link to the BC Building Code and the Burnaby bylaw.",
+        surface: "Results page",
         agentBehind: "Research",
       },
       {
-        title: "Prepare application",
+        title: "Decide: DIY or let us handle it",
         description:
-          "System pre-fills the application form set from project data. Coordinator fills only the gaps and uploads the plan set.",
-        surface: "Permit detail → Prepare tab",
-        agentBehind: "Submission",
-      },
-      {
-        title: "Submit and track",
-        description:
-          "Coordinator clicks Submit; the AHJ filing happens (where supported) or a portal-handoff checklist appears. Status flips to Submitted on the Permits dashboard.",
-        surface: "Permits dashboard",
-        agentBehind: "Submission",
+          "Two clear paths. 'I want to file this myself' (downloads pre-filled forms + checklist, completely free). 'You handle it for me' (paid service, starts the engagement flow). No dark patterns nudging toward the paid path — Paul's explicit direction.",
+        surface: "Results page → decision",
       },
     ],
   },
   {
-    id: "flow-comments",
-    name: "Reviewer comment → corrected resubmission",
-    persona: "Priya Shah, with Marcus Hill notified",
+    id: "flow-service",
+    name: "Engage the service → permit in hand",
+    persona: "Sarah Chen (Homeowner)",
     outcome:
-      "Municipal corrections surface in PermitOps the day they arrive, are addressed by the responsible person, and resubmitted with an audit trail.",
+      "Homeowner pays the service fee and hands the permit work off. We prepare submissions, validate before sending, submit to the city, manage correspondence, surface status, and deliver the approved permit. Hands-off real, with full transparency.",
     steps: [
       {
-        title: "Comment received",
+        title: "Confirm scope + service agreement",
         description:
-          "Coordination agent watches the AHJ portal and email. New corrections become a thread on the permit's side panel with the original quote.",
-        surface: "Permit side panel → Activity",
+          "Sarah reviews what we'll file on her behalf, confirms the project scope, signs a one-page service agreement. Service fee is shown upfront — no surprise charges.",
+        surface: "Service intake → agreement",
+        agentBehind: "Intake",
+      },
+      {
+        title: "AI prepares the application",
+        description:
+          "Submission agent pre-fills every form from the project data Sarah already gave. Each field has an attribution chip and a source. Sarah reviews and approves; nothing fires without her confirmation.",
+        surface: "Application → review",
+        agentBehind: "Submission",
+      },
+      {
+        title: "Pre-submission validation",
+        description:
+          "Before anything goes to the city, we check for missing forms, contradictions, version mismatches, common rejection triggers. Anything ambiguous gets flagged for Sarah with a plain-English explanation.",
+        surface: "Application → validate step",
+        agentBehind: "Submission",
+      },
+      {
+        title: "Submit + track in real time",
+        description:
+          "We submit on Sarah's behalf. Status flips to 'With the City.' Coordination agent watches the AHJ portal and emails — every update surfaces in Sarah's status view with a timestamp and what it means.",
+        surface: "Project status",
         agentBehind: "Coordination",
       },
       {
-        title: "Triage",
+        title: "Translate reviewer comments → next action",
         description:
-          "Each comment is assignable. Auto-assigned to the original submitter unless the comment requires architect or engineer input.",
-        surface: "Permit side panel → Comments tab",
+          "When the reviewer requests corrections, the agent translates the comment into plain English ('They need a sketch showing the new wall location') and drafts a response. Sarah confirms; we resubmit.",
+        surface: "Status → comments thread",
+        agentBehind: "Coordination",
       },
       {
-        title: "Respond",
+        title: "Approved permit delivered",
         description:
-          "Owner uploads revised sheets or replies in-thread. Versioning happens automatically; the prior version remains visible.",
-        surface: "Permit detail → Plan sheets",
-      },
-      {
-        title: "Resubmit",
-        description:
-          "Resubmission packages only the corrected sheets and the response narrative. Status updates and a notification fires to the reviewer.",
-        surface: "Permit side panel → Resubmit button",
-        agentBehind: "Submission",
+          "Permit issued. Sarah gets a single email with the approved permit, what to post on-site, and what to expect from inspections. Done.",
+        surface: "Status → completed",
+        agentBehind: "Coordination",
       },
     ],
   },
   {
-    id: "flow-portfolio",
-    name: "Morning triage of the portfolio",
-    persona: "Marcus Hill (Project Manager)",
+    id: "flow-multi-project",
+    name: "Multi-project scoping → smart sequencing (and the GC handoff)",
+    persona: "Miguel Reyes (Multi-project homeowner)",
     outcome:
-      "PM identifies the at-risk permits across all his projects in under 2 minutes and forwards a clean status to his ops director.",
+      "Homeowner describes everything they want to do over the next 12–18 months. System scopes the projects together, surfaces dependencies, sequences them sensibly, and — when complexity crosses a threshold — suggests a general contractor instead of trying to be one.",
     steps: [
       {
-        title: "Open Permits dashboard",
+        title: "Tell us everything you want to build",
         description:
-          "Status cards across the top show counts by stage; the table is sorted by risk (expiring soonest, longest stuck in comments).",
-        surface: "Permits page",
+          "Miguel describes three projects in one go: a backyard shed, a detached garage, and (eventually) a laneway house. System captures all three as a project bundle, not three isolated tickets.",
+        surface: "Intake → multi-project drawer",
+        agentBehind: "Intake",
       },
       {
-        title: "Scan tags + assignees",
+        title: "Scope them together",
         description:
-          "Color-coded status pills and tags let him spot the 3-4 permits that are likely to slip without opening any.",
-        surface: "Permits table",
+          "Research agent looks at all three projects against Miguel's address and surfaces what's possible: shed is permit-free under 100 sq ft, garage needs a Building Permit, laneway house needs rezoning + full submission. Dependencies surfaced visually.",
+        surface: "Project bundle → scope view",
+        agentBehind: "Research",
       },
       {
-        title: "Open the risky one",
+        title: "Sequence with reasons",
         description:
-          "Click a row → side panel slides in with full context, activity stream, and the responsible coordinator's name.",
-        surface: "Permit side panel",
+          "System proposes an order: shed first (no permit, fast win), garage second (needs setbacks confirmed), laneway last (needs rezoning, 12+ month process). Miguel can override; the agent explains why the order matters.",
+        surface: "Project bundle → sequence",
+        agentBehind: "Research",
       },
       {
-        title: "Forward status",
+        title: "Detect when it gets too big",
         description:
-          "From the side panel he sends a one-click status update to the ops director or owner's rep.",
-        surface: "Permit side panel → Share button",
+          "Laneway-house scope crosses the complexity threshold: rezoning, full architectural drawings, structural review, multiple trades. Agent surfaces a recommendation: 'For this one, you really want a general contractor to organize it. We can help you find one — we won't try to be one.'",
+        surface: "Project bundle → GC handoff",
+        agentBehind: "Research",
+      },
+      {
+        title: "Hand off cleanly, keep tracking",
+        description:
+          "If Miguel chooses to engage a GC, we share the scope, sequence, and any submitted permits with the GC. Miguel still sees status on his dashboard — but the GC owns the filing.",
+        surface: "Project bundle → GC link",
+        agentBehind: "Coordination",
       },
     ],
   },
@@ -712,85 +711,102 @@ export const assumptions: Assumption[] = [
   {
     id: "a1",
     category: "Market",
-    title: "Buyers are mid-market GCs (50–500 employees), not enterprise yet",
+    title: "Canada-first, BC-primary — not US",
     body:
-      "Permitflow is signing enterprise GCs (Apple, Amazon, Lennar). We assume our wedge is mid-market — large enough to feel the pain across multiple jurisdictions, small enough that a fast-moving vendor can land and expand.",
-    confidence: "Medium",
+      "Permitflow is US-based out of New York. Canadian municipalities prefer working with Canadian companies. We start in BC (where the team is closest to the problem) and expand across Canada before considering global. The North American market alone is the runway.",
+    confidence: "High",
     evidence:
-      "Anecdotal from the brief; verify in interview by asking Paul what their first 10 customers look like.",
+      "Paul stated this directly in the 2026-05-27 call. 'There's nobody in Canada at this current time doing what we're doing.'",
   },
   {
     id: "a2",
     category: "Market",
-    title: "Multi-jurisdiction is the unlock, not single-municipality permits",
+    title: "Free upfront info is the wedge — paid submission is the conversion",
     body:
-      "Customers tolerate municipal portals when they only file in one city. Pain explodes when they file across 5+ AHJs. We design for multi-jurisdiction from screen one (Municipalities is a top-level nav item).",
+      "Whatever public AI can already give a homeowner for free (timelines, requirements, cost ranges, form templates) we give better and more accurate — for free. The paid moment is when the user wants us to actually submit and manage the permit on their behalf. Trust-builder first, monetize second.",
     confidence: "High",
-    evidence: "Mirrored across Permitflow's marketing; visible in every screenshot.",
+    evidence:
+      "Paul's direct framing: 'Whatever AI is offering out there, we should be offering too for free.' Aligns with classic prosumer trust → conversion patterns (TurboTax, Wealthsimple).",
   },
   {
     id: "a3",
-    category: "User",
-    title: "Two primary personas — coordinator (power user) and PM (consumer)",
+    category: "Market",
+    title: "We surface the GC handoff — we don't try to be the GC",
     body:
-      "Coordinators live in the product daily; PMs glance at it for status. Dashboard density and side-panel detail serve the coordinator; status cards and at-a-glance color coding serve the PM.",
+      "When project complexity crosses a threshold (electrical + plumbing + structural, multi-phase renovation), the product should suggest the user hire a general contractor — and help them find one. We never act as the GC ourselves. Too much liability, wrong business shape.",
     confidence: "High",
-    evidence: "Pattern is universal in B2B ops tools (legal, claims, sales ops).",
+    evidence:
+      "Paul: 'We could act as a general contractor, but that's not what we want to do. Too much liability.'",
   },
   {
     id: "a4",
     category: "User",
-    title: "Read-only access for clients is a near-term unlock",
+    title: "Two primary buyers: homeowners and residential contractors",
     body:
-      "Clients (owners, owner's reps) ping the coordinator constantly to ask 'is the permit through?'. A shareable, read-only status link cuts inbound interruptions and is a low-effort feature.",
-    confidence: "Medium",
-    evidence: "Surfaced repeatedly in PM/architect persona interviews and present in many competitor tools.",
+      "Homeowners are the volume opportunity (millions of one-off projects); residential contractors are the repeat-user opportunity (efficiency multiplier across many homeowners). Both flows surface in the IA; the homeowner flow is v1.",
+    confidence: "High",
+    evidence:
+      "Paul explicit: 'residential contractors and homeowners.' Municipalities are future, not v1.",
   },
   {
     id: "a5",
-    category: "Technical",
-    title: "Most AHJs require human-in-the-loop submission, not direct API",
+    category: "User",
+    title: "Trust must be built before any payment moment",
     body:
-      "Only a fraction of AHJs offer machine-readable APIs. The product must elegantly handle the case where submission means filling a municipal web form, with the agent automating as much as possible and the human finishing the last mile.",
+      "Homeowner doesn't pay until they've experienced real value for free. So the early flows are deliberately generous — full plain-English answer, fee estimates, timelines, even pre-filled forms for DIY filers. Conversion to paid is opt-in, not friction-driven.",
     confidence: "High",
-    evidence: "Permitflow's own materials describe portal-by-portal coverage growth.",
+    evidence:
+      "Paul: 'We want to be focused on building trust with our clients. So whatever AI is offering out there, we should be offering too for free.'",
   },
   {
     id: "a6",
     category: "Technical",
-    title: "Authoritative requirements come from a curated database, not live scraping",
+    title: "Pre-submission validation is non-negotiable",
     body:
-      "Requirements live in a maintained corpus (12M data points equivalent in Permitflow's case). For the demo we treat the corpus as a given; the design only shows the user-facing surface.",
+      "Homeowners don't know what to look for. The system must catch every missing form, contradiction, version mismatch, and known rejection trigger before anything goes to the city. If we let them submit a bad application, we've failed.",
     confidence: "High",
-    evidence: "Standard pattern in regulatory data products.",
+    evidence:
+      "Paul: 'We want to make sure they got their t's crossed and their i's dotted before they submit. Not just get it to submit and come back and fail.' Plus Nick's own immigration experience.",
   },
   {
     id: "a7",
-    category: "Design",
-    title: "Action-oriented framing beats record-keeping framing",
+    category: "Technical",
+    title: "Aggregated user data is the long-term moat — not the static corpus",
     body:
-      "Permitflow's marketing leads with 'pending action items', not 'permits in the database'. We design every list so the next action is obvious — sort by risk, color-code by stage, surface the responsible person.",
-    confidence: "High",
-    evidence: "Permitflow marketing illustrations; persona-confirmed.",
+      "Static municipal data anyone can scrape. The defensible asset is the timeline + cost + rejection data we collect from real users moving through the system. After 1,000 → 10,000 users, we predict timelines per AHJ better than any public AI can. That data eventually attracts municipalities themselves as customers.",
+    confidence: "Medium",
+    evidence:
+      "Paul's thesis, not yet validated. He showed a Claude-generated Vancouver data scrape as a directional artifact. Worth validating with first 50 users.",
   },
   {
     id: "a8",
     category: "Design",
-    title: "Density is a feature for the coordinator persona",
+    title: "First prompt is conversational, not a signup",
     body:
-      "Permit coordinators want to see many permits at once. The table is dense by default; whitespace and progressive disclosure live in the side panel, not the table.",
-    confidence: "Medium",
-    evidence: "Aligns with the screenshots provided; validate with a coordinator in user testing.",
+      "Landing page = single question: 'What are you looking to renovate?' No email gate, no 'Get Started' button (Paul's specific aesthetic objection — feels like signup). User types, we go. The signup moment only appears when they want us to act on their behalf.",
+    confidence: "High",
+    evidence:
+      "Paul direct quote: 'I wouldn't even care if it's the first thing on the website where it's like, tell us what you want.' Anti-pattern: 'Get Started' buttons feel like sign-up commitment.",
   },
   {
     id: "a9",
     category: "Design",
-    title: "AI is invisible labor, not a chat interface",
+    title: "Hierarchy is preemptive — answers come to the user, not the other way around",
     body:
-      "We don't put a chat bar in the dashboard. Agents do work behind the scenes; the user sees the outcome (a pre-filled form, a surfaced comment) with a small attribution chip. Chat lives in the side panel as a fallback.",
+      "Don't make the homeowner scroll, hunt, or guess. Surface the next action front-and-center. If we know their location, the project type, and the likely permit set — show all three on the same screen with the cost and timeline. Don't pretend not to know.",
+    confidence: "High",
+    evidence:
+      "Paul: 'I don't want them scrolling. I want to basically kinda be right there if we can — preemptive.'",
+  },
+  {
+    id: "a10",
+    category: "Design",
+    title: "AI as visible companion (for homeowners), not invisible labor",
+    body:
+      "For contractor SaaS, AI hides — users want work done, not an agent visible. For homeowners doing this for the first time, the opposite: they want to see what the AI is doing, why, and where the answer came from. Citations, attribution chips, plain-language reasoning. The agent is a permit-savvy friend, not a workforce.",
     confidence: "Medium",
     evidence:
-      "Permitflow's framing is 'AI workforce' not 'AI assistant'. We carry that through to the UI.",
+      "POV from Nick — diverges from the PermitOps contractor version. Validate with first homeowner user testing. If wrong, fall back to invisible-labor framing.",
   },
 ]
 

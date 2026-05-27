@@ -42,50 +42,50 @@ const phases: Phase[] = [
     number: 1,
     week: 1,
     name: "Discovery",
-    oneLine: "Ground the design in real users, real constraints, and a sharp brief.",
+    oneLine: "Ground the design in real homeowners, real BC constraints, and Paul's POV.",
     startDay: 1,
     endDay: 5,
     accent: "violet",
     icon: Compass,
     goals: [
-      "Hear from the people who'll actually use it — coordinators and PMs first.",
-      "Calibrate the brief against the competitive landscape and Paul's POV.",
-      "Surface the riskiest assumptions before pixels lock them in.",
+      "Hear from real homeowners — what they Google, where they get stuck, what they fear.",
+      "Calibrate against Paul's lived experience and the BC permit landscape.",
+      "Pick the 3 pain points the MVP will solve (Paul's explicit ask).",
     ],
     activities: [
-      "5–7 user interviews (3 coordinators, 2 PMs, 1 architect, 1 ops VP)",
-      "Competitive teardown — Permitflow plus 2 adjacencies",
-      "Workspace + tooling audit with Paul's team",
-      "Persona drafts + problem statement v1",
-      "Prioritized opportunity list (value × feasibility)",
+      "5–7 homeowner interviews (Vancouver / Burnaby / Surrey)",
+      "Competitive teardown — Permitflow + 1–2 BC-relevant adjacencies",
+      "BC permit-landscape audit: Building Permit Hub, Step Code, laneway-home pathway",
+      "Problem statements + hypotheses written for non-tech partners to read",
+      "Success-criteria proposal (beyond adoption — conversion, time-to-clarity, trust signals)",
     ],
-    deliverable: "Brief v2 + 4–5 personas + ranked opportunity matrix",
-    gate: "Align with Paul on the 3 problems we're optimizing for.",
+    deliverable: "3 problem statements + 3 hypotheses + success criteria + research findings doc",
+    gate: "Paul + partners align on the 3 pains we're solving for the MVP.",
   },
   {
     id: "flows-ia",
     number: 2,
     week: 2,
     name: "Flows + IA",
-    oneLine: "Turn the brief into structure — flows, surfaces, and the data underneath.",
+    oneLine: "Turn the brief into structure — homeowner flows, surfaces, and the data underneath.",
     startDay: 4,
     endDay: 10,
     accent: "blue",
     icon: GitBranch,
     goals: [
-      "Map the journeys end-to-end, not just the screens.",
-      "Lock the entity model so future screens stay coherent.",
-      "Pick one direction from 2–3 concept sketches.",
+      "Lock the 3 user flows end-to-end (discover, engage service, multi-project scoping).",
+      "Design the IA for minimal scrolling — preemptive surfacing per Paul's direction.",
+      "Decide the 'visible companion vs. invisible labor' question for the homeowner agent.",
     ],
     activities: [
-      "3 key user flows (intake → submission, comment loop, portfolio triage)",
-      "Sitemap + entity model — surfaces and data side by side",
-      "2–3 lo-fi concept directions for the dashboard + side panel",
-      "AI interaction-pattern catalogue v1 (attribution, uncertainty, provenance, undo)",
-      "Working session with Paul to pick the direction",
+      "3 priority user flows with surface + AI agent attribution per step",
+      "Single-project IA (homeowner) and contractor variant",
+      "AI interaction-pattern catalogue v1 (attribution, confidence, provenance, citation)",
+      "Conversational first-prompt design — no 'Get Started', no signup gate",
+      "Working session with all 3 partners (legible for non-tech audience)",
     ],
-    deliverable: "Approved IA + 1 concept direction + AI patterns catalogue",
-    gate: "Direction approved; team aligned on what 'done' looks like for week 4.",
+    deliverable: "Approved IA + 3 flows + AI patterns v1 + first-prompt concept",
+    gate: "Partners aligned on direction; 'what done looks like' agreed for week 4.",
   },
   {
     id: "wireframes",
@@ -99,43 +99,43 @@ const phases: Phase[] = [
     icon: PenLine,
     goals: [
       "Every priority screen at mid-fi in the chosen direction.",
-      "A foundational component set the engineers can ship against.",
+      "A foundational component set Claude + the future dev team can ship against.",
       "AI patterns wired into the specific screens they live on.",
     ],
     activities: [
-      "Wireframes for 10–12 priority screens",
-      "Mid-fi designs in the picked direction",
-      "Design system kit: typography, color, spacing, sidebar, table, status pills, side panel, dialog",
-      "Empty / error / loading states for every primary surface",
-      "Async critique with Paul (Loom + comments), one synchronous review",
+      "Wireframes for 10–12 priority screens (discovery flow, service flow, multi-project flow)",
+      "Mid-fi designs in the picked direction — Claude + shadcn workflow",
+      "Design system kit: typography, color, spacing, components",
+      "Empty / error / loading / 'we don't know yet' states for every primary surface",
+      "Async critique with Paul (one batched feedback day, per his cadence)",
     ],
     deliverable: "Primary screens at mid-fi + working component set",
-    gate: "Functional review with engineers — does this fit how they'd build it?",
+    gate: "Sprint review with Paul — confirm direction before hi-fi polish.",
   },
   {
     id: "hifi",
     number: 4,
     week: 4,
-    name: "Hi-fi + prototype",
-    oneLine: "Bring it to a state Paul can demo without a deck.",
+    name: "Hi-fi + clickable prototype",
+    oneLine: "VC-ready prototype Paul can demo — interactive, Claude-driven, no deck needed.",
     startDay: 14,
     endDay: 20,
     accent: "emerald",
     icon: Rocket,
     goals: [
-      "Production-ready polish on every screen.",
-      "A clickable prototype that survives a cold demo.",
-      "Eng handoff doc that answers more questions than it raises.",
+      "Polished prototype that solves the 3 pain points end-to-end.",
+      "Live Claude prompts inside the prototype — VCs can actually try the AI.",
+      "Clear story Paul can demo cold to investors.",
     ],
     activities: [
-      "Hi-fi polish — type, spacing, motion considerations, dark-mode pass",
-      "Click-through prototype (Figma or React, depending on team setup)",
-      "Edge cases: empty / error / loading / permission / overdue",
+      "Hi-fi polish — type, spacing, color tokens (shadcn theme)",
+      "Interactive prototype with Claude prompts working inline",
+      "Edge cases: empty / error / loading / GC handoff / multi-project",
       "Accessibility pass — contrast, focus order, keyboard nav",
-      "Handoff doc + Loom walkthrough for engineering",
+      "Demo walkthrough script for Paul + partners",
     ],
-    deliverable: "Production-ready designs + clickable prototype + handoff doc",
-    gate: "Demo-ready for Paul's stakeholder review.",
+    deliverable: "Investor-ready interactive prototype + demo script",
+    gate: "Paul approves the demo flow; ready to put in front of VCs.",
   },
 ]
 
@@ -178,29 +178,38 @@ const tones: Record<
 }
 
 const planAssumptions = [
-  "Full-time hours (≈30 focused hrs/week).",
-  "Paul + 1–2 stakeholders available for a daily 15-min sync and weekly working session.",
-  "User interviews schedulable inside week 1 (recruiter or PM assist).",
-  "Existing brand exists — design system gets adapted, not invented from scratch.",
-  "Mock data is acceptable for the prototype; backend integration is post-week-4.",
+  "Full-time hours (~40 hrs/week) with weekly sprint reviews — Paul's stated cadence.",
+  "Slack is the single comms channel; feedback batched (not micro-comments).",
+  "Paul + 2 partners available for a weekly sprint review; one of them is non-technical.",
+  "Homeowner interviews recruitable inside week 1 (Paul confirmed this is 'not very difficult').",
+  "No existing brand — visual direction emerges via Claude + shadcn, deferred until needs.",
+  "Mock data + Claude-driven AI prompts are acceptable for the VC prototype.",
 ]
 
 const afterPhaseFour = [
   {
-    label: "Iteration",
-    body: "Weekly usability sessions with 2–3 coordinators; prioritized fix list each Friday.",
+    label: "Validation (weeks 5–6)",
+    body: "Recruit homeowners for user testing per Paul's plan. Run 5–8 unmoderated sessions on the prototype. Synthesize findings; bring fix list to sprint review.",
   },
   {
-    label: "Edge-case hardening",
-    body: "Permission states, jurisdiction edge cases, multi-tenant variants surfaced during user testing.",
+    label: "Iteration (weeks 6–7)",
+    body: "Modify the prototype based on user signal. Sharpen the parts that landed in VC conversations; soften the parts that confused investors. Keep design system docs current.",
   },
   {
-    label: "Eng support",
-    body: "Pairing with frontend on the first 2 weeks of build — answer questions, adjust as constraints surface.",
+    label: "Hi-res production (weeks 7–14)",
+    body: "Two months of high-fidelity, full-fledged design. Cover the top three pain points completely. Edge cases, mobile (notifications-only), additional flows. Begin dev handoff once a full-time dev is hired.",
   },
   {
-    label: "Measurement",
-    body: "Define the success metrics with Paul (time-to-first-permit, comment-resolution time, % of permits auto-staged).",
+    label: "Mobile companion",
+    body: "Per Paul's direction: mobile is a notifications surface, not a project-management tool. Design as a thin companion to the desktop product for the homeowner — permit-status pings, inspector arrival alerts, reviewer-comment notifications.",
+  },
+  {
+    label: "Bridge to dev team",
+    body: "Once Paul hires a full-stack dev, transition from solo Claude-driven prototyping to paired delivery. Cover the first 2 weeks of build to answer questions, adjust as constraints surface, lock the design system.",
+  },
+  {
+    label: "Success metrics",
+    body: "Track beyond adoption per Paul's ask — time-to-clarity, free-to-paid conversion, pre-submission validation accuracy, AHJ-by-AHJ data-quality scoring, trust signals (return rate, referral mentions).",
   },
 ]
 
@@ -218,16 +227,16 @@ export function TimelinePage() {
             Design notes
           </Badge>
           <span className="text-xs text-muted-foreground">
-            v0.1 · how I'd run the first month
+            v0.2 · post-2026-05-27 call, full engagement arc
           </span>
         </div>
         <div className="space-y-2">
           <h1 className="font-heading text-3xl leading-tight font-semibold tracking-tight">
             Timeline &amp; phased plan
           </h1>
-          <p className="max-w-2xl text-base text-muted-foreground">
-            Four weeks to a demo-ready state at full-time hours, broken into discovery,
-            flows + IA, wireframes, and hi-fi + prototype.
+            <p className="max-w-2xl text-base text-muted-foreground">
+            Four weeks to a VC-ready prototype, plus a 2-month arc to full-fledged hi-res
+            design. Cadence + scope reflect Paul&rsquo;s direction from the 2026-05-27 call.
           </p>
         </div>
         <p className="max-w-3xl text-sm leading-relaxed text-foreground/85">
@@ -306,11 +315,12 @@ export function TimelinePage() {
           Beyond week 4
         </div>
         <h2 className="font-heading text-xl font-semibold text-foreground">
-          What I'd do next
+          What I&rsquo;d do next
         </h2>
         <p className="max-w-3xl text-sm text-muted-foreground">
-          The 4-week plan ends with a demo-ready prototype, not a finished product.
-          Here's how the work continues.
+          Week 4 ends with a VC-ready prototype, not a finished product. The next ~10
+          weeks follow Paul&rsquo;s plan: 2 weeks of validation, then 2 months of
+          high-resolution design alongside the first dev hire.
         </p>
         <div className="grid grid-cols-1 gap-3 pt-1 md:grid-cols-2">
           {afterPhaseFour.map((row) => (

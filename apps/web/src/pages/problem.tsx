@@ -1,6 +1,5 @@
 import {
   AlertCircle,
-  Banknote,
   ClipboardList,
   Eye,
   HandCoins,

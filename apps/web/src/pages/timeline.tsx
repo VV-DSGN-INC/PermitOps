@@ -124,6 +124,7 @@ const phases: Phase[] = [
     icon: Rocket,
     goals: [
       "Polished prototype that solves the 3 pain points end-to-end.",
+      "Two-beat VC narrative: user identifies with the platform (free, trustworthy answer), then buys in (engages paid service). Both beats visible in the demo — that's the arc the VCs need to see.",
       "Live Claude prompts inside the prototype — VCs can actually try the AI.",
       "Clear story Paul can demo cold to investors.",
     ],
@@ -178,9 +179,10 @@ const tones: Record<
 }
 
 const planAssumptions = [
-  "Full-time hours (~40 hrs/week) with weekly sprint reviews — Paul's stated cadence.",
+  "Full-time hours (~40 hrs/week). Weekly sprint reviews initially; possibly moving to biweekly later — Paul's stated cadence.",
   "Slack is the single comms channel; feedback batched (not micro-comments).",
   "Paul + 2 partners available for a weekly sprint review; one of them is non-technical.",
+  "Designer wears a small PM hat at times — capturing requirements, sequencing decisions. Paul shares this hat until they hire a PM.",
   "Homeowner interviews recruitable inside week 1 (Paul confirmed this is 'not very difficult').",
   "No existing brand — visual direction emerges via Claude + shadcn, deferred until needs.",
   "Mock data + Claude-driven AI prompts are acceptable for the VC prototype.",
@@ -267,7 +269,7 @@ export function TimelinePage() {
             Design notes
           </Badge>
           <span className="text-xs text-muted-foreground">
-            v0.2 · post-2026-05-27 call, full engagement arc
+            v0.3 · BC-anchored; identify+buy-in arc named on Phase 4
           </span>
         </div>
         <div className="space-y-2">

@@ -1,6 +1,7 @@
 import {
   Activity,
   Bot,
+  ClipboardCheck,
   Cpu,
   Eye,
   Gauge,
@@ -21,6 +22,7 @@ import {
   ChatFallbackExample,
   ConfidenceExample,
   InlineCorrectionExample,
+  PreSubmissionValidationExample,
   ProvenanceExample,
   PromptedVsAutonomousExample,
   ReversibilityExample,
@@ -153,6 +155,18 @@ const patterns: Pattern[] = [
     example: <ActivityTimelineExample />,
     usedOn: ["Project Detail → Activity tab", "Daily digest"],
   },
+  {
+    number: "11",
+    title: "Pre-submission validation",
+    description:
+      "We catch what would bounce back, before anything ships to the AHJ.",
+    icon: ClipboardCheck,
+    accent: "blue",
+    when:
+      "Any path that ends in a submission to the city. The application runs through every check a senior reviewer would do — missing forms, contradictions, version mismatches, common rejection triggers, AHJ-specific quirks — and surfaces anything that would bounce. The user only sees a submit affordance if the submission would actually go through.",
+    example: <PreSubmissionValidationExample />,
+    usedOn: ["Application → validate step", "Multi-project bundle → submit gate"],
+  },
 ]
 
 export function AIPatternsPage() {
@@ -166,7 +180,7 @@ export function AIPatternsPage() {
             Design notes
           </Badge>
           <span className="text-xs text-muted-foreground">
-            v0.2 &middot; pattern weights tuned for homeowner audience
+            v0.3 &middot; pre-submission validation added; BC homeowner weights
           </span>
         </div>
         <div className="space-y-2">
@@ -179,18 +193,37 @@ export function AIPatternsPage() {
           </p>
         </div>
         <p className="max-w-3xl text-sm leading-relaxed text-foreground/85">
-          These ten patterns sit underneath every AI feature in PermitOps. They keep the
+          These eleven patterns sit underneath every AI feature in PermitOps. They keep the
           experience honest about uncertainty, attribution, and what&rsquo;s automated vs.
           on-demand. Agents are coworkers with bounded responsibilities, not an oracle in
           a chat box.
         </p>
         <p className="max-w-3xl text-sm leading-relaxed text-foreground/85">
-          For the homeowner-first MVP, three patterns are heavier-weight than they would be
-          for a contractor product: <strong>provenance / citation</strong> (homeowners need
-          to verify sources, not just trust), <strong>confidence indicator + override</strong>{" "}
-          (low-tech-comfort users need the agent to surface uncertainty, not hide it), and{" "}
+          For the homeowner-first MVP, four patterns carry more weight than they would in a
+          contractor product:{" "}
+          <strong>pre-submission validation</strong> (Paul&rsquo;s must-have &mdash; homeowners
+          don&rsquo;t know what bounces back, so we catch it before submit),{" "}
+          <strong>provenance / citation</strong> (homeowners verify sources rather than trust a
+          black box), <strong>confidence indicator + override</strong> (low-tech-comfort users
+          need uncertainty surfaced, not hidden), and{" "}
           <strong>uncertainty disclosure</strong> (&ldquo;we don&rsquo;t know yet&rdquo; for
-          this jurisdiction is a real state). The other seven still apply at normal weight.
+          this AHJ is an honest state, not a hallucination). The other seven still apply at
+          normal weight.
+        </p>
+        <p className="max-w-3xl text-sm leading-relaxed text-foreground/85">
+          One operating principle under all of this: the platform is{" "}
+          <strong>quiet about its labor, loud about its provenance</strong>. We don&rsquo;t push
+          the homeowner to tell us what we need &mdash; we find it ourselves, then surface what
+          we did with citations. Paul&rsquo;s framing: &ldquo;we should just find a way to do
+          it.&rdquo; Asking the homeowner what&rsquo;s required is a failure mode, not a
+          feature.
+        </p>
+        <p className="max-w-3xl text-sm leading-relaxed text-foreground/85">
+          For BC specifically, a meaningful share of homeowners file in English as a second
+          language. Plain-language reasoning + citation aren&rsquo;t a nice-to-have &mdash;
+          they&rsquo;re the difference between trusting the AI and bouncing to a human.
+          Translation is on the post-MVP list; until then, plain English with citations
+          carries the load.
         </p>
       </header>
 
@@ -201,7 +234,7 @@ export function AIPatternsPage() {
         <div className="flex items-baseline justify-between gap-4">
           <div>
             <h2 className="font-heading text-xl font-semibold text-foreground">
-              The ten patterns
+              The eleven patterns
             </h2>
             <p className="max-w-2xl text-sm text-muted-foreground">
               Each pattern names a behaviour, when it applies, a small example of the

@@ -1,5 +1,7 @@
 import { Link, NavLink, Outlet, useLocation } from "react-router-dom"
 import {
+  CalendarDays,
+  FolderHeart,
   Home as HomeIcon,
   HousePlug,
   MessageCircle,
@@ -9,6 +11,8 @@ import { TooltipProvider } from "@workspace/ui/components/tooltip"
 import { Button } from "@workspace/ui/components/button"
 import { cn } from "@workspace/ui/lib/utils"
 import { renovation } from "@/lib/home-mock"
+import { useT } from "@/lib/home-i18n"
+import { LanguageSwitcher } from "@/components/home/language-switcher"
 
 /**
  * The Home edition deliberately drops the sidebar. Homeowners only have one
@@ -18,6 +22,7 @@ import { renovation } from "@/lib/home-mock"
 export function HomeShell() {
   const location = useLocation()
   const isWelcome = location.pathname.endsWith("/welcome")
+  const t = useT()
 
   return (
     <TooltipProvider delayDuration={200}>
@@ -36,13 +41,25 @@ export function HomeShell() {
             {!isWelcome ? (
               <nav className="ml-2 hidden gap-1 sm:flex">
                 <HomeNavLink to="/home" icon={<HomeIcon className="size-4" />}>
-                  Home
+                  {t("nav.home")}
+                </HomeNavLink>
+                <HomeNavLink
+                  to="/home/projects"
+                  icon={<FolderHeart className="size-4" />}
+                >
+                  {t("nav.projects")}
+                </HomeNavLink>
+                <HomeNavLink
+                  to="/home/calendar"
+                  icon={<CalendarDays className="size-4" />}
+                >
+                  {t("nav.calendar")}
                 </HomeNavLink>
                 <HomeNavLink
                   to="/home/ask"
                   icon={<MessageCircle className="size-4" />}
                 >
-                  Ask
+                  {t("nav.ask")}
                 </HomeNavLink>
               </nav>
             ) : null}
@@ -57,10 +74,11 @@ export function HomeShell() {
                 >
                   <Link to="/home/ask">
                     <Sparkles className="size-3.5" />
-                    Ask AI
+                    {t("nav.askAI")}
                   </Link>
                 </Button>
               ) : null}
+              <LanguageSwitcher />
               <Link
                 to="/home"
                 className="border-home-border/70 bg-card/70 inline-flex size-9 items-center justify-center rounded-full border text-[12px] font-semibold tracking-tight"

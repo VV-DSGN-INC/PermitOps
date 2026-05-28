@@ -28,7 +28,7 @@ type Tab = "people" | "companies" | "reviewers"
 // us to expand the mock-data shape.
 function companyForPerson(person: Person): string {
   if (person.role === REVIEWER_ROLE) {
-    return "City of San Francisco — DBI"
+    return "City of Vancouver — Permits"
   }
   return WORKSPACE_FIRM
 }
@@ -76,7 +76,7 @@ export function DirectoryPage() {
         id: p.id,
         name: p.name,
         initials: p.initials,
-        municipalityId: "sf-city",
+        municipalityId: "vancouver-city",
         turnaroundDays: 10,
         permitsReviewed: 6,
       }))

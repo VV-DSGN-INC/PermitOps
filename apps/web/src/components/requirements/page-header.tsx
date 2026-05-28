@@ -12,7 +12,7 @@ export function RequirementsPageHeader() {
           variant="secondary"
           className="border-0 bg-primary/10 font-medium text-primary"
         >
-          Project: Bal Harbour Commercial Tenant Improvement &middot; 25F31
+          Project: Lonsdale Commercial Tenant Improvement &middot; 25F31
         </Badge>
         <span aria-hidden className="text-muted-foreground/60">
           /
@@ -23,7 +23,7 @@ export function RequirementsPageHeader() {
         </span>
         <span className="inline-flex items-center gap-1.5">
           <Building2 className="size-3.5" />
-          Bal Harbour, FL &middot; City
+          North Vancouver, BC &middot; City
         </span>
       </div>
     </header>

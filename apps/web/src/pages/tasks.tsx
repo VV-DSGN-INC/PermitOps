@@ -39,7 +39,7 @@ const INITIAL_TASKS: Task[] = [
     id: "t2",
     title: "Pay permit fee for B2026-1122",
     description:
-      "$2,840 owed to SF DBI before the application moves out of preparing.",
+      "$2,840 owed to Vancouver Permits before the application moves out of preparing.",
     priority: "high",
     dueDate: "2026-05-23",
     assignedById: "u2",
@@ -50,7 +50,7 @@ const INITIAL_TASKS: Task[] = [
     id: "t3",
     title: "Upload revised electrical plan for Solar Permit",
     description:
-      "Norfolk asked for an updated single-line diagram with conductor sizing called out.",
+      "Richmond asked for an updated single-line diagram with conductor sizing called out.",
     priority: "high",
     dueDate: "2026-05-24",
     assignedById: "u3",
@@ -59,9 +59,9 @@ const INITIAL_TASKS: Task[] = [
   },
   {
     id: "t4",
-    title: "Confirm jurisdiction for Beacon Hill Drive-thru Remodel",
+    title: "Confirm jurisdiction for Fairfield Drive-thru Remodel",
     description:
-      "Address sits on the Boston / Cambridge boundary — verify with Boston ISD before filing.",
+      "Address sits on the Victoria / Saanich boundary — verify with Victoria Permits before filing.",
     priority: "medium",
     dueDate: "2026-05-25",
     assignedById: "u3",
@@ -83,7 +83,7 @@ const INITIAL_TASKS: Task[] = [
     id: "t6",
     title: "Coordinate inspection slot for Roofing Permit",
     description:
-      "Atlanta wants a 48-hour window. Pick a date that lines up with Leo's field crew.",
+      "Surrey wants a 48-hour window. Pick a date that lines up with Leo's field crew.",
     priority: "medium",
     dueDate: TODAY_ISO,
     assignedById: "u5",
@@ -114,7 +114,7 @@ const INITIAL_TASKS: Task[] = [
   },
   {
     id: "t9",
-    title: "Schedule pre-submittal call with Bal Harbour planner",
+    title: "Schedule pre-submittal call with North Vancouver planner",
     description:
       "Get ahead of the signage objection that came up on the last permit cycle.",
     priority: "low",
@@ -125,7 +125,7 @@ const INITIAL_TASKS: Task[] = [
   },
   {
     id: "t10",
-    title: "Forward weekly status to Mission District client",
+    title: "Forward weekly status to Mount Pleasant client",
     description:
       "Pull the shareable status link from the permit side panel and add a two-line note.",
     priority: "low",
@@ -147,7 +147,7 @@ const INITIAL_TASKS: Task[] = [
   },
   {
     id: "t12",
-    title: "Archive closed Bayside Remodel paperwork",
+    title: "Archive closed Kits Beach Remodel paperwork",
     description:
       "Closeout packet is ready — move scans to the project archive and notify the owner.",
     priority: "low",
@@ -170,7 +170,7 @@ const INITIAL_TASKS: Task[] = [
   },
   {
     id: "t14",
-    title: "File extension request for Brickell electrical inspection",
+    title: "File extension request for Metrotown electrical inspection",
     description:
       "Inspector rescheduled — got the new slot pinned to next Tuesday.",
     priority: "medium",

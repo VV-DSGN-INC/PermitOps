@@ -8,6 +8,15 @@ import {
   suggestedPrompts,
   type ChatMessage,
 } from "@/lib/home-mock"
+import { useT } from "@/lib/home-i18n"
+
+/**
+ * Marker prefix for the scripted assistant fallback so its localized body +
+ * follow-ups can be looked up by key at render time (rather than baking the
+ * English string into the message at send time, which wouldn't react to a
+ * locale switch).
+ */
+const FALLBACK_ID_PREFIX = "a-fallback-"
 
 /**
  * The single chat surface. Scripted so the demo always has something
@@ -15,6 +24,7 @@ import {
  * answer.
  */
 export function HomeAskPage() {
+  const t = useT()
   const [messages, setMessages] = useState<ChatMessage[]>(chatTranscript)
   const [draft, setDraft] = useState("")
   const scrollRef = useRef<HTMLDivElement>(null)
@@ -34,12 +44,13 @@ export function HomeAskPage() {
       role: "user",
       content: text,
     }
+    // The scripted reply is identified by a marker id so MessageBubble can
+    // resolve its localized body + follow-ups from keys (reacting to locale
+    // switches), rather than freezing the English copy at send time.
     const assistantMsg: ChatMessage = {
-      id: `a-${Date.now() + 1}`,
+      id: `${FALLBACK_ID_PREFIX}${Date.now() + 1}`,
       role: "assistant",
-      content:
-        "Good question. Based on what I know about your permit, here's what's likely: Berkeley's review queue typically moves on Tuesdays and Thursdays. If they're going to ask for changes, you usually hear within the first week. So far yours has been quiet — that's a good sign.",
-      followUps: ["What does a typical review comment look like?", "Should I be worried?"],
+      content: "",
     }
     setMessages((m) => [...m, userMsg, assistantMsg])
     setDraft("")
@@ -50,14 +61,14 @@ export function HomeAskPage() {
       <div className="flex items-center justify-between pb-3">
         <Link
           to="/home"
-          className="text-muted-foreground hover:text-foreground inline-flex items-center gap-1.5 text-[13px]"
+          className="text-muted-foreground hover:text-foreground inline-flex items-center gap-1.5 text-[14px]"
         >
           <ArrowLeft className="size-3.5" />
-          Back to your renovation
+          {t("ask.back")}
         </Link>
-        <div className="text-muted-foreground inline-flex items-center gap-1.5 text-[12px]">
+        <div className="text-muted-foreground inline-flex items-center gap-1.5 text-[13px]">
           <Sparkles className="text-home-accent size-3.5" />
-          AI knows your project
+          {t("ask.knows")}
         </div>
       </div>
 
@@ -89,18 +100,18 @@ export function HomeAskPage() {
               handleSend()
             }
           }}
-          placeholder="Ask anything about your renovation…"
+          placeholder={t("ask.placeholder")}
           rows={1}
-          className="placeholder:text-muted-foreground/70 max-h-32 flex-1 resize-none border-0 bg-transparent px-3 py-2.5 text-[14.5px] leading-relaxed outline-none"
+          className="placeholder:text-muted-foreground/70 max-h-32 flex-1 resize-none border-0 bg-transparent px-3 py-2.5 text-[16px] leading-relaxed outline-none"
         />
         <Button
           onClick={() => handleSend()}
           disabled={!draft.trim()}
           size="sm"
-          className="bg-foreground text-background hover:bg-foreground/90 disabled:opacity-40 h-9 gap-1.5 rounded-xl px-3 text-[13px]"
+          className="bg-foreground text-background hover:bg-foreground/90 disabled:opacity-40 h-9 gap-1.5 rounded-xl px-3 text-[14px]"
         >
           <Send className="size-3.5" />
-          Send
+          {t("ask.send")}
         </Button>
       </div>
     </div>
@@ -116,11 +127,32 @@ function MessageBubble({
   isLast: boolean
   onFollowUp: (prompt: string) => void
 }) {
+  const t = useT()
+  const isFallback = message.id.startsWith(FALLBACK_ID_PREFIX)
+  // Canonical transcript ids (m1…) carry data.chat.<id> keys; the scripted
+  // reply uses data.chat.fallback.*. Anything else is a user-typed message
+  // and renders verbatim.
+  const chatKey = isFallback ? "data.chat.fallback" : `data.chat.${message.id}`
+
+  // Resolve content + follow-ups by key, falling back to the mock English.
+  const content =
+    isFallback || message.id.startsWith("m")
+      ? t(chatKey, message.content)
+      : message.content
+  const followUps = isFallback
+    ? [
+        t("data.chat.fallback.followup.1"),
+        t("data.chat.fallback.followup.2"),
+      ]
+    : (message.followUps ?? []).map((f, i) =>
+        t(`${chatKey}.followup.${i + 1}`, f),
+      )
+
   if (message.role === "user") {
     return (
       <div className="flex justify-end">
-        <div className="bg-foreground text-background max-w-[80%] rounded-3xl rounded-br-md px-5 py-3 text-[14.5px] leading-relaxed shadow-sm">
-          {message.content}
+        <div className="bg-foreground text-background max-w-[80%] rounded-3xl rounded-br-md px-5 py-3 text-[16px] leading-relaxed shadow-sm">
+          {content}
         </div>
       </div>
     )
@@ -131,8 +163,8 @@ function MessageBubble({
         <Sparkles className="size-4" />
       </span>
       <div className="max-w-[85%] space-y-3">
-        <div className="text-foreground text-[14.5px] leading-relaxed whitespace-pre-line">
-          {message.content}
+        <div className="text-foreground text-[16px] leading-relaxed whitespace-pre-line">
+          {content}
         </div>
         {message.references && message.references.length > 0 ? (
           <div className="flex flex-wrap gap-2">
@@ -140,23 +172,25 @@ function MessageBubble({
               <Link
                 key={ref.label}
                 to={ref.permitId ? `/home/permit/${ref.permitId}` : "/home"}
-                className="border-home-border/80 bg-home-canvas hover:bg-home-accent-soft/60 inline-flex items-center gap-1.5 rounded-full border px-3 py-1 text-[12px]"
+                className="border-home-border/80 bg-home-canvas hover:bg-home-accent-soft/60 inline-flex items-center gap-1.5 rounded-full border px-3 py-1 text-[13px]"
               >
                 <FileText className="text-muted-foreground size-3" />
-                {ref.label}
+                {ref.permitId
+                  ? t(`${chatKey}.ref.${ref.permitId}`, ref.label)
+                  : ref.label}
               </Link>
             ))}
           </div>
         ) : null}
-        {message.followUps && isLast ? (
+        {followUps.length > 0 && isLast ? (
           <div className="flex flex-wrap gap-2 pt-1">
-            {message.followUps.map((f) => (
+            {followUps.map((f) => (
               <button
                 key={f}
                 onClick={() => onFollowUp(f)}
                 className={cn(
                   "border-home-border/70 bg-card hover:border-foreground/30 hover:bg-foreground/[0.03]",
-                  "text-foreground/85 hover:text-foreground rounded-full border px-3.5 py-1.5 text-[12.5px] transition",
+                  "text-foreground/85 hover:text-foreground rounded-full border px-3.5 py-1.5 text-[13px] transition",
                 )}
               >
                 {f}
@@ -170,21 +204,25 @@ function MessageBubble({
 }
 
 function SuggestedPrompts({ onPick }: { onPick: (prompt: string) => void }) {
+  const t = useT()
   return (
     <div className="border-home-border/60 border-t pt-4">
-      <div className="text-muted-foreground mb-2.5 text-[11.5px] font-semibold tracking-[0.08em] uppercase">
-        Try asking
+      <div className="text-muted-foreground mb-2.5 text-[12.5px] font-semibold tracking-[0.08em] uppercase">
+        {t("ask.tryAsking")}
       </div>
       <div className="flex flex-wrap gap-2">
-        {suggestedPrompts.map((p) => (
-          <button
-            key={p}
-            onClick={() => onPick(p)}
-            className="border-home-border/70 bg-card hover:bg-home-accent-soft/60 text-foreground/85 hover:text-foreground rounded-full border px-3.5 py-1.5 text-[12.5px] transition"
-          >
-            {p}
-          </button>
-        ))}
+        {suggestedPrompts.map((p, i) => {
+          const label = t(`data.prompt.${i + 1}`, p)
+          return (
+            <button
+              key={p}
+              onClick={() => onPick(label)}
+              className="border-home-border/70 bg-card hover:bg-home-accent-soft/60 text-foreground/85 hover:text-foreground rounded-full border px-3.5 py-1.5 text-[13px] transition"
+            >
+              {label}
+            </button>
+          )
+        })}
       </div>
     </div>
   )

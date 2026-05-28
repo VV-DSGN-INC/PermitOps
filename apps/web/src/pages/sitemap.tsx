@@ -22,7 +22,7 @@ export function SitemapPage() {
             Design notes
           </Badge>
           <span className="text-xs text-muted-foreground">
-            v0.3 · homeowner-first IA, contractor surface as reference
+            v0.4 · BC-first IA · post-MVP municipality + language threads marked
           </span>
         </div>
         <div className="space-y-2">
@@ -34,11 +34,20 @@ export function SitemapPage() {
           </p>
         </div>
         <p className="max-w-3xl text-sm leading-relaxed text-foreground/85">
-          The MVP is built around the homeowner journey: a free, trust-building discovery
-          experience that converts into a paid filing service. The contractor surface is
-          a secondary path that shares the same entity model. Both flows show up in the
-          IA below; the URL map at the bottom lists what&rsquo;s built today in the
-          prototype.
+          The MVP is built around the BC homeowner journey: a free, trust-building discovery
+          experience that converts into a paid filing service. BC is the wedge &mdash; local
+          preference for Canadian companies, no incumbent doing this here, and the team is
+          closest to the problem. The contractor surface is a secondary path that shares the
+          same entity model. Both flows show up in the IA below; the URL map at the bottom
+          lists what&rsquo;s built today in the prototype.
+        </p>
+        <p className="max-w-3xl text-sm leading-relaxed text-foreground/85">
+          Two post-MVP threads are marked on the IA below as <em>reference only</em>: a{" "}
+          <strong>municipality surface</strong> (Paul&rsquo;s long-term thesis &mdash; AHJs
+          become paying customers once the aggregated-data moat matures), and a{" "}
+          <strong>language layer</strong> for BC&rsquo;s significant ESL homeowner segment.
+          Neither ships in the four-week prototype, but the IA acknowledges them so they
+          don&rsquo;t arrive as surprises later.
         </p>
       </header>
 
@@ -141,7 +150,8 @@ const navTree: TreeNode = {
           note: "free — full answer, no email gate",
           children: [
             { label: "Plain-language answer", variant: "view", default: true },
-            { label: "Cost + timeline estimate", variant: "view", note: "with citations" },
+            { label: "Median time-to-permit chart", variant: "view", note: "aggregated AHJ data — Paul's demo artifact" },
+            { label: "Cost band + fee estimate", variant: "view", note: "with citations" },
             { label: "Required forms (downloadable)", variant: "view", note: "for DIY filers" },
             {
               label: "Decision",
@@ -240,6 +250,50 @@ const navTree: TreeNode = {
           label: "Directory",
           variant: "page",
           note: "clients + people",
+        },
+      ],
+    },
+    {
+      label: "Municipality surface",
+      variant: "section",
+      note: "post-MVP — Paul's long-term third pillar",
+      children: [
+        {
+          label: "Aggregated permit dashboard",
+          variant: "page",
+          note: "median lapse + volume by category — what AHJs come to us for",
+        },
+        {
+          label: "Reviewer console",
+          variant: "page",
+          note: "pre-validated submissions on a queue, plain-English status",
+        },
+        {
+          label: "Integration mode",
+          variant: "page",
+          note: "beyond APIs — replace AHJ legacy systems over time",
+        },
+      ],
+    },
+    {
+      label: "Language layer",
+      variant: "section",
+      note: "post-MVP — BC ESL homeowner segment",
+      children: [
+        {
+          label: "Plain-language reasoning",
+          variant: "page",
+          note: "default — already a v1 commitment, not deferred",
+        },
+        {
+          label: "Translated UI shell",
+          variant: "page",
+          note: "Punjabi / Mandarin / Cantonese / Tagalog prioritized by BC census mix",
+        },
+        {
+          label: "Multilingual citation passthrough",
+          variant: "page",
+          note: "source docs stay in English; explanations translate",
         },
       ],
     },

@@ -1,4 +1,5 @@
 import {
+  AlertTriangle,
   Bot,
   Check,
   ChevronDown,
@@ -35,7 +36,7 @@ export function AttributionExample() {
       </div>
       <div className="flex items-center justify-between gap-3">
         <span className="text-sm font-medium text-foreground">
-          Bal Harbour, FL
+          North Vancouver, BC
         </span>
         <span className="inline-flex items-center gap-1 rounded-full bg-violet-500/12 px-1.5 py-0.5 text-[10px] font-medium text-violet-700 dark:text-violet-300">
           <Sparkles className="size-2.5" aria-hidden />
@@ -138,7 +139,7 @@ export function ProvenanceExample() {
         <div className="flex items-start gap-1.5">
           <span className="font-medium text-foreground">1</span>
           <FileText className="size-2.5 mt-0.5 shrink-0" aria-hidden />
-          <span>City of Miami · Past 24 mo review log</span>
+          <span>City of Vancouver · Past 24 mo review log</span>
         </div>
       </div>
     </div>
@@ -163,7 +164,7 @@ export function ReversibilityExample() {
             Submitted Building Permit B2026-1122
           </div>
           <div className="text-[10px] text-muted-foreground">
-            to Bal Harbour, FL
+            to North Vancouver, BC
           </div>
         </div>
       </div>
@@ -249,6 +250,37 @@ export function ChatFallbackExample() {
       <div className="absolute bottom-2 right-2 inline-flex items-center gap-1 rounded-full bg-primary px-2.5 py-1 text-[10px] font-medium text-primary-foreground shadow-sm">
         <Sparkles className="size-2.5" aria-hidden />
         Ask about your portfolio
+      </div>
+    </div>
+  )
+}
+
+/* 11 — Pre-submission validation */
+export function PreSubmissionValidationExample() {
+  return (
+    <div className={cn(frameClass, "p-3 space-y-2")}>
+      <div className="flex items-center justify-between">
+        <div className="text-[10px] font-medium uppercase tracking-wide text-muted-foreground">
+          Validation · 8 checks
+        </div>
+        <span className="inline-flex items-center gap-1 rounded-full bg-amber-500/12 px-1.5 py-0.5 text-[10px] font-medium text-amber-700 dark:text-amber-300">
+          <AlertTriangle className="size-2.5" aria-hidden />
+          1 to fix
+        </span>
+      </div>
+      <div className="space-y-1 text-[11px]">
+        <div className="flex items-center gap-1.5 text-foreground/80">
+          <Check className="size-3 text-emerald-600 dark:text-emerald-400" aria-hidden />
+          Owner authorization letter present
+        </div>
+        <div className="flex items-center gap-1.5 text-foreground/80">
+          <Check className="size-3 text-emerald-600 dark:text-emerald-400" aria-hidden />
+          Step Code compliance form on file
+        </div>
+        <div className="flex items-start gap-1.5 text-amber-700 dark:text-amber-300">
+          <AlertTriangle className="size-3 shrink-0 mt-0.5" aria-hidden />
+          <span>Plan set index is v2.3 — Burnaby requires v2.5+</span>
+        </div>
       </div>
     </div>
   )

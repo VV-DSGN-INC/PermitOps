@@ -1,61 +1,7 @@
-import {
-  createContext,
-  useContext,
-  useEffect,
-  useState,
-  type ReactNode,
-} from "react"
+import type { LocaleMessages } from "../types"
 
-/**
- * Demo-grade i18n for the homeowner edition. Only a small, hand-picked surface
- * (the welcome screen + the dashboard hero) is translated; everything else
- * gracefully falls back to English. Not intended as a replacement for a real
- * i18n stack — sized for a VC/interview prototype.
- */
-
-export type HomeLocale = "en" | "fr" | "zh-Yue" | "pa"
-
-export const HOME_LOCALES: { code: HomeLocale; label: string; native: string }[] = [
-  { code: "en", label: "English", native: "English" },
-  { code: "fr", label: "Français", native: "Français" },
-  { code: "zh-Yue", label: "Cantonese", native: "粵語" },
-  { code: "pa", label: "Punjabi", native: "ਪੰਜਾਬੀ" },
-]
-
-const STORAGE_KEY = "permitops:home-locale"
-
-type LocaleCtx = { locale: HomeLocale; setLocale: (l: HomeLocale) => void }
-
-const LocaleContext = createContext<LocaleCtx>({
-  locale: "en",
-  setLocale: () => {},
-})
-
-export function HomeLocaleProvider({ children }: { children: ReactNode }) {
-  const [locale, setLocaleState] = useState<HomeLocale>(() => {
-    if (typeof window === "undefined") return "en"
-    const stored = window.localStorage.getItem(STORAGE_KEY) as HomeLocale | null
-    return stored && HOME_LOCALES.some((l) => l.code === stored) ? stored : "en"
-  })
-
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      window.localStorage.setItem(STORAGE_KEY, locale)
-    }
-  }, [locale])
-
-  return (
-    <LocaleContext.Provider value={{ locale, setLocale: setLocaleState }}>
-      {children}
-    </LocaleContext.Provider>
-  )
-}
-
-export function useHomeLocale() {
-  return useContext(LocaleContext)
-}
-
-const messages: Record<HomeLocale, Record<string, string>> = {
+/** Welcome / onboarding (intro + review steps). Fully translated. */
+export const welcome: LocaleMessages = {
   en: {
     "welcome.eyebrow": "Let’s set up your renovation",
     "welcome.h1": "Tell me about the project, in your own words.",
@@ -85,14 +31,17 @@ const messages: Record<HomeLocale, Record<string, string>> = {
       "Lopez Construction handles all four under their contractor account. I’ll prep the paperwork with them and flag anything that needs your decision.",
     "welcome.review.change": "Change something",
     "welcome.review.open": "Open my renovation",
-    "home.whats_happening": "What’s happening",
-    "home.hero.title": "Burnaby is reviewing your plans.",
-    "home.hero.days_tail": " About 9 more days.",
-    "home.hero.sub":
-      "Lopez sent everything Tuesday. Nothing for you to do today — I’ll ping you if they ask for anything.",
-    "home.hero.see_review": "See the review",
-    "home.hero.ask": "Ask AI a question",
-    "switcher.aria": "Change language",
+    "welcome.review.permit.building.name": "Building Permit",
+    "welcome.review.permit.building.why":
+      "Because you’re removing a wall — even non-bearing counts in Burnaby.",
+    "welcome.review.permit.electrical.name": "Electrical Permit",
+    "welcome.review.permit.electrical.why":
+      "New circuits for the island and recessed lighting.",
+    "welcome.review.permit.plumbing.name": "Plumbing Permit",
+    "welcome.review.permit.plumbing.why": "Moving the sink and dishwasher line.",
+    "welcome.review.permit.mechanical.name": "Mechanical Permit",
+    "welcome.review.permit.mechanical.why":
+      "New range-hood vent through the exterior wall.",
   },
   fr: {
     "welcome.eyebrow": "Préparons votre rénovation",
@@ -123,14 +72,18 @@ const messages: Record<HomeLocale, Record<string, string>> = {
       "Lopez Construction gère les quatre sous leur compte d’entrepreneur. Je prépare la paperasse avec eux et signale tout ce qui demande votre décision.",
     "welcome.review.change": "Modifier quelque chose",
     "welcome.review.open": "Ouvrir ma rénovation",
-    "home.whats_happening": "Ce qui se passe",
-    "home.hero.title": "Burnaby examine vos plans.",
-    "home.hero.days_tail": " Environ 9 jours de plus.",
-    "home.hero.sub":
-      "Lopez a tout envoyé mardi. Rien à faire aujourd’hui — je vous ping si on vous demande quelque chose.",
-    "home.hero.see_review": "Voir l’examen",
-    "home.hero.ask": "Poser une question à l’IA",
-    "switcher.aria": "Changer de langue",
+    "welcome.review.permit.building.name": "Permis de construction",
+    "welcome.review.permit.building.why":
+      "Parce que vous abattez un mur — même non porteur, ça compte à Burnaby.",
+    "welcome.review.permit.electrical.name": "Permis d’électricité",
+    "welcome.review.permit.electrical.why":
+      "Nouveaux circuits pour l’îlot et l’éclairage encastré.",
+    "welcome.review.permit.plumbing.name": "Permis de plomberie",
+    "welcome.review.permit.plumbing.why":
+      "Déplacement de l’évier et de la conduite du lave-vaisselle.",
+    "welcome.review.permit.mechanical.name": "Permis de mécanique",
+    "welcome.review.permit.mechanical.why":
+      "Nouvelle ventilation de hotte à travers le mur extérieur.",
   },
   "zh-Yue": {
     "welcome.eyebrow": "嚟設定你嘅裝修",
@@ -150,22 +103,22 @@ const messages: Record<HomeLocale, Record<string, string>> = {
     "welcome.review.h1": "我了解到嘅嘢喺度。",
     "welcome.review.sub_lead": "睇起嚟係",
     "welcome.review.sub_type": "本納比嘅結構性廚房裝修",
-    "welcome.review.sub_tail":
-      "。四個牌照，你嘅承建商全部負責。我幫你睇住市政府嘅隊。",
+    "welcome.review.sub_tail": "。四個牌照，你嘅承建商全部負責。我幫你睇住市政府嘅隊。",
     "welcome.review.what_i_heard": "我聽到嘅",
     "welcome.review.permits_label": "你需要嘅牌照",
     "welcome.review.contractor_note":
       "Lopez Construction 用佢哋嘅承建商賬戶處理呢四個。我會幫佢哋準備文件，需要你決定嘅嘢會即刻話你知。",
     "welcome.review.change": "更改",
     "welcome.review.open": "打開我嘅裝修",
-    "home.whats_happening": "依家點",
-    "home.hero.title": "本納比正在審查你嘅計劃。",
-    "home.hero.days_tail": " 仲有大約9日。",
-    "home.hero.sub":
-      "Lopez 星期二已經遞交咗所有嘢。今日冇嘢做——如果佢哋有問題，我會即刻話你知。",
-    "home.hero.see_review": "查看審查",
-    "home.hero.ask": "問 AI 問題",
-    "switcher.aria": "更改語言",
+    "welcome.review.permit.building.name": "建築牌照",
+    "welcome.review.permit.building.why":
+      "因為你要拆牆——就算唔係承重牆，喺本納比都要申請。",
+    "welcome.review.permit.electrical.name": "電力牌照",
+    "welcome.review.permit.electrical.why": "島台同嵌入式燈嘅新電路。",
+    "welcome.review.permit.plumbing.name": "水管牌照",
+    "welcome.review.permit.plumbing.why": "移動星盆同洗碗機水管。",
+    "welcome.review.permit.mechanical.name": "機械牌照",
+    "welcome.review.permit.mechanical.why": "新抽油煙機風喉穿過外牆。",
   },
   pa: {
     "welcome.eyebrow": "ਆਪਣੀ ਮੁਰੰਮਤ ਸੈਟ ਅਪ ਕਰੀਏ",
@@ -195,19 +148,15 @@ const messages: Record<HomeLocale, Record<string, string>> = {
       "Lopez Construction ਆਪਣੇ ਠੇਕੇਦਾਰ ਖਾਤੇ ਹੇਠ ਸਾਰੇ ਚਾਰ ਸੰਭਾਲੇਗੀ। ਮੈਂ ਉਨ੍ਹਾਂ ਨਾਲ ਕਾਗਜ਼ਾਤ ਤਿਆਰ ਕਰਾਂਗਾ ਤੇ ਜੋ ਤੁਹਾਡੇ ਫੈਸਲੇ ਦੀ ਲੋੜ ਹੈ, ਉਹ ਦੱਸਾਂਗਾ।",
     "welcome.review.change": "ਕੁਝ ਬਦਲੋ",
     "welcome.review.open": "ਮੇਰੀ ਮੁਰੰਮਤ ਖੋਲ੍ਹੋ",
-    "home.whats_happening": "ਹੁਣ ਕੀ ਹੋ ਰਿਹਾ ਹੈ",
-    "home.hero.title": "ਬਰਨਬੀ ਤੁਹਾਡੀਆਂ ਯੋਜਨਾਵਾਂ ਦੀ ਸਮੀਖਿਆ ਕਰ ਰਿਹਾ ਹੈ।",
-    "home.hero.days_tail": " ਲਗਭਗ 9 ਦਿਨ ਹੋਰ।",
-    "home.hero.sub":
-      "Lopez ਨੇ ਮੰਗਲਵਾਰ ਨੂੰ ਸਭ ਕੁਝ ਭੇਜ ਦਿੱਤਾ। ਅੱਜ ਤੁਹਾਡੇ ਲਈ ਕੁਝ ਨਹੀਂ — ਜੇ ਉਹ ਕੁਝ ਮੰਗਣਗੇ ਤਾਂ ਮੈਂ ਤੁਹਾਨੂੰ ਪਿੰਗ ਕਰਾਂਗਾ।",
-    "home.hero.see_review": "ਸਮੀਖਿਆ ਦੇਖੋ",
-    "home.hero.ask": "AI ਨੂੰ ਸਵਾਲ ਪੁੱਛੋ",
-    "switcher.aria": "ਭਾਸ਼ਾ ਬਦਲੋ",
+    "welcome.review.permit.building.name": "ਬਿਲਡਿੰਗ ਪਰਮਿਟ",
+    "welcome.review.permit.building.why":
+      "ਕਿਉਂਕਿ ਤੁਸੀਂ ਕੰਧ ਹਟਾ ਰਹੇ ਹੋ — ਬਰਨਬੀ ਵਿੱਚ ਗੈਰ-ਭਾਰ ਵਾਲੀ ਕੰਧ ਵੀ ਗਿਣੀ ਜਾਂਦੀ ਹੈ।",
+    "welcome.review.permit.electrical.name": "ਇਲੈਕਟ੍ਰੀਕਲ ਪਰਮਿਟ",
+    "welcome.review.permit.electrical.why":
+      "ਆਈਲੈਂਡ ਅਤੇ ਰੀਸੈੱਸਡ ਲਾਈਟਿੰਗ ਲਈ ਨਵੇਂ ਸਰਕਟ।",
+    "welcome.review.permit.plumbing.name": "ਪਲੰਬਿੰਗ ਪਰਮਿਟ",
+    "welcome.review.permit.plumbing.why": "ਸਿੰਕ ਅਤੇ ਡਿਸ਼ਵਾਸ਼ਰ ਲਾਈਨ ਨੂੰ ਹਿਲਾਉਣਾ।",
+    "welcome.review.permit.mechanical.name": "ਮਕੈਨੀਕਲ ਪਰਮਿਟ",
+    "welcome.review.permit.mechanical.why": "ਬਾਹਰੀ ਕੰਧ ਰਾਹੀਂ ਨਵੀਂ ਰੇਂਜ-ਹੁੱਡ ਵੈਂਟ।",
   },
-}
-
-export function useT() {
-  const { locale } = useHomeLocale()
-  return (key: string): string =>
-    messages[locale]?.[key] ?? messages.en[key] ?? key
 }

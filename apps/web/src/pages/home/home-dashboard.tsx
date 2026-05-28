@@ -90,10 +90,13 @@ export function HomeDashboardPage() {
       <div className="mt-2 flex flex-wrap items-end justify-between gap-4">
         <div>
           <h1 className="text-foreground/95 text-[34px] leading-[1.05] font-semibold tracking-[-0.018em] sm:text-[40px]">
-            Your {featured.name.toLowerCase()}
+            {t("home.featured.heading").replace(
+              "{name}",
+              t(`data.project.${featured.id}.name`, featured.name).toLowerCase(),
+            )}
           </h1>
           <p className="text-muted-foreground mt-2 max-w-xl text-[16px] leading-relaxed">
-            {featured.summary}
+            {t(`data.project.${featured.id}.summary`, featured.summary)}
           </p>
         </div>
         <div className="border-home-border/70 bg-card flex items-center gap-3 rounded-full border px-4 py-1.5 text-[13px]">
@@ -101,7 +104,10 @@ export function HomeDashboardPage() {
           <span className="text-foreground font-medium">{featured.stage}</span>
           {featured.targetFinishDate ? (
             <span className="text-muted-foreground">
-              · target {formatShortDate(featured.targetFinishDate)}
+              {t("home.featured.target_prefix").replace(
+                "{date}",
+                formatShortDate(featured.targetFinishDate),
+              )}
             </span>
           ) : null}
         </div>
@@ -149,9 +155,9 @@ export function HomeDashboardPage() {
 
       {/* AI suggestions */}
       <Section
-        eyebrow="From your AI"
-        title="Three things I noticed"
-        hint="None of these are urgent — just keeping you in the loop."
+        eyebrow={t("home.suggestions.eyebrow")}
+        title={t("home.suggestions.title")}
+        hint={t("home.suggestions.hint")}
       >
         <div className="space-y-3">
           {aiSuggestions.map((s) => (
@@ -161,7 +167,10 @@ export function HomeDashboardPage() {
       </Section>
 
       {/* The four permits — featured project */}
-      <Section eyebrow="The four permits" title="Where each one stands">
+      <Section
+        eyebrow={t("home.permits.eyebrow")}
+        title={t("home.permits.title")}
+      >
         <div className="grid gap-3 sm:grid-cols-2">
           {featuredPermits.map((p) => (
             <Link
@@ -172,19 +181,21 @@ export function HomeDashboardPage() {
               <div className="flex items-start justify-between gap-2">
                 <div>
                   <div className="text-foreground text-[16px] font-semibold tracking-tight">
-                    {p.name}
+                    {t(`data.permit.${p.id}.name`, p.name)}
                   </div>
                   <StageDots current={p.status} className="mt-2" />
                 </div>
                 <ChevronRight className="text-muted-foreground/60 group-hover:text-foreground mt-1 size-4 transition" />
               </div>
               <p className="text-muted-foreground mt-3 line-clamp-2 text-[14px] leading-snug">
-                {homeStatusBlurb[p.status]}
+                {t(`data.status.${p.status}.blurb`, homeStatusBlurb[p.status])}
                 {p.permitNumber ? ` · #${p.permitNumber}` : ""}
               </p>
               <div className="border-home-border/60 mt-4 flex items-center justify-between border-t pt-3">
                 <span className="text-muted-foreground text-[13px]">
-                  {p.pulledBy === "contractor" ? "Lopez pulls this" : "You pull this"}
+                  {p.pulledBy === "contractor"
+                    ? t("home.permits.pulled_by_contractor")
+                    : t("home.permits.pulled_by_you")}
                 </span>
                 {p.fee ? (
                   <span className="text-foreground text-[13px] font-medium tabular-nums">
@@ -200,8 +211,8 @@ export function HomeDashboardPage() {
       {/* What else you're planning */}
       {otherProjects.length > 0 ? (
         <Section
-          eyebrow="Your other projects"
-          title="What else you&rsquo;re planning"
+          eyebrow={t("home.projects.eyebrow")}
+          title={t("home.projects.title")}
         >
           <div className="grid gap-3 sm:grid-cols-3">
             {otherProjects.map((proj) => (
@@ -212,55 +223,61 @@ export function HomeDashboardPage() {
       ) : null}
 
       {/* Side rail: contacts + numbers */}
-      <Section eyebrow="The team" title="Who&rsquo;s helping">
+      <Section eyebrow={t("home.team.eyebrow")} title={t("home.team.title")}>
         <div className="grid gap-3 sm:grid-cols-2">
           {featured.contractor ? (
             <ContactCard
               contact={featured.contractor}
               footer={
                 featured.startedOn
-                  ? `On the project since ${formatShortDate(featured.startedOn)}`
-                  : "Joining once we kick off"
+                  ? t("home.team.contractor_since").replace(
+                      "{date}",
+                      formatShortDate(featured.startedOn),
+                    )
+                  : t("home.team.contractor_pending")
               }
             />
           ) : null}
           {featured.municipalityHandler ? (
             <ContactCard
               contact={featured.municipalityHandler}
-              footer="Reviews your applications"
+              footer={t("home.team.reviewer_footer")}
             />
           ) : null}
         </div>
       </Section>
 
-      <Section eyebrow="At a glance" title="The numbers">
+      <Section
+        eyebrow={t("home.numbers.eyebrow")}
+        title={t("home.numbers.title")}
+      >
         <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
           <Stat
             icon={<Hammer className="size-4" />}
-            label="Budget"
+            label={t("home.numbers.budget")}
             value={formatMoney(featured.budget)}
           />
           <Stat
             icon={<Bell className="size-4" />}
-            label="Permit fees"
+            label={t("home.numbers.permit_fees")}
             value={formatMoney(totalFees)}
           />
           <Stat
             icon={<Clock4 className="size-4" />}
-            label="Started"
+            label={t("home.numbers.started")}
             value={
               featured.startedOn
                 ? formatShortDate(featured.startedOn)
-                : "—"
+                : t("home.numbers.empty")
             }
           />
           <Stat
             icon={<Calendar className="size-4" />}
-            label="Target finish"
+            label={t("home.numbers.target_finish")}
             value={
               featured.targetFinishDate
                 ? formatShortDate(featured.targetFinishDate)
-                : "—"
+                : t("home.numbers.empty")
             }
           />
         </div>
@@ -301,6 +318,7 @@ function SuggestionCard({
 }: {
   suggestion: (typeof aiSuggestions)[number]
 }) {
+  const t = useT()
   const tone =
     suggestion.severity === "action"
       ? "bg-home-accent-soft/60 border-home-accent/30"
@@ -316,17 +334,20 @@ function SuggestionCard({
         </span>
         <div className="flex-1">
           <div className="text-foreground text-[16px] font-semibold tracking-tight">
-            {suggestion.headline}
+            {t(`data.suggestion.${suggestion.id}.headline`, suggestion.headline)}
           </div>
           <p className="text-foreground/80 mt-1 text-[14px] leading-relaxed">
-            {suggestion.body}
+            {t(`data.suggestion.${suggestion.id}.body`, suggestion.body)}
           </p>
           <div className="mt-3.5 flex flex-wrap items-center gap-2">
             <Button
               size="sm"
               className="bg-foreground text-background hover:bg-foreground/90 h-8 gap-1.5 rounded-full px-3 text-[13.5px]"
             >
-              {suggestion.primaryAction}
+              {t(
+                `data.suggestion.${suggestion.id}.primary`,
+                suggestion.primaryAction,
+              )}
               <ArrowRight className="size-3" />
             </Button>
             {suggestion.secondaryAction ? (
@@ -335,7 +356,10 @@ function SuggestionCard({
                 variant="ghost"
                 className="text-muted-foreground hover:text-foreground h-8 rounded-full px-2 text-[13.5px]"
               >
-                {suggestion.secondaryAction}
+                {t(
+                  `data.suggestion.${suggestion.id}.secondary`,
+                  suggestion.secondaryAction,
+                )}
               </Button>
             ) : null}
           </div>
@@ -346,6 +370,7 @@ function SuggestionCard({
 }
 
 function ProjectCard({ project }: { project: HomeProject }) {
+  const t = useT()
   const Icon = getProjectIcon(project.icon)
   return (
     <div className="border-home-border/70 bg-card flex h-full flex-col rounded-2xl border p-5">
@@ -354,13 +379,13 @@ function ProjectCard({ project }: { project: HomeProject }) {
       </span>
       <div className="mt-4">
         <div className="text-foreground text-[17px] font-semibold tracking-tight">
-          {project.name}
+          {t(`data.project.${project.id}.name`, project.name)}
         </div>
         <div className="text-muted-foreground mt-1 text-[12.5px] font-medium tracking-[0.04em] uppercase">
-          {KIND_LABEL[project.kind]}
+          {t(`data.kind.${project.kind}`, KIND_LABEL[project.kind])}
         </div>
         <p className="text-muted-foreground mt-2 line-clamp-2 text-[14px] leading-snug">
-          {project.summary}
+          {t(`data.project.${project.id}.summary`, project.summary)}
         </p>
       </div>
       <div className="border-home-border/60 mt-4 flex items-center justify-between gap-2 border-t pt-3">
@@ -374,7 +399,7 @@ function ProjectCard({ project }: { project: HomeProject }) {
           className="text-foreground hover:bg-foreground/[0.04] h-8 gap-1 rounded-full px-3 text-[13.5px]"
         >
           <Link to={`/home/project/${project.id}`}>
-            Open
+            {t("home.projects.open")}
             <ArrowRight className="size-3" />
           </Link>
         </Button>
@@ -390,6 +415,7 @@ function StageDots({
   current: HomePermitStatus
   className?: string
 }) {
+  const t = useT()
   const currentIdx = STAGE_ORDER.indexOf(current)
   const labels: { key: HomePermitStatus; short: string }[] = [
     { key: "preparing", short: "Prep" },
@@ -417,7 +443,7 @@ function StageDots({
             />
             {active ? (
               <span className="text-foreground ml-1 text-[12.5px] font-medium">
-                {homeStatusLabel[current]}
+                {t(`data.status.${current}.label`, homeStatusLabel[current])}
               </span>
             ) : null}
           </div>

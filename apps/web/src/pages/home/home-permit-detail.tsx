@@ -21,8 +21,10 @@ import {
   homeStatusLabel,
   permits,
   renovation,
+  type HomePermit,
   type HomeRequirement,
 } from "@/lib/home-mock"
+import { useT } from "@/lib/home-i18n"
 
 /**
  * Single permit, one full lifecycle. Order on the page mirrors what a homeowner
@@ -30,6 +32,7 @@ import {
  * need, what comes after.
  */
 export function HomePermitDetailPage() {
+  const t = useT()
   const { id } = useParams<{ id: string }>()
   const permit = id ? getPermit(id) : undefined
   if (!permit) {
@@ -48,7 +51,7 @@ export function HomePermitDetailPage() {
           className="text-muted-foreground hover:text-foreground inline-flex items-center gap-1.5"
         >
           <ArrowLeft className="size-3.5" />
-          Back to your renovation
+          {t("permit.back")}
         </Link>
       </div>
 
@@ -56,23 +59,29 @@ export function HomePermitDetailPage() {
       <div className="border-home-border/70 bg-card overflow-hidden rounded-3xl border">
         <div className="px-7 py-7 sm:px-9 sm:py-8">
           <div className="text-muted-foreground text-[13px] font-medium tracking-wide uppercase">
-            Permit
+            {t("permit.eyebrow")}
           </div>
           <h1 className="text-foreground/95 mt-1.5 text-[34px] leading-tight font-semibold tracking-[-0.015em] sm:text-[40px]">
-            {permit.name}
+            {t(`data.permit.${permit.id}.name`, permit.name)}
           </h1>
           <p className="text-muted-foreground mt-3 max-w-xl text-[17px] leading-relaxed">
-            {permit.whatItCovers}
+            {t(`data.permit.${permit.id}.blurb`, permit.whatItCovers)}
           </p>
 
           <div className="border-home-border/60 mt-7 grid gap-5 border-t pt-6 sm:grid-cols-3">
             <Stat
-              label="Where it is now"
-              value={homeStatusLabel[permit.status]}
-              hint={homeStatusBlurb[permit.status]}
+              label={t("permit.stat.where")}
+              value={t(
+                `data.status.${permit.status}.label`,
+                homeStatusLabel[permit.status],
+              )}
+              hint={t(
+                `data.status.${permit.status}.blurb`,
+                homeStatusBlurb[permit.status],
+              )}
             />
             <Stat
-              label="Pulled by"
+              label={t("permit.stat.pulledBy")}
               value={
                 permit.pulledBy === "contractor"
                   ? renovation.contractor.name
@@ -81,11 +90,14 @@ export function HomePermitDetailPage() {
               hint={permit.permitNumber ? `#${permit.permitNumber}` : undefined}
             />
             <Stat
-              label="City fee"
+              label={t("permit.stat.fee")}
               value={permit.fee ? formatMoney(permit.fee) : "—"}
               hint={
                 permit.applicationDate
-                  ? `Filed ${formatShortDate(permit.applicationDate)}`
+                  ? t("permit.stat.filed").replace(
+                      "{date}",
+                      formatShortDate(permit.applicationDate),
+                    )
                   : undefined
               }
             />
@@ -96,11 +108,14 @@ export function HomePermitDetailPage() {
           <div className="border-home-border/60 bg-home-accent-soft/60 flex items-start gap-3 border-t px-7 py-4 sm:px-9">
             <Clock4 className="text-home-accent mt-0.5 size-4 shrink-0" />
             <p className="text-foreground/90 text-[14.5px] leading-relaxed">
-              Burnaby&rsquo;s building queue is about{" "}
+              {t("permit.queue.lead")}{" "}
               <strong className="text-foreground">
-                {permit.expectedReviewDays} business days
+                {t("permit.queue.days").replace(
+                  "{n}",
+                  String(permit.expectedReviewDays),
+                )}
               </strong>{" "}
-              right now. I&rsquo;ll let you know the moment anything moves.
+              {t("permit.queue.tail")}
             </p>
           </div>
         ) : null}
@@ -111,12 +126,14 @@ export function HomePermitDetailPage() {
 
       {/* Requirements checklist */}
       <Section
-        eyebrow="What it needs"
+        eyebrow={t("permit.needs.eyebrow")}
         title={
           <span>
-            Documents{" "}
+            {t("permit.needs.title")}{" "}
             <span className="text-muted-foreground text-[15px] font-normal">
-              · {reqDone} of {reqTotal} done
+              {t("permit.needs.count")
+                .replace("{done}", String(reqDone))
+                .replace("{total}", String(reqTotal))}
             </span>
           </span>
         }
@@ -132,7 +149,7 @@ export function HomePermitDetailPage() {
 
         <ul className="border-home-border/70 bg-card divide-home-border/60 divide-y rounded-2xl border">
           {permit.requirements.map((r) => (
-            <RequirementRow key={r.id} requirement={r} />
+            <RequirementRow key={r.id} permitId={permit.id} requirement={r} />
           ))}
         </ul>
       </Section>
@@ -140,9 +157,9 @@ export function HomePermitDetailPage() {
       {/* Inspections preview */}
       {permit.inspections && permit.inspections.length > 0 ? (
         <Section
-          eyebrow="What comes next"
-          title="Inspections after approval"
-          hint="Burnaby sends someone out to verify the work. I&rsquo;ll walk you through each one."
+          eyebrow={t("permit.next.eyebrow")}
+          title={t("permit.next.title")}
+          hint={t("permit.next.hint")}
         >
           <ul className="space-y-3">
             {permit.inspections.map((insp) => (
@@ -155,14 +172,22 @@ export function HomePermitDetailPage() {
                 </span>
                 <div className="flex-1">
                   <div className="text-foreground text-[16px] font-semibold tracking-tight">
-                    {insp.name}
+                    {t(
+                      `data.permit.${permit.id}.insp.${insp.id}.name`,
+                      insp.name,
+                    )}
                   </div>
                   <p className="text-muted-foreground mt-0.5 text-[14px] leading-snug">
-                    {insp.whatTheyCheck}
+                    {t(
+                      `data.permit.${permit.id}.insp.${insp.id}.check`,
+                      insp.whatTheyCheck,
+                    )}
                   </p>
                 </div>
                 <span className="text-muted-foreground text-[13px]">
-                  {insp.status === "not_yet" ? "Not yet" : insp.status}
+                  {insp.status === "not_yet"
+                    ? t("permit.insp.notYet")
+                    : insp.status}
                 </span>
               </li>
             ))}
@@ -226,7 +251,14 @@ function Section({
   )
 }
 
-function RequirementRow({ requirement }: { requirement: HomeRequirement }) {
+function RequirementRow({
+  permitId,
+  requirement,
+}: {
+  permitId: string
+  requirement: HomeRequirement
+}) {
+  const t = useT()
   const status = requirement.status
   const preview = requirement.preview
 
@@ -256,7 +288,10 @@ function RequirementRow({ requirement }: { requirement: HomeRequirement }) {
       <div className="min-w-0 flex-1">
         <div className="flex flex-wrap items-baseline justify-between gap-2">
           <span className="text-foreground text-[16px] font-medium tracking-tight">
-            {requirement.label}
+            {t(
+              `data.permit.${permitId}.req.${requirement.id}.label`,
+              requirement.label,
+            )}
           </span>
           {requirement.fileName && !preview ? (
             <span className="text-muted-foreground inline-flex items-center gap-1 text-[13px]">
@@ -266,26 +301,34 @@ function RequirementRow({ requirement }: { requirement: HomeRequirement }) {
           ) : null}
         </div>
         <p className="text-muted-foreground mt-0.5 text-[14px] leading-snug">
-          {requirement.helper}
+          {t(
+            `data.permit.${permitId}.req.${requirement.id}.helper`,
+            requirement.helper,
+          )}
         </p>
         {status === "ai_can_help" && requirement.aiAssist ? (
           <div className="bg-home-accent-soft/70 mt-3 flex items-start gap-2.5 rounded-xl px-3 py-2.5">
             <Sparkles className="text-home-accent mt-0.5 size-3.5 shrink-0" />
             <div className="flex-1 text-[14px]">
-              <div className="text-foreground/90">{requirement.aiAssist}</div>
+              <div className="text-foreground/90">
+                {t(
+                  `data.permit.${permitId}.req.${requirement.id}.ai`,
+                  requirement.aiAssist,
+                )}
+              </div>
               <div className="mt-2 flex gap-2">
                 <Button
                   size="sm"
                   className="bg-foreground text-background hover:bg-foreground/90 h-7 rounded-full px-3 text-[13px]"
                 >
-                  Yes, fill it out
+                  {t("permit.ai.yes")}
                 </Button>
                 <Button
                   size="sm"
                   variant="ghost"
                   className="text-muted-foreground hover:text-foreground h-7 rounded-full px-2 text-[13px]"
                 >
-                  I&rsquo;ll do it
+                  {t("permit.ai.no")}
                 </Button>
               </div>
             </div>
@@ -293,7 +336,7 @@ function RequirementRow({ requirement }: { requirement: HomeRequirement }) {
         ) : null}
         {status === "in_progress" ? (
           <div className="text-muted-foreground mt-2 text-[13.5px] italic">
-            Lopez is working on this.
+            {t("permit.req.inProgress")}
           </div>
         ) : null}
       </div>
@@ -338,6 +381,7 @@ function DocPreview({
 }
 
 function AiAssistCallout({ permitId }: { permitId: string }) {
+  const t = useT()
   // Static demo content keyed to the in-review building permit.
   if (permitId !== "building") return null
   return (
@@ -348,11 +392,10 @@ function AiAssistCallout({ permitId }: { permitId: string }) {
         </span>
         <div>
           <div className="text-foreground text-[16px] font-semibold tracking-tight">
-            Burnaby left one comment on this permit
+            {t("permit.callout.title")}
           </div>
           <p className="text-muted-foreground text-[14px] leading-snug">
-            They want a section drawing of the new wall header. I drafted an
-            email to your engineer.
+            {t("permit.callout.body")}
           </p>
         </div>
       </div>
@@ -362,7 +405,7 @@ function AiAssistCallout({ permitId }: { permitId: string }) {
           className="bg-home-accent text-background hover:bg-home-accent/90 h-9 gap-1.5 rounded-full px-4 text-[14px] font-medium"
         >
           <Link to="/home/ask">
-            See the draft
+            {t("permit.callout.cta")}
             <ArrowRight className="size-3.5" />
           </Link>
         </Button>
@@ -372,19 +415,21 @@ function AiAssistCallout({ permitId }: { permitId: string }) {
 }
 
 function NextPermitNav({ currentId }: { currentId: string }) {
+  const t = useT()
   const idx = permits.findIndex((p) => p.id === currentId)
-  const next = permits[(idx + 1) % permits.length]
+  const next = permits[(idx + 1) % permits.length] as HomePermit | undefined
   if (!next) return null
+  const nextName = t(`data.permit.${next.id}.name`, next.name)
   return (
     <div className="border-home-border/70 mt-12 flex items-center justify-between border-t pt-6">
       <div className="text-muted-foreground inline-flex items-center gap-2 text-[13.5px]">
         <HelpCircle className="size-3.5" />
-        Have a question about this?{" "}
+        {t("permit.foot.question")}{" "}
         <Link
           to="/home/ask"
           className="text-foreground underline-offset-4 hover:underline"
         >
-          Ask AI
+          {t("permit.foot.ask")}
         </Link>
       </div>
       <Link
@@ -392,7 +437,7 @@ function NextPermitNav({ currentId }: { currentId: string }) {
         className="text-foreground inline-flex items-center gap-1.5 text-[14px] font-medium hover:gap-2 transition-all"
       >
         <FileCheck2 className="text-muted-foreground size-4" />
-        Next: {next.name}
+        {t("permit.foot.next").replace("{name}", nextName)}
         <ArrowRight className="size-3.5" />
       </Link>
     </div>

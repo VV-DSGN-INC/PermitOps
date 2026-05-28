@@ -32,6 +32,7 @@ import {
   type ProjectPhoto,
   type ProjectPhotoKind,
 } from "@/lib/home-mock"
+import { useT } from "@/lib/home-i18n"
 
 const ICONS: Record<string, LucideIcon> = {
   ChefHat,
@@ -44,6 +45,9 @@ function getProjectIcon(name: string): LucideIcon {
   return ICONS[name] ?? ChefHat
 }
 
+// English fallbacks for the kind/status/photo-kind data keys. Localized labels
+// are resolved via t(`data.kind.${kind}`, KIND_LABEL[kind]) etc.; these maps
+// keep the English copy in one place.
 const KIND_LABEL: Record<HomeProject["kind"], string> = {
   renovation: "Renovation",
   addition: "Addition",
@@ -53,8 +57,8 @@ const KIND_LABEL: Record<HomeProject["kind"], string> = {
 
 const STATUS_LABEL: Record<HomeProject["status"], string> = {
   planning: "Planning",
-  active: "In progress",
-  completed: "Done",
+  active: "Active",
+  completed: "Completed",
 }
 
 const PHOTO_KIND_LABEL: Record<ProjectPhotoKind, string> = {
@@ -80,6 +84,7 @@ const STAGE_ORDER: HomePermitStatus[] = [
  * (rich content) and planning-stage ones (mostly photos + scoping).
  */
 export function HomeProjectDetailPage() {
+  const t = useT()
   const { id } = useParams<{ id: string }>()
   const project = id ? projects.find((p) => p.id === id) : undefined
   if (!project) {
@@ -97,7 +102,7 @@ export function HomeProjectDetailPage() {
           className="text-muted-foreground hover:text-foreground inline-flex items-center gap-1.5"
         >
           <ArrowLeft className="size-3.5" />
-          All your projects
+          {t("project.back")}
         </Link>
       </div>
 
@@ -109,7 +114,7 @@ export function HomeProjectDetailPage() {
         <div className="min-w-0 flex-1">
           <div className="flex flex-wrap items-center gap-2">
             <span className="border-home-border/70 bg-card text-muted-foreground inline-flex items-center rounded-full border px-2.5 py-0.5 text-[12.5px] font-medium tracking-[0.04em] uppercase">
-              {KIND_LABEL[project.kind]}
+              {t(`data.kind.${project.kind}`, KIND_LABEL[project.kind])}
             </span>
             <span
               className={cn(
@@ -130,14 +135,14 @@ export function HomeProjectDetailPage() {
                   project.status === "completed" && "bg-emerald-600",
                 )}
               />
-              {STATUS_LABEL[project.status]}
+              {t(`data.pstatus.${project.status}`, STATUS_LABEL[project.status])}
             </span>
           </div>
           <h1 className="text-foreground/95 mt-3 text-[34px] leading-[1.05] font-semibold tracking-[-0.018em] sm:text-[40px]">
-            {project.name}
+            {t(`data.project.${project.id}.name`, project.name)}
           </h1>
           <p className="text-muted-foreground mt-3 max-w-2xl text-[17px] leading-relaxed">
-            {project.summary}
+            {t(`data.project.${project.id}.summary`, project.summary)}
           </p>
         </div>
       </div>
@@ -146,12 +151,12 @@ export function HomeProjectDetailPage() {
       {project.photos && project.photos.length > 0 ? (
         <section className="mt-10">
           <div className="text-muted-foreground text-[12px] font-semibold tracking-[0.1em] uppercase">
-            The look
+            {t("project.look.eyebrow")}
           </div>
           <h3 className="text-foreground mt-1.5 text-[22px] font-semibold tracking-tight">
             {isPlanning
-              ? "Where we're heading"
-              : "How it's coming along"}
+              ? t("project.look.title_planning")
+              : t("project.look.title_active")}
           </h3>
           <div className="mt-5 -mx-6 overflow-x-auto px-6">
             <div className="flex snap-x snap-mandatory gap-3 pb-1">
@@ -164,7 +169,10 @@ export function HomeProjectDetailPage() {
       ) : null}
 
       {/* Where it is now */}
-      <Section eyebrow="The state of things" title="Where it is now">
+      <Section
+        eyebrow={t("project.state.eyebrow")}
+        title={t("project.state.title")}
+      >
         {isPlanning ? (
           <div className="border-home-border/70 bg-card rounded-2xl border p-6">
             <div className="flex items-start gap-3">
@@ -173,12 +181,10 @@ export function HomeProjectDetailPage() {
               </span>
               <div className="flex-1">
                 <div className="text-foreground text-[17px] font-semibold tracking-tight">
-                  Still scoping
+                  {t("project.scoping.title")}
                 </div>
                 <p className="text-muted-foreground mt-1 text-[14.5px] leading-relaxed">
-                  We&rsquo;re early on this one. The AI can help you firm up
-                  the scope, budget, and whether you&rsquo;ll need any permits
-                  before you commit.
+                  {t("project.scoping.body")}
                 </p>
                 <div className="mt-4 flex flex-wrap items-center gap-2">
                   <Button
@@ -187,7 +193,7 @@ export function HomeProjectDetailPage() {
                   >
                     <Link to="/home/ask">
                       <Sparkles className="size-3.5" />
-                      Talk to AI to firm this up
+                      {t("project.scoping.cta")}
                     </Link>
                   </Button>
                 </div>
@@ -199,11 +205,14 @@ export function HomeProjectDetailPage() {
             <div className="border-home-border/70 bg-card rounded-2xl border p-6">
               <div className="flex flex-wrap items-baseline justify-between gap-2">
                 <div className="text-muted-foreground text-[12.5px] font-medium tracking-[0.1em] uppercase">
-                  Stage
+                  {t("project.state.stage")}
                 </div>
                 {typeof project.progress === "number" ? (
                   <div className="text-muted-foreground text-[13px] tabular-nums">
-                    {project.progress}% complete
+                    {t("project.state.complete", "{progress}% complete").replace(
+                      "{progress}",
+                      String(project.progress),
+                    )}
                   </div>
                 ) : null}
               </div>
@@ -226,15 +235,18 @@ export function HomeProjectDetailPage() {
                   contact={project.contractor}
                   footer={
                     project.startedOn
-                      ? `On the project since ${formatShortDate(project.startedOn)}`
-                      : "Joining once we kick off"
+                      ? t(
+                          "project.state.contractor_since",
+                          "On the project since {date}",
+                        ).replace("{date}", formatShortDate(project.startedOn))
+                      : t("project.state.contractor_pending")
                   }
                 />
               ) : null}
               {project.municipalityHandler ? (
                 <ContactCard
                   contact={project.municipalityHandler}
-                  footer="Reviews your applications"
+                  footer={t("project.state.reviewer_footer")}
                 />
               ) : null}
             </div>
@@ -243,7 +255,10 @@ export function HomeProjectDetailPage() {
       </Section>
 
       {/* Permits */}
-      <Section eyebrow="Paperwork" title="Permits">
+      <Section
+        eyebrow={t("project.permits.eyebrow")}
+        title={t("project.permits.title")}
+      >
         {project.permits.length > 0 ? (
           <div className="grid gap-3 sm:grid-cols-2">
             {project.permits.map((permit) => (
@@ -258,18 +273,16 @@ export function HomeProjectDetailPage() {
               </span>
               <div className="flex-1">
                 <div className="text-foreground text-[16px] font-semibold tracking-tight">
-                  No permits yet
+                  {t("project.permits.empty.title")}
                 </div>
                 <p className="text-muted-foreground mt-1 text-[14.5px] leading-relaxed">
-                  We&rsquo;ll know once we scope this together. Burnaby&rsquo;s
-                  permit rules depend on size, height, and how close it sits to
-                  the property line.
+                  {t("project.permits.empty.body")}
                 </p>
                 <Link
                   to="/home/ask"
                   className="text-foreground mt-3 inline-flex items-center gap-1.5 text-[14px] font-medium underline-offset-4 hover:underline"
                 >
-                  Open AI assistant
+                  {t("project.permits.empty.cta")}
                   <ArrowRight className="size-3.5" />
                 </Link>
               </div>
@@ -279,29 +292,32 @@ export function HomeProjectDetailPage() {
       </Section>
 
       {/* At a glance */}
-      <Section eyebrow="At a glance" title="The numbers">
+      <Section
+        eyebrow={t("project.glance.eyebrow")}
+        title={t("project.glance.title")}
+      >
         <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
           <Stat
             icon={<Hammer className="size-4" />}
-            label="Budget"
+            label={t("project.stat.budget")}
             value={formatMoney(project.budget)}
           />
           <Stat
             icon={<Layers className="size-4" />}
-            label="Stage"
+            label={t("project.stat.stage")}
             value={project.stage}
           />
           {isPlanning ? (
             <Stat
               icon={<Sparkles className="size-4" />}
-              label="Status"
-              value="Scoping with AI"
+              label={t("project.stat.status")}
+              value={t("project.stat.scoping_ai")}
             />
           ) : (
             <>
               <Stat
                 icon={<Clock4 className="size-4" />}
-                label="Started"
+                label={t("project.stat.started")}
                 value={
                   project.startedOn
                     ? formatShortDate(project.startedOn)
@@ -310,7 +326,7 @@ export function HomeProjectDetailPage() {
               />
               <Stat
                 icon={<Calendar className="size-4" />}
-                label="Target finish"
+                label={t("project.stat.target_finish")}
                 value={
                   project.targetFinishDate
                     ? formatShortDate(project.targetFinishDate)
@@ -326,6 +342,10 @@ export function HomeProjectDetailPage() {
 }
 
 function PhotoTile({ photo }: { photo: ProjectPhoto }) {
+  const t = useT()
+  const caption = photo.caption
+    ? t(`data.photo.${photo.id}.caption`, photo.caption)
+    : ""
   return (
     <div
       className="group border-home-border/70 bg-card relative h-[220px] w-[320px] shrink-0 snap-start overflow-hidden rounded-2xl border"
@@ -333,19 +353,19 @@ function PhotoTile({ photo }: { photo: ProjectPhoto }) {
     >
       <img
         src={photo.url}
-        alt={photo.caption ?? ""}
+        alt={caption}
         loading="lazy"
         className="absolute inset-0 size-full object-cover transition group-hover:scale-105"
       />
       <div className="absolute top-2 left-2">
         <span className="bg-background/90 text-foreground inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[11px] font-medium backdrop-blur">
-          {PHOTO_KIND_LABEL[photo.kind]}
+          {t(`photo.kind.${photo.kind}`, PHOTO_KIND_LABEL[photo.kind])}
         </span>
       </div>
-      {photo.caption ? (
+      {caption ? (
         <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 to-transparent p-3 pt-12">
           <p className="line-clamp-2 text-[13px] font-medium text-white">
-            {photo.caption}
+            {caption}
           </p>
         </div>
       ) : null}
@@ -354,6 +374,7 @@ function PhotoTile({ photo }: { photo: ProjectPhoto }) {
 }
 
 function PermitCard({ permit }: { permit: HomePermit }) {
+  const t = useT()
   return (
     <Link
       to={`/home/permit/${permit.id}`}
@@ -362,19 +383,21 @@ function PermitCard({ permit }: { permit: HomePermit }) {
       <div className="flex items-start justify-between gap-2">
         <div>
           <div className="text-foreground text-[16px] font-semibold tracking-tight">
-            {permit.name}
+            {t(`data.permit.${permit.id}.name`, permit.name)}
           </div>
           <StageDots current={permit.status} className="mt-2" />
         </div>
         <ChevronRight className="text-muted-foreground/60 group-hover:text-foreground mt-1 size-4 transition" />
       </div>
       <p className="text-muted-foreground mt-3 line-clamp-2 text-[14px] leading-snug">
-        {homeStatusBlurb[permit.status]}
+        {t(`data.status.${permit.status}.blurb`, homeStatusBlurb[permit.status])}
         {permit.permitNumber ? ` · #${permit.permitNumber}` : ""}
       </p>
       <div className="border-home-border/60 mt-4 flex items-center justify-between border-t pt-3">
         <span className="text-muted-foreground text-[13px]">
-          {permit.pulledBy === "contractor" ? "Lopez pulls this" : "You pull this"}
+          {permit.pulledBy === "contractor"
+            ? t("project.permits.pulled_contractor", "Lopez pulls this")
+            : t("project.permits.pulled_you", "You pull this")}
         </span>
         {permit.fee ? (
           <span className="text-foreground text-[13px] font-medium tabular-nums">
@@ -393,6 +416,7 @@ function StageDots({
   current: HomePermitStatus
   className?: string
 }) {
+  const t = useT()
   const currentIdx = STAGE_ORDER.indexOf(current)
   const labels: { key: HomePermitStatus }[] = [
     { key: "preparing" },
@@ -420,7 +444,7 @@ function StageDots({
             />
             {active ? (
               <span className="text-foreground ml-1 text-[12.5px] font-medium">
-                {homeStatusLabel[current]}
+                {t(`data.status.${current}.label`, homeStatusLabel[current])}
               </span>
             ) : null}
           </div>

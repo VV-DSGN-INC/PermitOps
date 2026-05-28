@@ -11,7 +11,7 @@ import { TooltipProvider } from "@workspace/ui/components/tooltip"
 import { Button } from "@workspace/ui/components/button"
 import { cn } from "@workspace/ui/lib/utils"
 import { renovation } from "@/lib/home-mock"
-import { HomeLocaleProvider } from "@/lib/home-i18n"
+import { useT } from "@/lib/home-i18n"
 import { LanguageSwitcher } from "@/components/home/language-switcher"
 
 /**
@@ -22,10 +22,10 @@ import { LanguageSwitcher } from "@/components/home/language-switcher"
 export function HomeShell() {
   const location = useLocation()
   const isWelcome = location.pathname.endsWith("/welcome")
+  const t = useT()
 
   return (
     <TooltipProvider delayDuration={200}>
-      <HomeLocaleProvider>
       <div className="bg-home-canvas text-foreground min-h-screen">
         <header className="border-home-border/60 sticky top-0 z-30 border-b bg-home-canvas/85 backdrop-blur supports-[backdrop-filter]:bg-home-canvas/70">
           <div className="mx-auto flex h-16 max-w-5xl items-center gap-4 px-6">
@@ -41,25 +41,25 @@ export function HomeShell() {
             {!isWelcome ? (
               <nav className="ml-2 hidden gap-1 sm:flex">
                 <HomeNavLink to="/home" icon={<HomeIcon className="size-4" />}>
-                  Home
+                  {t("nav.home")}
                 </HomeNavLink>
                 <HomeNavLink
                   to="/home/projects"
                   icon={<FolderHeart className="size-4" />}
                 >
-                  Projects
+                  {t("nav.projects")}
                 </HomeNavLink>
                 <HomeNavLink
                   to="/home/calendar"
                   icon={<CalendarDays className="size-4" />}
                 >
-                  Calendar
+                  {t("nav.calendar")}
                 </HomeNavLink>
                 <HomeNavLink
                   to="/home/ask"
                   icon={<MessageCircle className="size-4" />}
                 >
-                  Ask
+                  {t("nav.ask")}
                 </HomeNavLink>
               </nav>
             ) : null}
@@ -74,7 +74,7 @@ export function HomeShell() {
                 >
                   <Link to="/home/ask">
                     <Sparkles className="size-3.5" />
-                    Ask AI
+                    {t("nav.askAI")}
                   </Link>
                 </Button>
               ) : null}
@@ -93,7 +93,6 @@ export function HomeShell() {
           <Outlet />
         </main>
       </div>
-      </HomeLocaleProvider>
     </TooltipProvider>
   )
 }

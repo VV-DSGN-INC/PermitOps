@@ -166,23 +166,23 @@ function ReviewStep({
           </div>
           <ul className="mt-4 space-y-3">
             <ReviewPermit
-              name="Building Permit"
-              why="Because you&rsquo;re removing a wall — even non-bearing counts in Burnaby."
+              name={t("welcome.review.permit.building.name")}
+              why={t("welcome.review.permit.building.why")}
               fee="~$1,800"
             />
             <ReviewPermit
-              name="Electrical Permit"
-              why="New circuits for the island and recessed lighting."
+              name={t("welcome.review.permit.electrical.name")}
+              why={t("welcome.review.permit.electrical.why")}
               fee="~$280"
             />
             <ReviewPermit
-              name="Plumbing Permit"
-              why="Moving the sink and dishwasher line."
+              name={t("welcome.review.permit.plumbing.name")}
+              why={t("welcome.review.permit.plumbing.why")}
               fee="~$240"
             />
             <ReviewPermit
-              name="Mechanical Permit"
-              why="New range-hood vent through the exterior wall."
+              name={t("welcome.review.permit.mechanical.name")}
+              why={t("welcome.review.permit.mechanical.why")}
               fee="~$175"
             />
           </ul>

@@ -16,6 +16,7 @@ import {
   projects,
   type HomeProject,
 } from "@/lib/home-mock"
+import { useT } from "@/lib/home-i18n"
 
 // Lucide icon lookup — kept in sync with the dashboard and project detail pages
 // so the same `project.icon` string resolves consistently.
@@ -30,6 +31,9 @@ function getProjectIcon(name: string): LucideIcon {
   return ICONS[name] ?? ChefHat
 }
 
+// English fallbacks for the kind/status data keys. The localized label is
+// resolved via t(`data.kind.${kind}`, KIND_LABEL[kind]); the map keeps the
+// English copy in one place.
 const KIND_LABEL: Record<HomeProject["kind"], string> = {
   renovation: "Renovation",
   addition: "Addition",
@@ -45,10 +49,19 @@ const STATUS_LABEL: Record<HomeProject["status"], string> = {
 
 type StatusFilter = "all" | "active" | "planning"
 
-const STATUS_FILTERS: { key: StatusFilter; label: string }[] = [
-  { key: "all", label: "All" },
-  { key: "active", label: "Active" },
-  { key: "planning", label: "Planning" },
+// Filter chips. `labelKey`/`fallback` feed t() so the chip text localizes.
+const STATUS_FILTERS: {
+  key: StatusFilter
+  labelKey: string
+  fallback: string
+}[] = [
+  { key: "all", labelKey: "projects.filter.all", fallback: "All" },
+  { key: "active", labelKey: "projects.filter.active", fallback: "Active" },
+  {
+    key: "planning",
+    labelKey: "projects.filter.planning",
+    fallback: "Planning",
+  },
 ]
 
 function permitsDoneCount(project: HomeProject): number {
@@ -64,6 +77,7 @@ function permitsDoneCount(project: HomeProject): number {
  * page.
  */
 export function HomeProjectsPage() {
+  const t = useT()
   const [statusFilter, setStatusFilter] = useState<StatusFilter>("all")
 
   const filtered = useMemo(() => {
@@ -82,14 +96,13 @@ export function HomeProjectsPage() {
       {/* Header */}
       <div className="mt-2">
         <div className="text-muted-foreground text-[12.5px] font-semibold tracking-[0.1em] uppercase">
-          Your projects
+          {t("projects.eyebrow")}
         </div>
         <h1 className="text-foreground/95 mt-2 text-[28px] leading-[1.08] font-semibold tracking-[-0.015em] sm:text-[34px] sm:leading-[1.05]">
-          Everything you&rsquo;re working on
+          {t("projects.title")}
         </h1>
         <p className="text-muted-foreground mt-3 max-w-xl text-[17px] leading-relaxed">
-          Active and planning — all in one place. Open any one to see the
-          details.
+          {t("projects.sub")}
         </p>
       </div>
 
@@ -101,7 +114,7 @@ export function HomeProjectsPage() {
             active={statusFilter === f.key}
             onClick={() => setStatusFilter(f.key)}
           >
-            {f.label}
+            {t(f.labelKey, f.fallback)}
           </FilterChip>
         ))}
       </div>
@@ -148,6 +161,7 @@ function FilterChip({
 }
 
 function ProjectCard({ project }: { project: HomeProject }) {
+  const t = useT()
   const Icon = getProjectIcon(project.icon)
   const firstPhoto = project.photos?.[0]
   const totalPermits = project.permits.length
@@ -161,7 +175,11 @@ function ProjectCard({ project }: { project: HomeProject }) {
           {firstPhoto ? (
             <img
               src={firstPhoto.url}
-              alt={firstPhoto.caption ?? project.name}
+              alt={t(
+                `data.photo.${firstPhoto.id}.caption`,
+                firstPhoto.caption ??
+                  t(`data.project.${project.id}.name`, project.name),
+              )}
               loading="lazy"
               style={
                 firstPhoto.color
@@ -180,12 +198,12 @@ function ProjectCard({ project }: { project: HomeProject }) {
           {/* Status badge */}
           <span className="bg-background/90 absolute top-3 left-3 inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[12px] font-medium backdrop-blur">
             <StatusDot status={project.status} />
-            {STATUS_LABEL[project.status]}
+            {t(`data.pstatus.${project.status}`, STATUS_LABEL[project.status])}
           </span>
           {/* Featured pill */}
           {project.featured ? (
             <span className="bg-home-accent text-home-accent-foreground absolute top-3 right-3 inline-flex items-center rounded-full px-2.5 py-1 text-[12px] font-semibold">
-              Featured
+              {t("projects.featured")}
             </span>
           ) : null}
         </div>
@@ -197,20 +215,22 @@ function ProjectCard({ project }: { project: HomeProject }) {
               <Icon className="size-3.5" />
             </span>
             <span className="text-muted-foreground text-[12.5px] font-semibold tracking-[0.06em] uppercase">
-              {KIND_LABEL[project.kind]}
+              {t(`data.kind.${project.kind}`, KIND_LABEL[project.kind])}
             </span>
           </div>
           <h2 className="text-foreground mt-2 text-[22px] font-semibold tracking-tight">
-            {project.name}
+            {t(`data.project.${project.id}.name`, project.name)}
           </h2>
           <p className="text-muted-foreground mt-2 line-clamp-2 text-[15px] leading-relaxed">
-            {project.summary}
+            {t(`data.project.${project.id}.summary`, project.summary)}
           </p>
           <div className="border-home-border/60 mt-5 flex items-center justify-between border-t pt-4">
             <div className="text-muted-foreground text-[13px]">
               {totalPermits > 0
-                ? `${doneCount} of ${totalPermits} permits done`
-                : "Not yet scoped"}
+                ? t("projects.permits_done", "{done} of {total} permits done")
+                    .replace("{done}", String(doneCount))
+                    .replace("{total}", String(totalPermits))
+                : t("projects.not_scoped")}
             </div>
             <span className="text-foreground/85 group-hover:text-foreground text-[13px] font-medium tabular-nums">
               {formatMoney(project.budget)}
@@ -237,23 +257,24 @@ function StatusDot({ status }: { status: HomeProject["status"] }) {
 }
 
 function EmptyState({ onClear }: { onClear: () => void }) {
+  const t = useT()
   return (
     <div className="border-home-border/70 bg-card rounded-3xl border px-8 py-12 text-center">
       <span className="bg-home-accent-soft text-home-accent mx-auto inline-flex size-12 items-center justify-center rounded-2xl">
         <FolderHeart className="size-6" />
       </span>
       <h3 className="text-foreground mt-4 text-[20px] font-semibold tracking-tight">
-        Nothing matches that filter
+        {t("projects.empty.title")}
       </h3>
       <p className="text-muted-foreground mx-auto mt-2 max-w-sm text-[14.5px] leading-relaxed">
-        Switch back to all projects to see everything you&rsquo;re working on.
+        {t("projects.empty.sub")}
       </p>
       <button
         type="button"
         onClick={onClear}
         className="border-home-border/70 bg-home-canvas hover:bg-home-accent-soft/60 text-foreground mt-5 inline-flex items-center rounded-full border px-4 py-1.5 text-[13.5px] font-medium transition"
       >
-        Show all projects
+        {t("projects.empty.show_all")}
       </button>
     </div>
   )

@@ -12,12 +12,34 @@ import { cn } from "@workspace/ui/lib/utils"
 import {
   getCalendarEvents,
   HOME_TODAY_ISO,
-  formatAgendaDay,
   owner,
   projects,
   type CalendarEvent,
   type CalendarEventKind,
 } from "@/lib/home-mock"
+import { useT, useHomeLocale, type HomeLocale } from "@/lib/home-i18n"
+
+/**
+ * Map our HomeLocale to a BCP-47 tag for Intl date formatting. Cantonese has
+ * no widely-supported spoken-locale data tag, so we use Traditional Chinese
+ * (`zh-Hant`) for month/weekday names; Punjabi uses the India region so the
+ * Gurmukhi script renders.
+ */
+const LOCALE_TO_BCP47: Record<HomeLocale, string> = {
+  en: "en-CA",
+  fr: "fr-CA",
+  "zh-Yue": "zh-Hant",
+  pa: "pa-IN",
+}
+
+/** Format a yyyy-mm-dd as a localized agenda day header (e.g. "Wed · May 28"). */
+function formatAgendaDay(iso: string, bcp47: string): string {
+  return new Date(iso + "T12:00:00Z").toLocaleDateString(bcp47, {
+    weekday: "short",
+    month: "short",
+    day: "numeric",
+  })
+}
 
 /**
  * Homeowner calendar — an agenda list grouped by day instead of a month grid.
@@ -28,31 +50,34 @@ import {
 type KindFilter = "all" | CalendarEventKind
 type ProjectFilter = "all" | string
 
-const KIND_FILTERS: { key: KindFilter; label: string }[] = [
-  { key: "all", label: "All" },
-  { key: "milestone", label: "Milestones" },
-  { key: "inspection", label: "Inspections" },
-  { key: "todo", label: "To-dos" },
+/** The translate function returned by `useT`. */
+type TFn = (key: string, fallback?: string) => string
+
+const KIND_FILTERS: { key: KindFilter; tKey: string }[] = [
+  { key: "all", tKey: "calendar.filter.all" },
+  { key: "milestone", tKey: "calendar.filter.milestones" },
+  { key: "inspection", tKey: "calendar.filter.inspections" },
+  { key: "todo", tKey: "calendar.filter.todos" },
 ]
 
 const KIND_META: Record<
   CalendarEventKind,
-  { label: string; iconBg: string; iconColor: string; Icon: typeof Sparkles }
+  { labelKey: string; iconBg: string; iconColor: string; Icon: typeof Sparkles }
 > = {
   milestone: {
-    label: "Milestone",
+    labelKey: "calendar.kind.milestone",
     iconBg: "bg-violet-100",
     iconColor: "text-violet-700",
     Icon: Sparkles,
   },
   inspection: {
-    label: "Inspection",
+    labelKey: "calendar.kind.inspection",
     iconBg: "bg-sky-100",
     iconColor: "text-sky-700",
     Icon: CalendarCheck,
   },
   todo: {
-    label: "To-do",
+    labelKey: "calendar.kind.todo",
     iconBg: "bg-amber-100",
     iconColor: "text-amber-800",
     Icon: CircleDashed,
@@ -60,6 +85,9 @@ const KIND_META: Record<
 }
 
 export function HomeCalendarPage() {
+  const t = useT()
+  const { locale } = useHomeLocale()
+  const bcp47 = LOCALE_TO_BCP47[locale]
   const [kindFilter, setKindFilter] = useState<KindFilter>("all")
   const [projectFilter, setProjectFilter] = useState<ProjectFilter>("all")
   const [selectedDate, setSelectedDate] = useState<string>(HOME_TODAY_ISO)
@@ -144,14 +172,13 @@ export function HomeCalendarPage() {
       {/* Header band */}
       <div className="mt-2">
         <div className="text-muted-foreground text-[12.5px] font-semibold tracking-[0.1em] uppercase">
-          Your calendar
+          {t("calendar.eyebrow")}
         </div>
         <h1 className="text-foreground/95 mt-2 text-[28px] leading-[1.08] font-semibold tracking-[-0.015em] sm:text-[34px] sm:leading-[1.05]">
-          What&rsquo;s coming up
+          {t("calendar.h1")}
         </h1>
         <p className="text-muted-foreground mt-3 max-w-xl text-[17px] leading-relaxed">
-          All the dates from your projects — permits, inspections, things you
-          need to do.
+          {t("calendar.sub")}
         </p>
       </div>
 
@@ -164,6 +191,8 @@ export function HomeCalendarPage() {
           selectedDate={selectedDate}
           onSelectDate={selectDate}
           onJumpToToday={jumpToToday}
+          t={t}
+          bcp47={bcp47}
         />
       </div>
 
@@ -175,7 +204,7 @@ export function HomeCalendarPage() {
             active={kindFilter === f.key}
             onClick={() => setKindFilter(f.key)}
           >
-            {f.label}
+            {t(f.tKey)}
           </FilterChip>
         ))}
       </div>
@@ -188,7 +217,7 @@ export function HomeCalendarPage() {
             onClick={() => setProjectFilter("all")}
             tone="subtle"
           >
-            All projects
+            {t("calendar.filter.allProjects")}
           </FilterChip>
           {projectsWithEvents.map((p) => (
             <FilterChip
@@ -197,7 +226,7 @@ export function HomeCalendarPage() {
               onClick={() => setProjectFilter(p.id)}
               tone="subtle"
             >
-              {p.name}
+              {t(`data.project.${p.id}.name`, p.name)}
             </FilterChip>
           ))}
         </div>
@@ -207,6 +236,7 @@ export function HomeCalendarPage() {
       <div className="mt-10">
         {grouped.length === 0 ? (
           <EmptyState
+            t={t}
             onClear={() => {
               setKindFilter("all")
               setProjectFilter("all")
@@ -215,7 +245,13 @@ export function HomeCalendarPage() {
         ) : (
           <div className="space-y-9">
             {grouped.map(([date, events]) => (
-              <DayGroup key={date} date={date} events={events} />
+              <DayGroup
+                key={date}
+                date={date}
+                events={events}
+                t={t}
+                bcp47={bcp47}
+              />
             ))}
           </div>
         )}
@@ -253,9 +289,21 @@ function FilterChip({
   )
 }
 
-function DayGroup({ date, events }: { date: string; events: CalendarEvent[] }) {
+function DayGroup({
+  date,
+  events,
+  t,
+  bcp47,
+}: {
+  date: string
+  events: CalendarEvent[]
+  t: TFn
+  bcp47: string
+}) {
   const isToday = date === HOME_TODAY_ISO
   const isPast = date < HOME_TODAY_ISO
+  const countKey =
+    events.length === 1 ? "calendar.eventCount.one" : "calendar.eventCount.other"
   return (
     <div id={`day-${date}`} className="scroll-mt-24">
       <div className="bg-home-canvas/85 supports-[backdrop-filter]:bg-home-canvas/70 sticky top-16 z-10 -mx-2 mb-3 flex items-center gap-3 px-2 py-1.5 backdrop-blur">
@@ -265,32 +313,34 @@ function DayGroup({ date, events }: { date: string; events: CalendarEvent[] }) {
             isPast ? "text-muted-foreground" : "text-foreground",
           )}
         >
-          {formatAgendaDay(date)}
+          {formatAgendaDay(date, bcp47)}
         </h2>
         {isToday ? (
           <span className="border-home-accent/40 bg-home-accent-soft text-home-accent inline-flex items-center rounded-full border px-2 py-0.5 text-[11.5px] font-semibold tracking-wide uppercase">
-            Today
+            {t("calendar.today")}
           </span>
         ) : null}
         <span className="bg-home-border/70 h-px flex-1" />
         <span className="text-muted-foreground text-[12.5px] tabular-nums">
-          {events.length} {events.length === 1 ? "event" : "events"}
+          {t(countKey).replace("{n}", String(events.length))}
         </span>
       </div>
       <ul className="space-y-2.5">
         {events.map((e) => (
-          <EventCard key={e.id} event={e} />
+          <EventCard key={e.id} event={e} t={t} />
         ))}
       </ul>
     </div>
   )
 }
 
-function EventCard({ event }: { event: CalendarEvent }) {
+function EventCard({ event, t }: { event: CalendarEvent; t: TFn }) {
   const meta = KIND_META[event.kind]
   const Icon = meta.Icon
   const project = projects.find((p) => p.id === event.projectId)
-  const projectLabel = project ? project.name.toLowerCase() : null
+  const projectLabel = project
+    ? t(`data.project.${project.id}.name`, project.name).toLowerCase()
+    : null
   const isLinked = Boolean(event.permitId)
 
   const inner = (
@@ -312,16 +362,16 @@ function EventCard({ event }: { event: CalendarEvent }) {
       </span>
       <div className="min-w-0 flex-1">
         <div className="text-foreground text-[16px] font-semibold tracking-tight">
-          {event.title}
+          {t(`data.calevent.${event.id}.title`, event.title)}
         </div>
         {event.note ? (
           <p className="text-muted-foreground mt-1 line-clamp-2 text-[14px] leading-snug">
-            {event.note}
+            {t(`data.calevent.${event.id}.note`, event.note)}
           </p>
         ) : null}
         <div className="mt-2.5 flex flex-wrap items-center gap-1.5">
           <span className="text-muted-foreground text-[12px] font-semibold tracking-[0.06em] uppercase">
-            {meta.label}
+            {t(meta.labelKey)}
           </span>
           {projectLabel ? (
             <>
@@ -362,6 +412,8 @@ function MonthGrid({
   selectedDate,
   onSelectDate,
   onJumpToToday,
+  t,
+  bcp47,
 }: {
   viewMonth: Date
   onViewMonthChange: (d: Date) => void
@@ -369,6 +421,8 @@ function MonthGrid({
   selectedDate: string
   onSelectDate: (date: string) => void
   onJumpToToday: () => void
+  t: TFn
+  bcp47: string
 }) {
   const year = viewMonth.getFullYear()
   const month = viewMonth.getMonth() // 0-indexed
@@ -377,7 +431,7 @@ function MonthGrid({
   const daysInMonth = new Date(year, month + 1, 0).getDate()
   const prevMonthDays = new Date(year, month, 0).getDate()
 
-  const monthLabel = viewMonth.toLocaleDateString("en-CA", {
+  const monthLabel = viewMonth.toLocaleDateString(bcp47, {
     month: "long",
     year: "numeric",
   })
@@ -417,7 +471,12 @@ function MonthGrid({
     nextDay++
   }
 
-  const dayNames = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
+  // Localized Sunday-start weekday abbreviations, derived via Intl so they
+  // follow the active locale. 2023-01-01 is a Sunday; format the next 7 days.
+  const weekdayFmt = new Intl.DateTimeFormat(bcp47, { weekday: "short" })
+  const dayNames = Array.from({ length: 7 }, (_, i) =>
+    weekdayFmt.format(new Date(Date.UTC(2023, 0, 1 + i, 12))),
+  )
 
   return (
     <div className="border-home-border/70 bg-card rounded-3xl border p-5 sm:p-6">
@@ -427,7 +486,7 @@ function MonthGrid({
           type="button"
           onClick={() => onViewMonthChange(new Date(year, month - 1, 1))}
           className="border-home-border/70 bg-home-canvas text-foreground/80 hover:bg-home-accent-soft/40 hover:text-foreground inline-flex size-9 items-center justify-center rounded-full border transition"
-          aria-label="Previous month"
+          aria-label={t("calendar.prevMonth")}
         >
           <ChevronLeft className="size-4" />
         </button>
@@ -438,7 +497,7 @@ function MonthGrid({
           type="button"
           onClick={() => onViewMonthChange(new Date(year, month + 1, 1))}
           className="border-home-border/70 bg-home-canvas text-foreground/80 hover:bg-home-accent-soft/40 hover:text-foreground inline-flex size-9 items-center justify-center rounded-full border transition"
-          aria-label="Next month"
+          aria-label={t("calendar.nextMonth")}
         >
           <ChevronRight className="size-4" />
         </button>
@@ -446,9 +505,9 @@ function MonthGrid({
 
       {/* Weekday header */}
       <div className="mt-5 grid grid-cols-7 text-center">
-        {dayNames.map((name) => (
+        {dayNames.map((name, i) => (
           <div
-            key={name}
+            key={i}
             className="text-muted-foreground pb-2 text-[12px] font-semibold tracking-wide uppercase"
           >
             {name}
@@ -524,15 +583,15 @@ function MonthGrid({
 
       {/* Legend + Today */}
       <div className="text-muted-foreground mt-4 flex flex-wrap items-center gap-x-5 gap-y-2 text-[12.5px]">
-        <LegendDot color="bg-violet-500" label="Milestones" />
-        <LegendDot color="bg-sky-500" label="Inspections" />
-        <LegendDot color="bg-amber-500" label="To-dos" />
+        <LegendDot color="bg-violet-500" label={t("calendar.filter.milestones")} />
+        <LegendDot color="bg-sky-500" label={t("calendar.filter.inspections")} />
+        <LegendDot color="bg-amber-500" label={t("calendar.filter.todos")} />
         <button
           type="button"
           onClick={onJumpToToday}
           className="border-home-border/70 bg-home-canvas hover:bg-home-accent-soft/60 text-foreground/85 hover:text-foreground ml-auto inline-flex items-center rounded-full border px-3 py-1 text-[12.5px] font-medium transition"
         >
-          Today
+          {t("calendar.today")}
         </button>
       </div>
     </div>
@@ -552,24 +611,24 @@ function isoFor(year: number, month: number, day: number): string {
   return `${year}-${String(month).padStart(2, "0")}-${String(day).padStart(2, "0")}`
 }
 
-function EmptyState({ onClear }: { onClear: () => void }) {
+function EmptyState({ onClear, t }: { onClear: () => void; t: TFn }) {
   return (
     <div className="border-home-border/70 bg-card rounded-3xl border px-8 py-12 text-center">
       <span className="bg-home-accent-soft text-home-accent mx-auto inline-flex size-12 items-center justify-center rounded-2xl">
         <CalendarCheck className="size-6" />
       </span>
       <h3 className="text-foreground mt-4 text-[20px] font-semibold tracking-tight">
-        Nothing matches those filters
+        {t("calendar.empty.title")}
       </h3>
       <p className="text-muted-foreground mx-auto mt-2 max-w-sm text-[14.5px] leading-relaxed">
-        Try a different combination, or clear them to see everything coming up.
+        {t("calendar.empty.body")}
       </p>
       <button
         type="button"
         onClick={onClear}
         className="border-home-border/70 bg-home-canvas hover:bg-home-accent-soft/60 text-foreground mt-5 inline-flex items-center rounded-full border px-4 py-1.5 text-[13.5px] font-medium transition"
       >
-        Clear filters
+        {t("calendar.empty.clear")}
       </button>
     </div>
   )

@@ -18,8 +18,14 @@ import {
 const SHORT_LABEL: Record<HomeLocale, string> = {
   en: "EN",
   fr: "FR",
-  "zh-Yue": "中",
+  "zh-Yue": "粵",
   pa: "ਪੰ",
+  tl: "TL",
+  "zh-Hans": "中",
+  git: "GX",
+  ru: "RU",
+  de: "DE",
+  ko: "한",
 }
 
 export function LanguageSwitcher() {

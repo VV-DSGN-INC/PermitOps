@@ -30,6 +30,13 @@ const LOCALE_TO_BCP47: Record<HomeLocale, string> = {
   fr: "fr-CA",
   "zh-Yue": "zh-Hant",
   pa: "pa-IN",
+  tl: "fil-PH",
+  "zh-Hans": "zh-Hans",
+  // Gitxsan has no Intl locale data — use Canadian English for date formatting.
+  git: "en-CA",
+  ru: "ru-RU",
+  de: "de-DE",
+  ko: "ko-KR",
 }
 
 /** Format a yyyy-mm-dd as a localized agenda day header (e.g. "Wed · May 28"). */

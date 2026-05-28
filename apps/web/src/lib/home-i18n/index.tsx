@@ -40,10 +40,15 @@ const surfaces: LocaleMessages[] = [
   permit,
 ]
 
-const messages: LocaleMessages = HOME_LOCALE_CODES.reduce((acc, loc) => {
-  acc[loc] = Object.assign({}, ...surfaces.map((s) => s[loc] ?? {}))
-  return acc
-}, {} as LocaleMessages)
+// Merged result is complete (one entry per locale code), so type it as a full
+// Record even though each source surface is Partial.
+const messages: Record<HomeLocale, Record<string, string>> = HOME_LOCALE_CODES.reduce(
+  (acc, loc) => {
+    acc[loc] = Object.assign({}, ...surfaces.map((s) => s[loc] ?? {}))
+    return acc
+  },
+  {} as Record<HomeLocale, Record<string, string>>,
+)
 
 type LocaleCtx = { locale: HomeLocale; setLocale: (l: HomeLocale) => void }
 
@@ -85,5 +90,5 @@ export function useHomeLocale() {
 export function useT() {
   const { locale } = useHomeLocale()
   return (key: string, fallback?: string): string =>
-    messages[locale]?.[key] ?? messages.en[key] ?? fallback ?? key
+    messages[locale]?.[key] ?? messages.en?.[key] ?? fallback ?? key
 }

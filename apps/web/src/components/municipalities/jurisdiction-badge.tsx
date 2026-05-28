@@ -5,11 +5,11 @@ import type { Municipality } from "@/lib/mock-data"
 const jurisdictionStyles: Record<Municipality["jurisdictionType"], string> = {
   City:
     "bg-indigo-100 text-indigo-800 dark:bg-indigo-500/15 dark:text-indigo-300",
-  County:
+  "Regional District":
     "bg-emerald-100 text-emerald-800 dark:bg-emerald-500/15 dark:text-emerald-300",
-  "City-County":
+  "District Municipality":
     "bg-violet-100 text-violet-800 dark:bg-violet-500/15 dark:text-violet-300",
-  State:
+  Province:
     "bg-amber-100 text-amber-800 dark:bg-amber-500/15 dark:text-amber-300",
 }
 

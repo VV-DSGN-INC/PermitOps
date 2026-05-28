@@ -38,7 +38,7 @@ export function HomeAskPage() {
       id: `a-${Date.now() + 1}`,
       role: "assistant",
       content:
-        "Good question. Based on what I know about your permit, here's what's likely: Berkeley's review queue typically moves on Tuesdays and Thursdays. If they're going to ask for changes, you usually hear within the first week. So far yours has been quiet — that's a good sign.",
+        "Good question. Based on what I know about your permit, here's what's likely: Burnaby's review queue typically moves on Tuesdays and Thursdays. If they're going to ask for changes, you usually hear within the first week. So far yours has been quiet — that's a good sign.",
       followUps: ["What does a typical review comment look like?", "Should I be worried?"],
     }
     setMessages((m) => [...m, userMsg, assistantMsg])
@@ -50,12 +50,12 @@ export function HomeAskPage() {
       <div className="flex items-center justify-between pb-3">
         <Link
           to="/home"
-          className="text-muted-foreground hover:text-foreground inline-flex items-center gap-1.5 text-[13px]"
+          className="text-muted-foreground hover:text-foreground inline-flex items-center gap-1.5 text-[14px]"
         >
           <ArrowLeft className="size-3.5" />
           Back to your renovation
         </Link>
-        <div className="text-muted-foreground inline-flex items-center gap-1.5 text-[12px]">
+        <div className="text-muted-foreground inline-flex items-center gap-1.5 text-[13px]">
           <Sparkles className="text-home-accent size-3.5" />
           AI knows your project
         </div>
@@ -91,13 +91,13 @@ export function HomeAskPage() {
           }}
           placeholder="Ask anything about your renovation…"
           rows={1}
-          className="placeholder:text-muted-foreground/70 max-h-32 flex-1 resize-none border-0 bg-transparent px-3 py-2.5 text-[14.5px] leading-relaxed outline-none"
+          className="placeholder:text-muted-foreground/70 max-h-32 flex-1 resize-none border-0 bg-transparent px-3 py-2.5 text-[16px] leading-relaxed outline-none"
         />
         <Button
           onClick={() => handleSend()}
           disabled={!draft.trim()}
           size="sm"
-          className="bg-foreground text-background hover:bg-foreground/90 disabled:opacity-40 h-9 gap-1.5 rounded-xl px-3 text-[13px]"
+          className="bg-foreground text-background hover:bg-foreground/90 disabled:opacity-40 h-9 gap-1.5 rounded-xl px-3 text-[14px]"
         >
           <Send className="size-3.5" />
           Send
@@ -119,7 +119,7 @@ function MessageBubble({
   if (message.role === "user") {
     return (
       <div className="flex justify-end">
-        <div className="bg-foreground text-background max-w-[80%] rounded-3xl rounded-br-md px-5 py-3 text-[14.5px] leading-relaxed shadow-sm">
+        <div className="bg-foreground text-background max-w-[80%] rounded-3xl rounded-br-md px-5 py-3 text-[16px] leading-relaxed shadow-sm">
           {message.content}
         </div>
       </div>
@@ -131,7 +131,7 @@ function MessageBubble({
         <Sparkles className="size-4" />
       </span>
       <div className="max-w-[85%] space-y-3">
-        <div className="text-foreground text-[14.5px] leading-relaxed whitespace-pre-line">
+        <div className="text-foreground text-[16px] leading-relaxed whitespace-pre-line">
           {message.content}
         </div>
         {message.references && message.references.length > 0 ? (
@@ -140,7 +140,7 @@ function MessageBubble({
               <Link
                 key={ref.label}
                 to={ref.permitId ? `/home/permit/${ref.permitId}` : "/home"}
-                className="border-home-border/80 bg-home-canvas hover:bg-home-accent-soft/60 inline-flex items-center gap-1.5 rounded-full border px-3 py-1 text-[12px]"
+                className="border-home-border/80 bg-home-canvas hover:bg-home-accent-soft/60 inline-flex items-center gap-1.5 rounded-full border px-3 py-1 text-[13px]"
               >
                 <FileText className="text-muted-foreground size-3" />
                 {ref.label}
@@ -156,7 +156,7 @@ function MessageBubble({
                 onClick={() => onFollowUp(f)}
                 className={cn(
                   "border-home-border/70 bg-card hover:border-foreground/30 hover:bg-foreground/[0.03]",
-                  "text-foreground/85 hover:text-foreground rounded-full border px-3.5 py-1.5 text-[12.5px] transition",
+                  "text-foreground/85 hover:text-foreground rounded-full border px-3.5 py-1.5 text-[13px] transition",
                 )}
               >
                 {f}
@@ -172,7 +172,7 @@ function MessageBubble({
 function SuggestedPrompts({ onPick }: { onPick: (prompt: string) => void }) {
   return (
     <div className="border-home-border/60 border-t pt-4">
-      <div className="text-muted-foreground mb-2.5 text-[11.5px] font-semibold tracking-[0.08em] uppercase">
+      <div className="text-muted-foreground mb-2.5 text-[12.5px] font-semibold tracking-[0.08em] uppercase">
         Try asking
       </div>
       <div className="flex flex-wrap gap-2">
@@ -180,7 +180,7 @@ function SuggestedPrompts({ onPick }: { onPick: (prompt: string) => void }) {
           <button
             key={p}
             onClick={() => onPick(p)}
-            className="border-home-border/70 bg-card hover:bg-home-accent-soft/60 text-foreground/85 hover:text-foreground rounded-full border px-3.5 py-1.5 text-[12.5px] transition"
+            className="border-home-border/70 bg-card hover:bg-home-accent-soft/60 text-foreground/85 hover:text-foreground rounded-full border px-3.5 py-1.5 text-[13px] transition"
           >
             {p}
           </button>

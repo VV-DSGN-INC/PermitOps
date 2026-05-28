@@ -1,5 +1,7 @@
 import { Link, NavLink, Outlet, useLocation } from "react-router-dom"
 import {
+  CalendarDays,
+  FolderHeart,
   Home as HomeIcon,
   HousePlug,
   MessageCircle,
@@ -9,6 +11,8 @@ import { TooltipProvider } from "@workspace/ui/components/tooltip"
 import { Button } from "@workspace/ui/components/button"
 import { cn } from "@workspace/ui/lib/utils"
 import { renovation } from "@/lib/home-mock"
+import { HomeLocaleProvider } from "@/lib/home-i18n"
+import { LanguageSwitcher } from "@/components/home/language-switcher"
 
 /**
  * The Home edition deliberately drops the sidebar. Homeowners only have one
@@ -21,6 +25,7 @@ export function HomeShell() {
 
   return (
     <TooltipProvider delayDuration={200}>
+      <HomeLocaleProvider>
       <div className="bg-home-canvas text-foreground min-h-screen">
         <header className="border-home-border/60 sticky top-0 z-30 border-b bg-home-canvas/85 backdrop-blur supports-[backdrop-filter]:bg-home-canvas/70">
           <div className="mx-auto flex h-16 max-w-5xl items-center gap-4 px-6">
@@ -37,6 +42,18 @@ export function HomeShell() {
               <nav className="ml-2 hidden gap-1 sm:flex">
                 <HomeNavLink to="/home" icon={<HomeIcon className="size-4" />}>
                   Home
+                </HomeNavLink>
+                <HomeNavLink
+                  to="/home/projects"
+                  icon={<FolderHeart className="size-4" />}
+                >
+                  Projects
+                </HomeNavLink>
+                <HomeNavLink
+                  to="/home/calendar"
+                  icon={<CalendarDays className="size-4" />}
+                >
+                  Calendar
                 </HomeNavLink>
                 <HomeNavLink
                   to="/home/ask"
@@ -61,6 +78,7 @@ export function HomeShell() {
                   </Link>
                 </Button>
               ) : null}
+              <LanguageSwitcher />
               <Link
                 to="/home"
                 className="border-home-border/70 bg-card/70 inline-flex size-9 items-center justify-center rounded-full border text-[12px] font-semibold tracking-tight"
@@ -75,6 +93,7 @@ export function HomeShell() {
           <Outlet />
         </main>
       </div>
+      </HomeLocaleProvider>
     </TooltipProvider>
   )
 }

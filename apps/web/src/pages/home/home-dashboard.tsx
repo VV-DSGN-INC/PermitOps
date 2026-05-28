@@ -1,15 +1,20 @@
 import { Link } from "react-router-dom"
 import {
   ArrowRight,
+  Bath,
   Bell,
   Calendar,
+  ChefHat,
   ChevronRight,
   Clock4,
   Hammer,
+  type LucideIcon,
   Mail,
   MapPin,
   Phone,
   Sparkles,
+  TreeDeciduous,
+  Warehouse,
 } from "lucide-react"
 import { Button } from "@workspace/ui/components/button"
 import { cn } from "@workspace/ui/lib/utils"
@@ -19,10 +24,13 @@ import {
   formatShortDate,
   homeStatusBlurb,
   homeStatusLabel,
-  permits,
-  renovation,
+  owner,
+  projects,
+  type HomeContact,
   type HomePermitStatus,
+  type HomeProject,
 } from "@/lib/home-mock"
+import { useT } from "@/lib/home-i18n"
 
 const STAGE_ORDER: HomePermitStatus[] = [
   "not_started",
@@ -34,72 +42,105 @@ const STAGE_ORDER: HomePermitStatus[] = [
   "closed",
 ]
 
+// Resolve a lucide icon by its string name. Keeping this local so the mock
+// data stays plain JSON-ish and the import surface here is explicit.
+const ICONS: Record<string, LucideIcon> = {
+  ChefHat,
+  Bath,
+  Warehouse,
+  TreeDeciduous,
+}
+
+function getProjectIcon(name: string): LucideIcon {
+  return ICONS[name] ?? ChefHat
+}
+
+const KIND_LABEL: Record<HomeProject["kind"], string> = {
+  renovation: "Renovation",
+  addition: "Addition",
+  new_build: "New build",
+  outdoor: "Outdoor",
+}
+
 /**
- * The single-renovation home page. Sequenced top-down so the user lands on
- * "what's the situation right now" and then sees individual permits.
+ * The home page for a homeowner with several projects in different stages.
+ * Sequenced top-down: who/where they are → the featured project's current
+ * situation → AI suggestions → permits → other projects → contacts → numbers.
  */
 export function HomeDashboardPage() {
-  const inReview = permits.find((p) => p.status === "in_review")
-  const totalFees = permits.reduce((sum, p) => sum + (p.fee ?? 0), 0)
+  const t = useT()
+  const featured = projects.find((p) => p.featured) ?? projects[0]!
+  const otherProjects = projects.filter((p) => p.id !== featured.id)
+  const featuredPermits = featured.permits
+  const inReview = featuredPermits.find((p) => p.status === "in_review")
+  const totalFees = featuredPermits.reduce(
+    (sum, p) => sum + (p.fee ?? 0),
+    0,
+  )
 
   return (
     <div className="mx-auto max-w-5xl px-6 pt-10 pb-24">
-      {/* Project header */}
-      <div className="flex flex-wrap items-end justify-between gap-4">
+      {/* Owner address chip */}
+      <div className="flex items-center gap-2 text-[13px] text-muted-foreground">
+        <MapPin className="size-3.5" />
+        {owner.address} · {owner.city}, {owner.state}
+      </div>
+
+      {/* Featured project header */}
+      <div className="mt-2 flex flex-wrap items-end justify-between gap-4">
         <div>
-          <div className="flex items-center gap-2 text-[12px] text-muted-foreground">
-            <MapPin className="size-3.5" />
-            {renovation.address} · {renovation.city}, {renovation.state}
-          </div>
-          <h1 className="text-foreground/95 mt-2 text-[34px] leading-[1.05] font-semibold tracking-[-0.018em] sm:text-[40px]">
-            Your {renovation.projectName.toLowerCase()}
+          <h1 className="text-foreground/95 text-[34px] leading-[1.05] font-semibold tracking-[-0.018em] sm:text-[40px]">
+            Your {featured.name.toLowerCase()}
           </h1>
-          <p className="text-muted-foreground mt-2 max-w-xl text-[15px] leading-relaxed">
-            {renovation.projectSummary}
+          <p className="text-muted-foreground mt-2 max-w-xl text-[16px] leading-relaxed">
+            {featured.summary}
           </p>
         </div>
-        <div className="border-home-border/70 bg-card flex items-center gap-3 rounded-full border px-4 py-1.5 text-[12px]">
+        <div className="border-home-border/70 bg-card flex items-center gap-3 rounded-full border px-4 py-1.5 text-[13px]">
           <span className="bg-home-accent inline-block size-1.5 rounded-full" />
-          <span className="text-foreground font-medium">{renovation.stage}</span>
-          <span className="text-muted-foreground">
-            · target {formatShortDate(renovation.targetFinishDate)}
-          </span>
+          <span className="text-foreground font-medium">{featured.stage}</span>
+          {featured.targetFinishDate ? (
+            <span className="text-muted-foreground">
+              · target {formatShortDate(featured.targetFinishDate)}
+            </span>
+          ) : null}
         </div>
       </div>
 
-      {/* What's next hero */}
+      {/* What's happening hero (featured project) */}
       {inReview ? (
         <div className="border-home-border/70 bg-card relative mt-10 overflow-hidden rounded-3xl border shadow-[0_1px_0_rgb(0_0_0_/_0.02)]">
           <div className="from-home-accent-soft/70 via-home-canvas/0 to-home-canvas/0 pointer-events-none absolute inset-0 bg-gradient-to-br" />
           <div className="relative px-8 py-9 sm:px-10 sm:py-10">
-            <div className="text-home-accent inline-flex items-center gap-1.5 text-[11.5px] font-semibold tracking-[0.1em] uppercase">
+            <div className="text-home-accent inline-flex items-center gap-1.5 text-[12.5px] font-semibold tracking-[0.1em] uppercase">
               <Sparkles className="size-3.5" />
-              What&rsquo;s happening
+              {t("home.whats_happening")}
             </div>
-            <h2 className="text-foreground mt-3 max-w-2xl text-[28px] leading-[1.15] font-semibold tracking-[-0.015em] sm:text-[32px]">
-              Berkeley is reviewing your plans.
-              <span className="text-muted-foreground"> About 9 more days.</span>
+            <h2 className="text-foreground mt-3 max-w-2xl text-[30px] leading-[1.15] font-semibold tracking-[-0.015em] sm:text-[36px]">
+              {t("home.hero.title")}
+              <span className="text-muted-foreground">
+                {t("home.hero.days_tail")}
+              </span>
             </h2>
-            <p className="text-foreground/80 mt-3 max-w-2xl text-[15px] leading-relaxed">
-              Lopez sent everything Tuesday. Nothing for you to do today —
-              I&rsquo;ll ping you if they ask for anything.
+            <p className="text-foreground/80 mt-3 max-w-2xl text-[16px] leading-relaxed">
+              {t("home.hero.sub")}
             </p>
             <div className="mt-6 flex flex-wrap items-center gap-3">
               <Button
                 asChild
-                className="bg-foreground text-background hover:bg-foreground/90 gap-2 rounded-full text-[13px]"
+                className="bg-foreground text-background hover:bg-foreground/90 gap-2 rounded-full text-[14px]"
               >
                 <Link to={`/home/permit/${inReview.id}`}>
-                  See the review
+                  {t("home.hero.see_review")}
                   <ArrowRight className="size-3.5" />
                 </Link>
               </Button>
               <Button
                 asChild
                 variant="ghost"
-                className="text-foreground hover:bg-foreground/[0.04] rounded-full text-[13px]"
+                className="text-foreground hover:bg-foreground/[0.04] rounded-full text-[14px]"
               >
-                <Link to="/home/ask">Ask AI a question</Link>
+                <Link to="/home/ask">{t("home.hero.ask")}</Link>
               </Button>
             </div>
           </div>
@@ -119,13 +160,10 @@ export function HomeDashboardPage() {
         </div>
       </Section>
 
-      {/* Permits grid */}
-      <Section
-        eyebrow="The four permits"
-        title="Where each one stands"
-      >
+      {/* The four permits — featured project */}
+      <Section eyebrow="The four permits" title="Where each one stands">
         <div className="grid gap-3 sm:grid-cols-2">
-          {permits.map((p) => (
+          {featuredPermits.map((p) => (
             <Link
               key={p.id}
               to={`/home/permit/${p.id}`}
@@ -133,23 +171,23 @@ export function HomeDashboardPage() {
             >
               <div className="flex items-start justify-between gap-2">
                 <div>
-                  <div className="text-foreground text-[15px] font-semibold tracking-tight">
+                  <div className="text-foreground text-[16px] font-semibold tracking-tight">
                     {p.name}
                   </div>
                   <StageDots current={p.status} className="mt-2" />
                 </div>
                 <ChevronRight className="text-muted-foreground/60 group-hover:text-foreground mt-1 size-4 transition" />
               </div>
-              <p className="text-muted-foreground mt-3 line-clamp-2 text-[13px] leading-snug">
+              <p className="text-muted-foreground mt-3 line-clamp-2 text-[14px] leading-snug">
                 {homeStatusBlurb[p.status]}
                 {p.permitNumber ? ` · #${p.permitNumber}` : ""}
               </p>
               <div className="border-home-border/60 mt-4 flex items-center justify-between border-t pt-3">
-                <span className="text-muted-foreground text-[12px]">
+                <span className="text-muted-foreground text-[13px]">
                   {p.pulledBy === "contractor" ? "Lopez pulls this" : "You pull this"}
                 </span>
                 {p.fee ? (
-                  <span className="text-foreground text-[12px] font-medium tabular-nums">
+                  <span className="text-foreground text-[13px] font-medium tabular-nums">
                     {formatMoney(p.fee)}
                   </span>
                 ) : null}
@@ -159,16 +197,36 @@ export function HomeDashboardPage() {
         </div>
       </Section>
 
+      {/* What else you're planning */}
+      {otherProjects.length > 0 ? (
+        <Section
+          eyebrow="Your other projects"
+          title="What else you&rsquo;re planning"
+        >
+          <div className="grid gap-3 sm:grid-cols-3">
+            {otherProjects.map((proj) => (
+              <ProjectCard key={proj.id} project={proj} />
+            ))}
+          </div>
+        </Section>
+      ) : null}
+
       {/* Side rail: contacts + numbers */}
       <Section eyebrow="The team" title="Who&rsquo;s helping">
         <div className="grid gap-3 sm:grid-cols-2">
-          <ContactCard
-            contact={renovation.contractor}
-            footer={`On the project since ${formatShortDate(renovation.startedOn)}`}
-          />
-          {renovation.municipalityHandler ? (
+          {featured.contractor ? (
             <ContactCard
-              contact={renovation.municipalityHandler}
+              contact={featured.contractor}
+              footer={
+                featured.startedOn
+                  ? `On the project since ${formatShortDate(featured.startedOn)}`
+                  : "Joining once we kick off"
+              }
+            />
+          ) : null}
+          {featured.municipalityHandler ? (
+            <ContactCard
+              contact={featured.municipalityHandler}
               footer="Reviews your applications"
             />
           ) : null}
@@ -180,7 +238,7 @@ export function HomeDashboardPage() {
           <Stat
             icon={<Hammer className="size-4" />}
             label="Budget"
-            value={formatMoney(renovation.budget)}
+            value={formatMoney(featured.budget)}
           />
           <Stat
             icon={<Bell className="size-4" />}
@@ -190,12 +248,20 @@ export function HomeDashboardPage() {
           <Stat
             icon={<Clock4 className="size-4" />}
             label="Started"
-            value={formatShortDate(renovation.startedOn)}
+            value={
+              featured.startedOn
+                ? formatShortDate(featured.startedOn)
+                : "—"
+            }
           />
           <Stat
             icon={<Calendar className="size-4" />}
             label="Target finish"
-            value={formatShortDate(renovation.targetFinishDate)}
+            value={
+              featured.targetFinishDate
+                ? formatShortDate(featured.targetFinishDate)
+                : "—"
+            }
           />
         </div>
       </Section>
@@ -216,14 +282,14 @@ function Section({
 }) {
   return (
     <section className="mt-12">
-      <div className="text-muted-foreground text-[11px] font-semibold tracking-[0.1em] uppercase">
+      <div className="text-muted-foreground text-[12px] font-semibold tracking-[0.1em] uppercase">
         {eyebrow}
       </div>
-      <h3 className="text-foreground mt-1.5 text-[20px] font-semibold tracking-tight">
+      <h3 className="text-foreground mt-1.5 text-[22px] font-semibold tracking-tight">
         {title}
       </h3>
       {hint ? (
-        <p className="text-muted-foreground mt-1 text-[13.5px]">{hint}</p>
+        <p className="text-muted-foreground mt-1 text-[14px]">{hint}</p>
       ) : null}
       <div className="mt-5">{children}</div>
     </section>
@@ -243,27 +309,22 @@ function SuggestionCard({
         : "bg-card border-home-border/70"
 
   return (
-    <div
-      className={cn(
-        "rounded-2xl border p-5 transition",
-        tone,
-      )}
-    >
+    <div className={cn("rounded-2xl border p-5 transition", tone)}>
       <div className="flex items-start gap-4">
         <span className="bg-home-accent/15 text-home-accent mt-0.5 inline-flex size-8 shrink-0 items-center justify-center rounded-full">
           <Sparkles className="size-4" />
         </span>
         <div className="flex-1">
-          <div className="text-foreground text-[14.5px] font-semibold tracking-tight">
+          <div className="text-foreground text-[16px] font-semibold tracking-tight">
             {suggestion.headline}
           </div>
-          <p className="text-foreground/80 mt-1 text-[13.5px] leading-relaxed">
+          <p className="text-foreground/80 mt-1 text-[14px] leading-relaxed">
             {suggestion.body}
           </p>
           <div className="mt-3.5 flex flex-wrap items-center gap-2">
             <Button
               size="sm"
-              className="bg-foreground text-background hover:bg-foreground/90 h-8 gap-1.5 rounded-full px-3 text-[12.5px]"
+              className="bg-foreground text-background hover:bg-foreground/90 h-8 gap-1.5 rounded-full px-3 text-[13.5px]"
             >
               {suggestion.primaryAction}
               <ArrowRight className="size-3" />
@@ -272,13 +333,51 @@ function SuggestionCard({
               <Button
                 size="sm"
                 variant="ghost"
-                className="text-muted-foreground hover:text-foreground h-8 rounded-full px-2 text-[12.5px]"
+                className="text-muted-foreground hover:text-foreground h-8 rounded-full px-2 text-[13.5px]"
               >
                 {suggestion.secondaryAction}
               </Button>
             ) : null}
           </div>
         </div>
+      </div>
+    </div>
+  )
+}
+
+function ProjectCard({ project }: { project: HomeProject }) {
+  const Icon = getProjectIcon(project.icon)
+  return (
+    <div className="border-home-border/70 bg-card flex h-full flex-col rounded-2xl border p-5">
+      <span className="bg-home-accent/15 text-home-accent inline-flex size-10 items-center justify-center rounded-xl">
+        <Icon className="size-5" />
+      </span>
+      <div className="mt-4">
+        <div className="text-foreground text-[17px] font-semibold tracking-tight">
+          {project.name}
+        </div>
+        <div className="text-muted-foreground mt-1 text-[12.5px] font-medium tracking-[0.04em] uppercase">
+          {KIND_LABEL[project.kind]}
+        </div>
+        <p className="text-muted-foreground mt-2 line-clamp-2 text-[14px] leading-snug">
+          {project.summary}
+        </p>
+      </div>
+      <div className="border-home-border/60 mt-4 flex items-center justify-between gap-2 border-t pt-3">
+        <span className="text-foreground text-[14px] font-medium tabular-nums">
+          {formatMoney(project.budget)}
+        </span>
+        <Button
+          asChild
+          size="sm"
+          variant="ghost"
+          className="text-foreground hover:bg-foreground/[0.04] h-8 gap-1 rounded-full px-3 text-[13.5px]"
+        >
+          <Link to={`/home/project/${project.id}`}>
+            Open
+            <ArrowRight className="size-3" />
+          </Link>
+        </Button>
       </div>
     </div>
   )
@@ -317,7 +416,7 @@ function StageDots({
               )}
             />
             {active ? (
-              <span className="text-foreground ml-1 text-[11.5px] font-medium">
+              <span className="text-foreground ml-1 text-[12.5px] font-medium">
                 {homeStatusLabel[current]}
               </span>
             ) : null}
@@ -332,7 +431,7 @@ function ContactCard({
   contact,
   footer,
 }: {
-  contact: (typeof renovation)["contractor"]
+  contact: HomeContact
   footer: string
 }) {
   const toneMap = {
@@ -346,18 +445,18 @@ function ContactCard({
     <div className="border-home-border/70 bg-card flex items-start gap-4 rounded-2xl border p-5">
       <span
         className={cn(
-          "inline-flex size-11 shrink-0 items-center justify-center rounded-full text-[13px] font-semibold tracking-tight",
+          "inline-flex size-11 shrink-0 items-center justify-center rounded-full text-[14px] font-semibold tracking-tight",
           toneMap[contact.avatarTone],
         )}
       >
         {contact.initials}
       </span>
       <div className="min-w-0 flex-1">
-        <div className="text-foreground text-[14.5px] font-semibold tracking-tight">
+        <div className="text-foreground text-[16px] font-semibold tracking-tight">
           {contact.name}
         </div>
-        <div className="text-muted-foreground text-[12.5px]">{contact.role}</div>
-        <div className="mt-3 flex flex-wrap items-center gap-3 text-[12.5px]">
+        <div className="text-muted-foreground text-[13.5px]">{contact.role}</div>
+        <div className="mt-3 flex flex-wrap items-center gap-3 text-[13.5px]">
           {contact.phone ? (
             <span className="text-foreground/80 inline-flex items-center gap-1.5">
               <Phone className="text-muted-foreground size-3" />
@@ -371,7 +470,7 @@ function ContactCard({
             </span>
           ) : null}
         </div>
-        <div className="text-muted-foreground mt-2.5 text-[12px]">{footer}</div>
+        <div className="text-muted-foreground mt-2.5 text-[13px]">{footer}</div>
       </div>
     </div>
   )
@@ -388,11 +487,11 @@ function Stat({
 }) {
   return (
     <div className="border-home-border/70 bg-card rounded-2xl border p-4">
-      <div className="text-muted-foreground flex items-center gap-2 text-[12px]">
+      <div className="text-muted-foreground flex items-center gap-2 text-[13px]">
         <span className="text-home-accent">{icon}</span>
         {label}
       </div>
-      <div className="text-foreground mt-2 text-[20px] font-semibold tracking-tight tabular-nums">
+      <div className="text-foreground mt-2 text-[22px] font-semibold tracking-tight tabular-nums">
         {value}
       </div>
     </div>

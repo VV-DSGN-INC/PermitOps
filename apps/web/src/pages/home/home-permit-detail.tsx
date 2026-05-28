@@ -42,7 +42,7 @@ export function HomePermitDetailPage() {
 
   return (
     <div className="mx-auto max-w-3xl px-6 pt-8 pb-24">
-      <div className="mb-6 flex items-center gap-2 text-[13px]">
+      <div className="mb-6 flex items-center gap-2 text-[14px]">
         <Link
           to="/home"
           className="text-muted-foreground hover:text-foreground inline-flex items-center gap-1.5"
@@ -55,13 +55,13 @@ export function HomePermitDetailPage() {
       {/* Title + status hero */}
       <div className="border-home-border/70 bg-card overflow-hidden rounded-3xl border">
         <div className="px-7 py-7 sm:px-9 sm:py-8">
-          <div className="text-muted-foreground text-[12px] font-medium tracking-wide uppercase">
+          <div className="text-muted-foreground text-[13px] font-medium tracking-wide uppercase">
             Permit
           </div>
-          <h1 className="text-foreground/95 mt-1.5 text-[30px] leading-tight font-semibold tracking-[-0.015em] sm:text-[36px]">
+          <h1 className="text-foreground/95 mt-1.5 text-[34px] leading-tight font-semibold tracking-[-0.015em] sm:text-[40px]">
             {permit.name}
           </h1>
-          <p className="text-muted-foreground mt-3 max-w-xl text-[15px] leading-relaxed">
+          <p className="text-muted-foreground mt-3 max-w-xl text-[17px] leading-relaxed">
             {permit.whatItCovers}
           </p>
 
@@ -95,8 +95,8 @@ export function HomePermitDetailPage() {
         {permit.status === "in_review" && permit.expectedReviewDays ? (
           <div className="border-home-border/60 bg-home-accent-soft/60 flex items-start gap-3 border-t px-7 py-4 sm:px-9">
             <Clock4 className="text-home-accent mt-0.5 size-4 shrink-0" />
-            <p className="text-foreground/90 text-[13.5px] leading-relaxed">
-              Berkeley&rsquo;s building queue is about{" "}
+            <p className="text-foreground/90 text-[14.5px] leading-relaxed">
+              Burnaby&rsquo;s building queue is about{" "}
               <strong className="text-foreground">
                 {permit.expectedReviewDays} business days
               </strong>{" "}
@@ -115,7 +115,7 @@ export function HomePermitDetailPage() {
         title={
           <span>
             Documents{" "}
-            <span className="text-muted-foreground text-[14px] font-normal">
+            <span className="text-muted-foreground text-[15px] font-normal">
               · {reqDone} of {reqTotal} done
             </span>
           </span>
@@ -142,7 +142,7 @@ export function HomePermitDetailPage() {
         <Section
           eyebrow="What comes next"
           title="Inspections after approval"
-          hint="Berkeley sends someone out to verify the work. I&rsquo;ll walk you through each one."
+          hint="Burnaby sends someone out to verify the work. I&rsquo;ll walk you through each one."
         >
           <ul className="space-y-3">
             {permit.inspections.map((insp) => (
@@ -154,14 +154,14 @@ export function HomePermitDetailPage() {
                   <CalendarCheck className="text-muted-foreground size-4" />
                 </span>
                 <div className="flex-1">
-                  <div className="text-foreground text-[14.5px] font-semibold tracking-tight">
+                  <div className="text-foreground text-[16px] font-semibold tracking-tight">
                     {insp.name}
                   </div>
-                  <p className="text-muted-foreground mt-0.5 text-[13px] leading-snug">
+                  <p className="text-muted-foreground mt-0.5 text-[14px] leading-snug">
                     {insp.whatTheyCheck}
                   </p>
                 </div>
-                <span className="text-muted-foreground text-[12px]">
+                <span className="text-muted-foreground text-[13px]">
                   {insp.status === "not_yet" ? "Not yet" : insp.status}
                 </span>
               </li>
@@ -186,14 +186,14 @@ function Stat({
 }) {
   return (
     <div>
-      <div className="text-muted-foreground text-[11.5px] font-medium tracking-wide uppercase">
+      <div className="text-muted-foreground text-[12.5px] font-medium tracking-wide uppercase">
         {label}
       </div>
-      <div className="text-foreground mt-1.5 text-[16px] font-semibold tracking-tight">
+      <div className="text-foreground mt-1.5 text-[18px] font-semibold tracking-tight">
         {value}
       </div>
       {hint ? (
-        <div className="text-muted-foreground mt-0.5 text-[12.5px]">{hint}</div>
+        <div className="text-muted-foreground mt-0.5 text-[13.5px]">{hint}</div>
       ) : null}
     </div>
   )
@@ -212,14 +212,14 @@ function Section({
 }) {
   return (
     <section className="mt-10">
-      <div className="text-muted-foreground text-[11px] font-semibold tracking-[0.1em] uppercase">
+      <div className="text-muted-foreground text-[12px] font-semibold tracking-[0.1em] uppercase">
         {eyebrow}
       </div>
-      <h3 className="text-foreground mt-1.5 text-[20px] font-semibold tracking-tight">
+      <h3 className="text-foreground mt-1.5 text-[22px] font-semibold tracking-tight">
         {title}
       </h3>
       {hint ? (
-        <p className="text-muted-foreground mt-1 text-[13.5px]">{hint}</p>
+        <p className="text-muted-foreground mt-1 text-[14.5px]">{hint}</p>
       ) : null}
       <div className="mt-5">{children}</div>
     </section>
@@ -228,6 +228,7 @@ function Section({
 
 function RequirementRow({ requirement }: { requirement: HomeRequirement }) {
   const status = requirement.status
+  const preview = requirement.preview
 
   const icon =
     status === "done" ? (
@@ -249,39 +250,40 @@ function RequirementRow({ requirement }: { requirement: HomeRequirement }) {
     )
 
   return (
-    <li className="flex items-start gap-4 px-5 py-4">
+    <li className="flex min-h-[80px] items-start gap-4 px-5 py-4">
+      {preview ? <DocPreview preview={preview} /> : null}
       {icon}
       <div className="min-w-0 flex-1">
         <div className="flex flex-wrap items-baseline justify-between gap-2">
-          <span className="text-foreground text-[14.5px] font-medium tracking-tight">
+          <span className="text-foreground text-[16px] font-medium tracking-tight">
             {requirement.label}
           </span>
-          {requirement.fileName ? (
-            <span className="text-muted-foreground inline-flex items-center gap-1 text-[12px]">
+          {requirement.fileName && !preview ? (
+            <span className="text-muted-foreground inline-flex items-center gap-1 text-[13px]">
               <Paperclip className="size-3" />
               {requirement.fileName}
             </span>
           ) : null}
         </div>
-        <p className="text-muted-foreground mt-0.5 text-[13px] leading-snug">
+        <p className="text-muted-foreground mt-0.5 text-[14px] leading-snug">
           {requirement.helper}
         </p>
         {status === "ai_can_help" && requirement.aiAssist ? (
           <div className="bg-home-accent-soft/70 mt-3 flex items-start gap-2.5 rounded-xl px-3 py-2.5">
             <Sparkles className="text-home-accent mt-0.5 size-3.5 shrink-0" />
-            <div className="flex-1 text-[13px]">
+            <div className="flex-1 text-[14px]">
               <div className="text-foreground/90">{requirement.aiAssist}</div>
               <div className="mt-2 flex gap-2">
                 <Button
                   size="sm"
-                  className="bg-foreground text-background hover:bg-foreground/90 h-7 rounded-full px-3 text-[12px]"
+                  className="bg-foreground text-background hover:bg-foreground/90 h-7 rounded-full px-3 text-[13px]"
                 >
                   Yes, fill it out
                 </Button>
                 <Button
                   size="sm"
                   variant="ghost"
-                  className="text-muted-foreground hover:text-foreground h-7 rounded-full px-2 text-[12px]"
+                  className="text-muted-foreground hover:text-foreground h-7 rounded-full px-2 text-[13px]"
                 >
                   I&rsquo;ll do it
                 </Button>
@@ -290,7 +292,7 @@ function RequirementRow({ requirement }: { requirement: HomeRequirement }) {
           </div>
         ) : null}
         {status === "in_progress" ? (
-          <div className="text-muted-foreground mt-2 text-[12.5px] italic">
+          <div className="text-muted-foreground mt-2 text-[13.5px] italic">
             Lopez is working on this.
           </div>
         ) : null}
@@ -299,20 +301,56 @@ function RequirementRow({ requirement }: { requirement: HomeRequirement }) {
   )
 }
 
+function DocPreview({
+  preview,
+}: {
+  preview: NonNullable<HomeRequirement["preview"]>
+}) {
+  const tintBg = {
+    slate: "from-slate-50 to-slate-100",
+    indigo: "from-indigo-50 to-indigo-100",
+    amber: "from-amber-50 to-amber-100",
+    emerald: "from-emerald-50 to-emerald-100",
+    rose: "from-rose-50 to-rose-100",
+  }[preview.tint ?? "slate"]
+  return (
+    <div
+      className={`border-border/70 relative aspect-[3/4] w-14 shrink-0 overflow-hidden rounded-md border bg-gradient-to-br ${tintBg} shadow-sm`}
+    >
+      <div className="absolute inset-0 flex flex-col p-1.5">
+        <div className="text-foreground/85 line-clamp-2 text-[7.5px] leading-tight font-semibold">
+          {preview.title}
+        </div>
+        {preview.subtitle ? (
+          <div className="text-muted-foreground mt-0.5 line-clamp-1 text-[6.5px]">
+            {preview.subtitle}
+          </div>
+        ) : null}
+        <div className="mt-auto space-y-0.5">
+          <div className="bg-foreground/15 h-px" />
+          <div className="bg-foreground/15 h-px w-2/3" />
+          <div className="bg-foreground/15 h-px w-3/4" />
+          <div className="bg-foreground/15 h-px w-1/2" />
+        </div>
+      </div>
+    </div>
+  )
+}
+
 function AiAssistCallout({ permitId }: { permitId: string }) {
   // Static demo content keyed to the in-review building permit.
   if (permitId !== "building") return null
   return (
-    <div className="border-home-border/70 bg-card mt-6 flex flex-col gap-3 rounded-2xl border p-5 sm:flex-row sm:items-center">
+    <div className="border-home-border/70 bg-card mt-6 flex flex-col gap-3 rounded-2xl border p-6 sm:flex-row sm:items-center">
       <div className="flex items-start gap-3">
         <span className="bg-foreground text-background mt-0.5 inline-flex size-9 shrink-0 items-center justify-center rounded-full">
           <MessageCircle className="size-4" />
         </span>
         <div>
-          <div className="text-foreground text-[14.5px] font-semibold tracking-tight">
-            Berkeley left one comment on this permit
+          <div className="text-foreground text-[16px] font-semibold tracking-tight">
+            Burnaby left one comment on this permit
           </div>
-          <p className="text-muted-foreground text-[13px] leading-snug">
+          <p className="text-muted-foreground text-[14px] leading-snug">
             They want a section drawing of the new wall header. I drafted an
             email to your engineer.
           </p>
@@ -321,7 +359,7 @@ function AiAssistCallout({ permitId }: { permitId: string }) {
       <div className="sm:ml-auto">
         <Button
           asChild
-          className="bg-home-accent text-background hover:bg-home-accent/90 h-9 gap-1.5 rounded-full px-4 text-[13px] font-medium"
+          className="bg-home-accent text-background hover:bg-home-accent/90 h-9 gap-1.5 rounded-full px-4 text-[14px] font-medium"
         >
           <Link to="/home/ask">
             See the draft
@@ -339,7 +377,7 @@ function NextPermitNav({ currentId }: { currentId: string }) {
   if (!next) return null
   return (
     <div className="border-home-border/70 mt-12 flex items-center justify-between border-t pt-6">
-      <div className="text-muted-foreground inline-flex items-center gap-2 text-[12.5px]">
+      <div className="text-muted-foreground inline-flex items-center gap-2 text-[13.5px]">
         <HelpCircle className="size-3.5" />
         Have a question about this?{" "}
         <Link
@@ -351,7 +389,7 @@ function NextPermitNav({ currentId }: { currentId: string }) {
       </div>
       <Link
         to={`/home/permit/${next.id}`}
-        className="text-foreground inline-flex items-center gap-1.5 text-[13px] font-medium hover:gap-2 transition-all"
+        className="text-foreground inline-flex items-center gap-1.5 text-[14px] font-medium hover:gap-2 transition-all"
       >
         <FileCheck2 className="text-muted-foreground size-4" />
         Next: {next.name}

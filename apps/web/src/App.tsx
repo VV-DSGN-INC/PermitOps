@@ -2,10 +2,6 @@ import { Navigate, Route, Routes } from "react-router-dom"
 import { AppShell } from "@/components/app-shell"
 import { HomeShell } from "@/components/home/home-shell"
 import { HomeLocaleProvider } from "@/lib/home-i18n"
-import { ProjectsPage } from "@/pages/projects"
-import { ProjectDetailPage } from "@/pages/project-detail"
-import { PermitsPage } from "@/pages/permits"
-import { RequirementsPage } from "@/pages/requirements"
 import { PersonasPage } from "@/pages/personas"
 import { FlowsPage } from "@/pages/flows"
 import { SitemapPage } from "@/pages/sitemap"
@@ -13,10 +9,9 @@ import { ProblemPage } from "@/pages/problem"
 import { AIOpportunitiesPage } from "@/pages/ai-opportunities"
 import { AIPatternsPage } from "@/pages/ai-patterns"
 import { TimelinePage } from "@/pages/timeline"
-import { AssumptionsPage } from "@/pages/assumptions"
 import { TasksPage } from "@/pages/tasks"
-import { DirectoryPage } from "@/pages/directory"
-import { MunicipalitiesPage } from "@/pages/municipalities"
+import { BoardPage } from "@/pages/board"
+import { MembersPage } from "@/pages/members"
 import { HomeWelcomePage } from "@/pages/home/home-welcome"
 import { HomeDashboardPage } from "@/pages/home/home-dashboard"
 import { HomePermitDetailPage } from "@/pages/home/home-permit-detail"
@@ -45,25 +40,22 @@ export function App() {
         <Route path="ask" element={<HomeAskPage />} />
       </Route>
       <Route element={<AppShell />}>
-        <Route index element={<Navigate to="/projects" replace />} />
-        <Route path="projects" element={<ProjectsPage />} />
-        <Route path="projects/:id" element={<ProjectDetailPage />} />
-        <Route path="permits" element={<PermitsPage />} />
-        <Route path="requirements" element={<RequirementsPage />} />
+        <Route index element={<Navigate to="/tasks" replace />} />
         <Route path="tasks" element={<TasksPage />} />
-        <Route path="municipalities" element={<MunicipalitiesPage />} />
-        <Route path="directory" element={<DirectoryPage />} />
+        <Route path="board" element={<BoardPage />} />
+        <Route path="team">
+          <Route path="timeline" element={<TimelinePage />} />
+          <Route path="members" element={<MembersPage />} />
+        </Route>
         <Route path="notes">
           <Route path="problem" element={<ProblemPage />} />
           <Route path="personas" element={<PersonasPage />} />
           <Route path="flows" element={<FlowsPage />} />
           <Route path="sitemap" element={<SitemapPage />} />
-          <Route path="ai-opportunities" element={<AIOpportunitiesPage />} />
           <Route path="ai-patterns" element={<AIPatternsPage />} />
-          <Route path="timeline" element={<TimelinePage />} />
-          <Route path="assumptions" element={<AssumptionsPage />} />
+          <Route path="ai-opportunities" element={<AIOpportunitiesPage />} />
         </Route>
-        <Route path="*" element={<Navigate to="/projects" replace />} />
+        <Route path="*" element={<Navigate to="/tasks" replace />} />
       </Route>
     </Routes>
   )

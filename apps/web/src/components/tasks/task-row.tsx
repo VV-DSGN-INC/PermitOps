@@ -8,7 +8,8 @@ import {
   TooltipTrigger,
 } from "@workspace/ui/components/tooltip"
 import { cn } from "@workspace/ui/lib/utils"
-import { getPerson, getProject, permits } from "@/lib/mock-data"
+import { getPerson } from "@/lib/mock-data"
+import { STATUS_LABEL } from "@/lib/tasks-store"
 import type { Task, TaskPriority } from "./task-types"
 
 const priorityTones: Record<
@@ -61,10 +62,6 @@ function dueLabel(iso: string): {
   return { label, overdue, isToday: false }
 }
 
-function getPermit(id: string) {
-  return permits.find((p) => p.id === id)
-}
-
 export function TaskRow({
   task,
   onToggle,
@@ -77,13 +74,7 @@ export function TaskRow({
   const priority = priorityTones[task.priority]
   const due = dueLabel(task.dueDate)
   const assignedBy = getPerson(task.assignedById)
-  const permit = task.relatedPermitId ? getPermit(task.relatedPermitId) : undefined
-  const project = task.relatedProjectId
-    ? getProject(task.relatedProjectId)
-    : permit
-      ? getProject(permit.projectId)
-      : undefined
-  const completed = task.completed
+  const completed = task.status === "done"
 
   return (
     <li
@@ -130,29 +121,10 @@ export function TaskRow({
           {task.description}
         </p>
         <div className="mt-1 flex flex-wrap items-center gap-2">
-          {permit ? (
-            <button
-              type="button"
-              className="inline-flex h-5 items-center gap-1 rounded-full bg-indigo-50 px-2 text-xs font-medium text-indigo-700 ring-1 ring-inset ring-indigo-200/70 transition-colors hover:bg-indigo-100 dark:bg-indigo-950/40 dark:text-indigo-300 dark:ring-indigo-900/60 dark:hover:bg-indigo-950/60"
-            >
-              <span className="size-1.5 rounded-full bg-indigo-500" aria-hidden />
-              {permit.permitNumber}
-            </button>
-          ) : null}
-          {project && !permit ? (
-            <button
-              type="button"
-              className="inline-flex h-5 items-center gap-1 rounded-full bg-violet-50 px-2 text-xs font-medium text-violet-700 ring-1 ring-inset ring-violet-200/70 transition-colors hover:bg-violet-100 dark:bg-violet-950/40 dark:text-violet-300 dark:ring-violet-900/60 dark:hover:bg-violet-950/60"
-            >
-              <span className="size-1.5 rounded-full bg-violet-500" aria-hidden />
-              {project.name}
-            </button>
-          ) : null}
-          {project && permit ? (
-            <span className="text-xs text-muted-foreground">
-              {project.name}
-            </span>
-          ) : null}
+          <span className="inline-flex h-5 items-center gap-1 rounded-full bg-muted px-2 text-xs font-medium text-muted-foreground">
+            <span className="size-1.5 rounded-full bg-foreground/40" aria-hidden />
+            {STATUS_LABEL[task.status]}
+          </span>
         </div>
       </div>
 

@@ -9,12 +9,10 @@ import {
 } from "@workspace/ui/components/breadcrumb"
 
 const routeTitles: Record<string, string> = {
-  projects: "Projects",
-  permits: "Permits",
-  requirements: "Project Requirements",
-  tasks: "My Tasks",
-  municipalities: "Municipalities",
-  directory: "Directory",
+  tasks: "My tasks",
+  board: "Tasks",
+  team: "Team",
+  members: "Members",
   notes: "Design Notes",
   problem: "Problem Statement",
   personas: "Personas",
@@ -23,7 +21,6 @@ const routeTitles: Record<string, string> = {
   "ai-opportunities": "AI Opportunities",
   "ai-patterns": "AI Patterns",
   timeline: "Timeline",
-  assumptions: "Assumptions",
 }
 
 export function Breadcrumbs() {
@@ -35,7 +32,7 @@ export function Breadcrumbs() {
       <Breadcrumb>
         <BreadcrumbList>
           <BreadcrumbItem>
-            <BreadcrumbPage>Workspace</BreadcrumbPage>
+            <BreadcrumbPage>TeamHQ</BreadcrumbPage>
           </BreadcrumbItem>
         </BreadcrumbList>
       </Breadcrumb>
@@ -47,7 +44,7 @@ export function Breadcrumbs() {
       <BreadcrumbList>
         <BreadcrumbItem>
           <BreadcrumbLink asChild>
-            <Link to="/">Workspace</Link>
+            <Link to="/">TeamHQ</Link>
           </BreadcrumbLink>
         </BreadcrumbItem>
         {segments.map((segment, i) => {

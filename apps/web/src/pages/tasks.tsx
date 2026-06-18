@@ -11,6 +11,7 @@ import {
 import { TaskStatStrip } from "@/components/tasks/task-stat-strip"
 import { TaskRow } from "@/components/tasks/task-row"
 import type { Task } from "@/components/tasks/task-types"
+import { CURRENT_USER_ID, useTasks, setTaskStatus } from "@/lib/tasks-store"
 
 const TODAY_ISO = "2026-05-26"
 const DAY_MS = 1000 * 60 * 60 * 24
@@ -21,185 +22,26 @@ function daysFromToday(iso: string): number {
   return Math.floor((date.getTime() - TODAY.getTime()) / DAY_MS)
 }
 
-// Mock data — ~14 tasks for Jasmine Diaz spanning overdue, today, upcoming,
-// and recently completed. Related to real Permit/Project IDs in mock-data.
-const INITIAL_TASKS: Task[] = [
-  {
-    id: "t1",
-    title: "Address reviewer comments on B2026-7841",
-    description:
-      "Linda Ruiz flagged two egress widths on sheet A-201. Coordinate with Marcus before resubmit.",
-    priority: "high",
-    dueDate: "2026-05-22",
-    assignedById: "u6",
-    relatedPermitId: "pm5",
-    completed: false,
-  },
-  {
-    id: "t2",
-    title: "Pay permit fee for B2026-1122",
-    description:
-      "$2,840 owed to Vancouver Permits before the application moves out of preparing.",
-    priority: "high",
-    dueDate: "2026-05-23",
-    assignedById: "u2",
-    relatedPermitId: "pm1",
-    completed: false,
-  },
-  {
-    id: "t3",
-    title: "Upload revised electrical plan for Solar Permit",
-    description:
-      "Richmond asked for an updated single-line diagram with conductor sizing called out.",
-    priority: "high",
-    dueDate: "2026-05-24",
-    assignedById: "u3",
-    relatedPermitId: "pm7",
-    completed: false,
-  },
-  {
-    id: "t4",
-    title: "Confirm jurisdiction for Fairfield Drive-thru Remodel",
-    description:
-      "Address sits on the Victoria / Saanich boundary — verify with Victoria Permits before filing.",
-    priority: "medium",
-    dueDate: "2026-05-25",
-    assignedById: "u3",
-    relatedProjectId: "p4",
-    completed: false,
-  },
-  {
-    id: "t5",
-    title: "Approve sign permit response narrative",
-    description:
-      "Sam drafted the corrections reply for S-2026-118 — needs your sign-off before submission.",
-    priority: "high",
-    dueDate: TODAY_ISO,
-    assignedById: "u2",
-    relatedPermitId: "pm6",
-    completed: false,
-  },
-  {
-    id: "t6",
-    title: "Coordinate inspection slot for Roofing Permit",
-    description:
-      "Surrey wants a 48-hour window. Pick a date that lines up with Leo's field crew.",
-    priority: "medium",
-    dueDate: TODAY_ISO,
-    assignedById: "u5",
-    relatedPermitId: "pm3",
-    completed: false,
-  },
-  {
-    id: "t7",
-    title: "Sign Owner Authorization Letter for P-2026-991",
-    description:
-      "Hill Architects sent the executed scope. Counter-sign and attach to the plumbing application packet.",
-    priority: "medium",
-    dueDate: TODAY_ISO,
-    assignedById: "u1",
-    relatedPermitId: "pm8",
-    completed: false,
-  },
-  {
-    id: "t8",
-    title: "Review Holden Manufacturing requirements list",
-    description:
-      "Research agent surfaced 14 items for the CTI — needs a human pass before sharing with the client.",
-    priority: "medium",
-    dueDate: "2026-05-28",
-    assignedById: "u4",
-    relatedProjectId: "p6",
-    completed: false,
-  },
-  {
-    id: "t9",
-    title: "Schedule pre-submittal call with North Vancouver planner",
-    description:
-      "Get ahead of the signage objection that came up on the last permit cycle.",
-    priority: "low",
-    dueDate: "2026-05-29",
-    assignedById: "u1",
-    relatedProjectId: "p5",
-    completed: false,
-  },
-  {
-    id: "t10",
-    title: "Forward weekly status to Mount Pleasant client",
-    description:
-      "Pull the shareable status link from the permit side panel and add a two-line note.",
-    priority: "low",
-    dueDate: "2026-06-01",
-    assignedById: "u4",
-    relatedProjectId: "p1",
-    completed: false,
-  },
-  {
-    id: "t11",
-    title: "Renew expired ENG19-DC9E4 before next inspection",
-    description:
-      "Permit lapsed in December. Decide whether to renew or close out before Leo gets on site.",
-    priority: "high",
-    dueDate: "2026-06-03",
-    assignedById: "u5",
-    relatedPermitId: "pm9",
-    completed: false,
-  },
-  {
-    id: "t12",
-    title: "Archive closed Kits Beach Remodel paperwork",
-    description:
-      "Closeout packet is ready — move scans to the project archive and notify the owner.",
-    priority: "low",
-    dueDate: "2026-06-05",
-    assignedById: "u1",
-    relatedPermitId: "pm10",
-    completed: false,
-  },
-  {
-    id: "t13",
-    title: "Submit Plan Set Index Form 3/8 for C12AB",
-    description:
-      "Last form blocking Marcus from moving the Roastery permit out of preparing.",
-    priority: "medium",
-    dueDate: "2026-05-21",
-    assignedById: "u4",
-    relatedPermitId: "pm2",
-    completed: true,
-    completedAt: "2026-05-22",
-  },
-  {
-    id: "t14",
-    title: "File extension request for Metrotown electrical inspection",
-    description:
-      "Inspector rescheduled — got the new slot pinned to next Tuesday.",
-    priority: "medium",
-    dueDate: "2026-05-20",
-    assignedById: "u4",
-    relatedPermitId: "pm4",
-    completed: true,
-    completedAt: "2026-05-23",
-  },
-]
+function isDone(task: Task): boolean {
+  return task.status === "done"
+}
 
 type TaskTab = "all" | "today" | "upcoming" | "completed"
 
 export function TasksPage() {
-  const [tasks, setTasks] = useState<Task[]>(INITIAL_TASKS)
+  const allTasks = useTasks()
   const [tab, setTab] = useState<TaskTab>("all")
 
+  // "My tasks" is everything owned by the signed-in person.
+  const tasks = useMemo(
+    () => allTasks.filter((t) => t.assigneeId === CURRENT_USER_ID),
+    [allTasks]
+  )
+
   function handleToggle(id: string) {
-    setTasks((prev) =>
-      prev.map((task) => {
-        if (task.id !== id) return task
-        const nextCompleted = !task.completed
-        return {
-          ...task,
-          completed: nextCompleted,
-          completedAt: nextCompleted ? TODAY_ISO : undefined,
-        }
-      })
-    )
+    const task = tasks.find((t) => t.id === id)
+    if (!task) return
+    setTaskStatus(id, isDone(task) ? "todo" : "done")
   }
 
   const counts = useMemo(() => {
@@ -209,7 +51,7 @@ export function TasksPage() {
     let completedThisWeek = 0
     for (const task of tasks) {
       const diff = daysFromToday(task.dueDate)
-      if (task.completed) {
+      if (isDone(task)) {
         const completedDiff = task.completedAt
           ? Math.abs(daysFromToday(task.completedAt))
           : 0
@@ -224,19 +66,19 @@ export function TasksPage() {
   }, [tasks])
 
   const visibleByTab = useMemo(() => {
-    const all = tasks.filter((t) => !t.completed)
-    const today = tasks.filter((t) => !t.completed && daysFromToday(t.dueDate) <= 0)
+    const all = tasks.filter((t) => !isDone(t))
+    const today = tasks.filter((t) => !isDone(t) && daysFromToday(t.dueDate) <= 0)
     const upcoming = tasks.filter(
-      (t) => !t.completed && daysFromToday(t.dueDate) > 0
+      (t) => !isDone(t) && daysFromToday(t.dueDate) > 0
     )
-    const completed = tasks.filter((t) => t.completed)
+    const completed = tasks.filter((t) => isDone(t))
     return { all, today, upcoming, completed }
   }, [tasks])
 
   function sortTasks(list: Task[]): Task[] {
     return [...list].sort((a, b) => {
       // Completed always last
-      if (a.completed !== b.completed) return a.completed ? 1 : -1
+      if (isDone(a) !== isDone(b)) return isDone(a) ? 1 : -1
       // Then by due date ascending
       return a.dueDate.localeCompare(b.dueDate)
     })
@@ -258,7 +100,7 @@ export function TasksPage() {
             My Tasks
           </h1>
           <p className="mt-1 text-sm text-muted-foreground">
-            Things needing your attention across every project.
+            Everything assigned to you across the team.
           </p>
         </div>
         <div className="flex items-center gap-2">
@@ -352,12 +194,12 @@ function emptyTitle(tab: TaskTab): string {
 function emptyHint(tab: TaskTab): string {
   switch (tab) {
     case "today":
-      return "When something gets assigned to you or a permit hits a deadline, it'll show up here."
+      return "When something gets assigned to you, it'll show up here."
     case "upcoming":
       return "Future deadlines and follow-ups will appear here as they're scheduled."
     case "completed":
       return "Tasks you mark done will collect here for the week."
     default:
-      return "You're all caught up across every project. Nice."
+      return "You're all caught up. Nice."
   }
 }

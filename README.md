@@ -2,34 +2,53 @@
 
 A construction-permit management product designed end-to-end as an interview deliverable. The brief: come back with a working prototype plus a clear point of view on the problem, the users, and how AI fits into the experience. **Permitflow** ([permitflow.com](https://permitflow.com)) is the competitive reference.
 
-> **Live demo:** https://permit-demo.vercel.app
+![PermitOps Home dashboard](docs/screenshots/home-dashboard.webp)
+
+**Live:** https://permit-demo.vercel.app
+
+Hero captured from a local dev run of `main` at `/home`.
 
 ## What's in here
 
-The app has two parallel surfaces, both reachable from the sidebar:
+The app has two surfaces in one Vite SPA.
 
-| **Workspace** (the product) | **Design Notes** (the thinking) |
-| --- | --- |
-| Projects (with detail page) | Problem Statement |
-| My Tasks | Personas |
-| Permits (with side-panel detail) | Key Flows |
-| Project Requirements | Sitemap (IA + entity model) |
-| Municipalities | AI Opportunities (value × feasibility matrix) |
-| Directory | AI Patterns (interaction catalogue) |
-|  | Assumptions |
+**TeamHQ workspace** (`/`, sidebar in three groups), a lightweight project-management tool for a small product team:
 
-The workspace pages are a working Permitflow-style product. The design notes pages document the strategy, IA, and design rigor behind the work — they live inside the app so they can be walked through alongside the screens they describe.
+| To do | Team | Design notes |
+| --- | --- | --- |
+| My tasks (`/tasks`) | Timeline (`/team/timeline`) | Problem statement (`/notes/problem`) |
+| Tasks, a five-column Kanban board with drag-and-drop (`/board`) | Members (`/team/members`) | Personas (`/notes/personas`) |
+|  |  | Key flows (`/notes/flows`) |
+|  |  | Sitemap (`/notes/sitemap`) |
+|  |  | AI patterns (`/notes/ai-patterns`) |
+|  |  | AI opportunities (`/notes/ai-opportunities`) |
 
-## Recommended walkthrough (15–20 min)
+**PermitOps Home** (`/home`), the homeowner edition of the product: dashboard, projects, permit and project detail, calendar, and an Ask page, with a language switcher covering 10 locales.
 
-1. **/notes/problem** — frame the *why*
-2. **/notes/personas** — frame the *who*
-3. **/notes/flows** — frame the journey
-4. **/notes/ai-opportunities** — the POV on what AI does (2×2 matrix is the hero)
-5. **/notes/ai-patterns** — the POV on how AI shows up in the UI
-6. **/notes/sitemap** — IA + entity model
-7. **/projects → click a project → /permits → /requirements** — the product itself
-8. **/notes/assumptions** — close with rigor, invite challenge
+The design notes pages document the strategy, IA, and design rigor behind the work and live inside the app so they can be walked through alongside the screens they describe.
+
+## Screenshots
+
+![AI opportunities matrix](docs/screenshots/ai-opportunities.webp)
+
+`/notes/ai-opportunities`: twelve AI opportunities plotted by value and feasibility.
+
+![TeamHQ Kanban board](docs/screenshots/team-board.webp)
+
+`/board`: the five-column task board (the Done column scrolls off to the right).
+
+Screenshots were captured from a local dev run.
+
+## Recommended walkthrough (15-20 min)
+
+1. **/notes/problem** to frame the *why*
+2. **/notes/personas** to frame the *who*
+3. **/notes/flows** to frame the journey
+4. **/notes/ai-opportunities** for the POV on what AI does (the value x feasibility matrix is the hero)
+5. **/notes/ai-patterns** for the POV on how AI shows up in the UI
+6. **/notes/sitemap** for the IA and entity model
+7. **/home** for the homeowner product, then **/tasks** and **/board** for TeamHQ
+8. **/team/timeline** to close with the engagement plan
 
 ## Stack
 
@@ -49,6 +68,7 @@ npm install
 npm run dev        # → http://localhost:5173
 npm run build      # production build
 npm run typecheck  # tsc --noEmit across all workspaces
+npm run lint       # eslint across all workspaces
 ```
 
 The monorepo has two workspaces:
@@ -59,62 +79,52 @@ The monorepo has two workspaces:
 
 ```
 apps/web/src/
-├── App.tsx                  # Routes
+├── App.tsx                  # Routes: /home/* (Home edition) and the TeamHQ AppShell
 ├── main.tsx                 # BrowserRouter + ThemeProvider
 ├── components/
 │   ├── app-shell.tsx        # SidebarProvider + Outlet + top bar
-│   ├── app-sidebar.tsx      # Workspace + Design Notes nav
+│   ├── app-sidebar.tsx      # To do / Team / Design notes nav
 │   ├── breadcrumbs.tsx
-│   ├── projects/            # per-page sub-components
-│   ├── permits/
-│   ├── requirements/
-│   ├── municipalities/
-│   ├── directory/
+│   ├── board/               # Kanban columns and cards
 │   ├── tasks/
+│   ├── members/
+│   ├── home/                # Home edition shell + language switcher
 │   ├── personas/
 │   ├── flows/
-│   ├── assumptions/
 │   └── ai-patterns/
 ├── lib/
-│   └── mock-data.ts         # Single source of truth for all sample data
+│   ├── mock-data.ts         # People, personas, flows, sidebar navigation
+│   ├── tasks-store.ts       # In-memory task store shared by My tasks, Board, Members
+│   ├── home-mock.ts         # Sample data for the Home edition
+│   └── home-i18n/           # Home edition strings, 10 locales
 └── pages/
-    ├── projects.tsx
-    ├── project-detail.tsx
-    ├── permits.tsx
-    ├── requirements.tsx
-    ├── tasks.tsx
-    ├── municipalities.tsx
-    ├── directory.tsx
-    ├── problem.tsx
-    ├── personas.tsx
-    ├── flows.tsx
-    ├── sitemap.tsx
-    ├── ai-opportunities.tsx
-    ├── ai-patterns.tsx
-    └── assumptions.tsx
+    ├── tasks.tsx  board.tsx  members.tsx  timeline.tsx
+    ├── problem.tsx  personas.tsx  flows.tsx  sitemap.tsx
+    ├── ai-opportunities.tsx  ai-patterns.tsx
+    └── home/                # dashboard, welcome, projects, project + permit detail, calendar, ask
 
 packages/ui/src/
 ├── components/              # shadcn components (sidebar, table, sheet, etc.)
 └── styles/globals.css       # theme tokens
+
+docs/
+├── designer-kickoff-prep.md
+├── room-plan/
+└── superpowers/specs/       # design specs (split prototypes, TeamHQ)
 ```
 
 ## Design decisions and shortcuts
 
-- **All data is mock.** No backend, no API, no persistence. Interactive state (switches, completed checkboxes, side-panel selections) is wired to `useState` so the demo *feels* alive without faking infrastructure.
+- **All data is mock.** No backend, no API, no persistence. Interactive state (task moves on the board, completed checkboxes, side-panel selections) lives in client-side state so the demo *feels* alive without faking infrastructure. Only the theme choice is stored in `localStorage`.
 - **"Today" is pinned to 2026-05-26** so relative dates ("3 days ago", "due in 12 days") read consistently regardless of when the demo is opened.
-- **AI features are documented, not implemented.** The Design Notes pages establish the POV (12 opportunities ranked by value × feasibility, 10 interaction patterns with mini-mockups). The product surface shows agent attribution and activity feeds as static UI rather than live model calls.
-- **One workspace, one team.** "Westline Builders" with a small team keeps the demo coherent. Branching the data into multiple workspaces would have added confusion without showing more design.
+- **AI features are documented, not implemented.** The Design Notes pages establish the POV (12 opportunities ranked by value × feasibility, 11 interaction patterns with mini-mockups). The product surface shows agent attribution and activity feeds as static UI rather than live model calls.
+- **One workspace, one team.** TeamHQ uses six demo people (`people` in `mock-data.ts`) and a seeded task store, with "current user" hard-coded to `u1`. Branching the data into multiple workspaces would have added confusion without showing more design.
 - **Card accent technique.** Where cards have a colored left accent (Personas quotes, Flows outcome, Problem cards, AI opportunity cards), the accent is drawn with a hard-stop `linear-gradient` background — not `border-left`. Borders curve into rounded corners and look cropped; gradients stay sharp inside the same radius. Lesson from [buttonschool.com/blog/awkward-borders](https://buttonschool.com/blog/awkward-borders).
 - **Routing.** Standard SPA routes; the `vercel.json` rewrite at the project root makes any deep link survive a hard refresh.
 
 ## Personas (fictional)
 
-The five personas referenced throughout the design notes are invented:
-1. **Marcus Hill** — Senior PM at a mid-size GC (lives in spreadsheets)
-2. **Priya Shah** — Permit Coordinator (power user, files daily)
-3. **Dana Okafor** — Founding architect (handles her own permits)
-4. **Reggie Vance** — Ops VP at a residential services company (volume game)
-5. **Linda Ruiz** — Senior plan reviewer at a municipal building department (counter-persona — she doesn't use the product, but its quality affects her queue)
+The personas on `/notes/personas` are invented (`personas` in `apps/web/src/lib/mock-data.ts`): Sarah Chen, Miguel Reyes, Tom Bryce and Linda Ruiz.
 
 ## Credits
 
